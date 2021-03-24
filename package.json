@@ -7,6 +7,11 @@
     "dist",
     "src"
   ],
+  "homepage": "https://styled-chart.com",
+  "repository": {
+    "type": "git",
+    "url": "https://https://github.com/VovaTereschenko/styled-chart.git"
+  },
   "engines": {
     "node": ">=10"
   },
