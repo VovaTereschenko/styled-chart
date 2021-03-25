@@ -7,7 +7,7 @@ import {
 
 import {
   XAxisBarWrapper,
-  XAxisWrapper,
+  XAxisLineWrapper,
   XAxisItem,
 } from '../components'
 
@@ -27,7 +27,7 @@ export const buildXAxis = (
         },
       )
       : isLineChart
-        ? <XAxisWrapper>{children}</XAxisWrapper>
+        ? <XAxisLineWrapper>{children}</XAxisLineWrapper>
         : <XAxisBarWrapper>{children}</XAxisBarWrapper>
   )
 }
@@ -36,16 +36,14 @@ export const buildXAxisItems = (
   xAxis: IXAxis,
   step: number,
   index: number,
-  children?: any, // to pass anything to xAxis values
+  children?: any,
 ) =>
-  xAxis.component
-    ? React.cloneElement(
-      xAxis.component,
-      {
-        children,
-        style: {
-          opacity: (index) % step ? 0 : 1
-        }
-      })
-    : <XAxisItem>{children}</XAxisItem>
+  React.cloneElement(
+    xAxis.component || <XAxisItem />,
+    {
+      children,
+      style: {
+        opacity: (index) % step ? 0 : 1
+      }
+    })
 

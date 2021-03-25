@@ -3,6 +3,7 @@ export type IReactComponent = React.ReactElement<any, string | React.JSXElementC
 export interface IRichDataObject {
   value: number
   component: (children?: any) => any
+  // tooltipComponent
 }
 
 export type IDataItemProperty =  string | number | IRichDataObject
@@ -16,7 +17,6 @@ export enum ILegend {
   isParent = 'isParent',
   isFilled = 'isFilled'
 }
-
 
 export type IDataSlice = {
   [key: string]: number[]
@@ -34,7 +34,7 @@ export type IConfig = {
 export type IXAxis = {
   key: string
   step?: number
-  cellsNum?: number
+  ticksNum?: number
   sectionComponent?: IReactComponent
   component?: IReactComponent
 }
@@ -45,4 +45,25 @@ export type IYAxis = {
   valuesCount?: number
   sectionComponent?: IReactComponent
   component?: IReactComponent
+}
+
+export interface ITooltip {
+  isVisible: boolean
+  component?: IReactComponent
+  innerComponents?: {
+    label?: IReactComponent
+    value?: IReactComponent
+    list?: IReactComponent
+    listItem?: IReactComponent
+  }
+}
+
+export interface ITooltipData {
+  dataConfigKey: string
+  barIndex: number
+  barValue: number
+  tooltipValues: {
+    label: string
+    value: any
+  }[]
 }
