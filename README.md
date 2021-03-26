@@ -299,10 +299,10 @@ tooltip // specs for the tooltip 🤷
 
 Example
 ```javascript
-[
+data={[
   {
-    date: '15.08',
-    proPlan: 7,
+    date: '15.08', // will be used for xAxis values
+    proPlan: 7, // the rest will be used to create bars/paths
     basicPlan: 15,
     conversion: 22,
   },
@@ -312,7 +312,7 @@ Example
     basicPlan: 12,
     conversion: 20,
   },
-]
+]}
 ```
 
 #### Notes:
