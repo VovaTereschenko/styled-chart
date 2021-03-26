@@ -33,12 +33,12 @@ const StyledLineChart = () => {
 
   const ProPath = styled(Path)`
     stroke: rgb(134, 196, 255);
-    fill: rgb(134, 196, 255);
+    fill: #86c4ff80;
   `
 
   const BasicPath = styled(Path)`
     stroke: #cfe8ff;
-    fill: #cfe8ff;
+    fill: #cfe8ff52;
   `
 
   const ConversionPath2 = styled(Path)`

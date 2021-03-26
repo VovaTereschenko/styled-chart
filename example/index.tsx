@@ -75,6 +75,23 @@ const Wrapper = styled.section`
   max-width: 1200px;
 `
 
+const Feedback = styled.section`
+  text-align: center;
+  margin: 48px 0 32px;
+  padding-top: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  border-top: 2px solid #757575;
+  div {
+    margin: 8px auto 0;
+    color: #414141;
+    font-weight: 500;
+  }
+  a {
+    color: #2f7cc3;
+  }
+`
+
 const Buttongroup = styled.section`
   display: flex;
   margin:  16px;
@@ -104,10 +121,12 @@ const ButtonPrimary = styled.button`
 `
 
 const ButtonSecondary = styled(ButtonPrimary)`
-  background: #f6bac1;
-  box-shadow: 0px 2px #f6bac17a;
+  text-decoration: none;
+  background: linear-gradient(#9fd0ff, #f6bac1);
+  box-shadow: 0px 2px #6fb2f0;
   &:hover {
-    background: #e7a8b0;
+    background: linear-gradient(#6eafec, #e7a5ad);
+    box-shadow: 0px 4px #6fb2f0;
   }
 `
 
@@ -119,14 +138,21 @@ const App = () =>
         <LgooText>Styled chart</LgooText>
       </Logo>
       <Buttongroup>
-        <ButtonPrimary>Samples</ButtonPrimary>
-        <ButtonSecondary>Docs</ButtonSecondary>
+        <ButtonSecondary as="a" href="https://github.com/VovaTereschenko/styled-chart">Docs with samples</ButtonSecondary>
       </Buttongroup>
     </Header>
     
     <H1>Create beautiful charts with <span>styled components</span></H1>
     <H2>Chart lib for React.js built with TS and almost no dependencies</H2>
     <BasicCharts />
+
+    <Feedback>
+      <p>Contact developer</p>
+      <div>
+        email <a href="mailto:vovatdev@gmail.com">vovatdev@gmail.com</a>
+      </div>
+      <div>hash for twitter #styled-chart</div>
+    </Feedback>
   </Wrapper> 
 
 export default App

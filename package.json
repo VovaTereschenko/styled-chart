@@ -10,7 +10,7 @@
   "homepage": "https://styled-chart.com",
   "repository": {
     "type": "git",
-    "url": "https://https://github.com/VovaTereschenko/styled-chart.git"
+    "url": "https://github.com/VovaTereschenko/styled-chart"
   },
   "engines": {
     "node": ">=10"
