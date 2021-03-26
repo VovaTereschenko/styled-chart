@@ -29,10 +29,6 @@ There are two basic charts which you can customize: BarChart and LineChart
 <img src="https://i.ibb.co/ykPStTb/2021-03-27-0-32-30.png" width="380" title="Basic BarChart">
 
 
-<details>
-<summary>Show BarChart example code</summary>
-<p>
-
 ```javascript
 import * as React from 'react'
 import styled from 'styled-components'
@@ -89,9 +85,6 @@ const StyledBarChart = () => {
 
 export default StyledBarChart
 ```
-
-</p>
-</details>  
 
 
 
