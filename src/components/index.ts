@@ -1,4 +1,4 @@
-export { default as StackedBarChart } from '../components/charts/StackedBarChart'
+export { default as BarChart } from './charts/BarChart'
 export { default as LineChart } from '../components/charts/LineChart'
 
 export { default as ChartWrapper } from '../components/shared/ChartWrapper'
@@ -11,6 +11,7 @@ export { default as InvisibleBarsSection } from '../components/shared/InvisibleB
 export { default as InvisibleBar } from '../components/shared/InvisibleBar'
 export { default as EmptyBar } from '../components/shared/Empty/EmptyBar'
 export { default as SVG } from '../components/shared/SVG'
+export { default as Path } from '../components/shared/Path'
 
 export { default as XAxisItem } from '../components/shared/XAxis/XAxisItem'
 export { default as XAxisBarWrapper } from './shared/XAxis/XAxisBarWrapper'
@@ -21,6 +22,8 @@ export { default as TooltipListItem } from './shared/Tooltip/TooltipListItem'
 export { default as TooltipList } from './shared/Tooltip/TooltipList'
 export { default as TooltipValue } from '../components/shared/Tooltip/TooltipValue'
 export { default as TooltipLabel } from '../components/shared/Tooltip/TooltipLabel'
+export { default as TooltipXAxisValue } from '../components/shared/Tooltip/TooltipXAxisValue'
+export { default as HintPoint} from '../components/shared/HintPoint'
+
 export { default as YAxisWrapper } from './shared/YAxis/YAxisWrapper'
 
-export { default as Path } from '../components/shared/Path'

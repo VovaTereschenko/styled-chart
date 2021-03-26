@@ -1,14 +1,14 @@
 import styled from 'styled-components'
 
-const InvisibleBarsSection = styled.div<{widthFactor: number}>`
+const InvisibleBarsSection = styled.div<{dataLength: number}>`
   height: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   position: absolute;
-  ${({ widthFactor }) => `
-    width: calc(100% + ${widthFactor}%);
-    margin-left: calc(${-widthFactor/2}%);
+  ${({ dataLength }) => `
+    width: calc(100% + ${100/(dataLength - 1)}%);
+    margin-left: calc(${-(100 + 100/(dataLength - 1))/dataLength/2}%);
   `}
 `
 

@@ -20,7 +20,7 @@ export const buildYAxisItems = (
         {
           children,
         })
-      : <YAxisItem>{children}</YAxisItem>
+      : <YAxisItem key={children}>{children}</YAxisItem>
   )
 }
 

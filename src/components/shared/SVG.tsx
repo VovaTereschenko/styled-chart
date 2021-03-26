@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const SVG =  styled.svg`
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   width: 100%;
 `
 

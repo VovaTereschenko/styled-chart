@@ -1,160 +1,612 @@
-# TSDX React User Guide
+# Styled-chart
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+Create beautiful charts with 💅 [Styled-components](https://styled-components.com/) (or your own react components). Chart lib for React.js built with Typescript and almost no dependencies.
 
-> This TSDX setup is meant for developing React component libraries (not apps!) that can be published to NPM. If you’re looking to build a React-based app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
-
-> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
-
-## Commands
-
-TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
-
-The recommended workflow is to run TSDX in one terminal:
-
+## Installation
 ```bash
-npm start # or yarn start
+npm intsall styled-chart --save
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+There are two basic charts which you can additionally customize: BarChart and LineChart
 
-Then run the example inside another:
+## BarChart basic example
 
 ```bash
-cd example
-npm i # or yarn to install dependencies
-npm start # or yarn start
+import * as React from 'react'
+import styled from 'styled-components'
+import {
+  BarChart,
+  Bar,
+  BarGroup,
+} from 'styled-chart'
+
+const StyledBarChart = () => {
+  const MyBarGroup = styled(BarGroup)`
+    margin: 0 2px;
+  `
+
+  const ProPlanBar = styled(Bar)`
+    background: red;
+  `
+
+  const BasicPlanBar = styled(Bar)`
+    background: green;
+  `
+
+  return (
+    <BarChart
+      tooltip={{
+        isVisible: true,
+      }}
+      yAxis={{
+        ticksNum: 5,
+      }}
+      xAxis={{
+        key: 'date',
+      }}
+      config={{
+        conversion: {
+          label: 'Conversion',
+          isParent: true,
+          component: <MyBarGroup />,
+        },
+        basicPlan: {
+          label: 'Basic plan',
+          component: <BasicPlanBar />,
+        },
+        proPlan: {
+          label: 'Pro plan',
+          component: <ProPlanBar />
+        },
+      }}
+      data={[
+        {
+          date: '19/08',
+          conversion: 22,
+          basicPlan: 1,
+          proPlan:   4,
+        },
+        {
+          date: '20/08',
+          conversion: 11,
+          basicPlan: 1,
+          proPlan: 4,
+        },
+      ]}
+    />
+  )
+}
+
+export default StyledBarChart
 ```
 
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, we use [Parcel's aliasing](https://parceljs.org/module_resolution.html#aliases).
+## LineChart basic example 
 
-To do a one-off build, use `npm run build` or `yarn build`.
+```bash
+import * as React from 'react'
+import styled from 'styled-components'
+import {
+  LineChart,
+  Path,
+} from 'styled-chart'
 
-To run tests, use `npm test` or `yarn test`.
+const StyledLineChart = () => {
+  const ConversionPath = styled(Path)`
+    stroke: red;
+  `
+
+  const ProPath = styled(Path)`
+    stroke: blue;
+    fill: blue;
+  `
+
+  const BasicPath = styled(Path)`
+    stroke: green;
+    fill: green;
+  `
+
+  return (
+    <LineChart
+      tooltip={{
+        isVisible: true,
+      }}
+      yAxis={{
+        ticksNum: 5,
+      }}
+      xAxis={{
+        key: 'date',
+      }}
+      config={{
+        conversion: {
+          label: 'Conversion',
+          component: <ConversionPath />,
+        },
+        basicPlan: {
+          label: 'Basic plan',
+          isFilled: true,
+          component: <BasicPath />,
+        },
+        proPlan: {
+          label: 'Pro plan',
+          isFilled: true,
+          component: <ProPath />
+        },
+      }}
+      data={[
+        {
+          date: '19/08',
+          conversion: 5,
+          basicPlan: 3,
+          proPlan: 1,
+        },
+        {
+          date: '20/08',
+          conversion: 7,
+          basicPlan: 2,
+          proPlan: 3,
+        },
+        {
+          date: '20/08',
+          conversion: 11,
+          basicPlan: 3,
+          proPlan: 1,
+        },
+      ]}
+    />
+  )
+}
+
+export default StyledLineChart
+```
 
 ## Configuration
 
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
+There are five entities you can configue any LineChart or BarChart with:
+```bash
+data # an array of { key: value }
+config # visual representaion of the data keys
+xAxis # specs for the horizontal line
+yAxis # specs for the verticl line 
+tooltip # specs for the tooltip 🤷
 
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-### Bundle analysis
-
-Calculates the real cost of your library using [size-limit](https://github.com/ai/size-limit) with `npm run size` and visulize it with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/example
-  index.html
-  index.tsx       # test your component here in a demo app
-  package.json
-  tsconfig.json
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
 ```
 
-#### React Testing Library
-
-We do not set up `react-testing-library` for you yet, we welcome contributions and documentation on this.
-
-### Rollup
-
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
+### data
+```bash
+{
+  [key: string]: number | React.ReactComponent
 }
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
+Example
+```bash
+[
+  {
+    date: '15.08',
+    proPlan: 7,
+    basicPlan: 15,
+    conversion: 22,
+  },
+  {
+    date: '16.08',
+    proPlan: 19,
+    basicPlan: 12,
+    conversion: 20,
+  },
+]
+```
 
-## Module Formats
+#### Notes:
+- The order of the values effects on the relationship between paths/bars
 
-CJS, ESModules, and UMD module formats are supported.
+LineChart: proPlan is in front of the basicPlan
+BarChart: proPlan is before or below (in the stacked version of BarChart) proPlan
+```bash
+{
+  basicPlan: 15,
+  proPlan: 14,
+}
+```
 
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Deploying the Example Playground
-
-The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
+- For some specific cases you can pass a component to style it
 
 ```bash
-cd example # if not already in the example folder
-npm run build # builds to dist
-netlify deploy # deploy the dist folder
+{
+  basicPlan: {
+    value: 90, # is equivalent of basicPlan: 90
+    component: () => getSpecialBasicPlan(90), # So you can explicitly return anything instead of the default bar/path or the one which is specified by you in the config
+  },
+}
 ```
 
-Alternatively, if you already have a git repo connected, you can set up continuous deployment with Netlify:
+### config
+
+Example (BarChart)
+```bash
+config={{
+  conversion: {
+    # string
+    # required
+    # a label which is used in the tooltip inside <TooltipLabel>
+    label: 'Conversion',
+    # ReactChild, required
+    # a component for your bar
+    # hint: you can style <Bar/> from the lib
+    component: <MyConvertionBarGrop />,
+    # boolean, optional
+    # indicates that the other bars will be wrapped into this one
+    # so you'll get stacked bar chart
+    # one one isParent can be recognized
+    # hint: you can style <BarGroup/> from the lib
+    isParent: true, 
+  },
+  basicPlan: {
+    label: 'Basic plan',
+    # hint: for the !isFlag bar you can style <Bar/> from the lib
+    component: <MyBasicPlanBar />,
+  },
+  proPlan: {
+    label: 'Pro plan',
+    component: <MyProPlanBar />,
+  },
+}}
+```
+
+Example (LineChart)
+```bash
+config={{
+  conversion: {
+    # string
+    # required
+    # a label which is used in the tooltip
+    label: 'Conversion',
+    # ReactChild, required
+    # a component for your path, must be path tag e.g. styled.path or <path />
+    # hint: you can style <Path/> from the lib
+    component: <MyConvertionPath />,
+    # boolean, optional
+    # indicates that the <MyConvertionPath/> path is planned to be filled
+    isFilled: true,
+  },
+  basicPlan: {
+    label: 'Basic plan',
+    component: <MyBasicPlanPath />,
+  },
+  proPlan: {
+    label: 'Pro plan',
+    component: <MyProPlanPath />,
+  },
+}}
+```
+
+If you plan to show more bars than the data.length, you can specify a component for the empty values. This empty bar should have the same width as all the other bars.
 
 ```bash
-netlify init
-# build command: yarn build && cd example && yarn && yarn build
-# directory to deploy: example/dist
-# pick yes for netlify.toml
+empty: {
+  label: 'Empty',
+  component: <MyEmptyBar />
+},
 ```
 
-## Named Exports
+### xAxis
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Including Styles
-
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
-
-## Usage with Lerna
-
-When creating a new package with TSDX within a project set up with Lerna, you might encounter a `Cannot resolve dependency` error when trying to run the `example` project. To fix that you will need to make changes to the `package.json` file _inside the `example` directory_.
-
-The problem is that due to the nature of how dependencies are installed in Lerna projects, the aliases in the example project's `package.json` might not point to the right place, as those dependencies might have been installed in the root of your Lerna project.
-
-Change the `alias` to point to where those packages are actually installed. This depends on the directory structure of your Lerna project, so the actual path might be different from the diff below.
-
-```diff
-   "alias": {
--    "react": "../node_modules/react",
--    "react-dom": "../node_modules/react-dom"
-+    "react": "../../../node_modules/react",
-+    "react-dom": "../../../node_modules/react-dom"
-   },
+```bash
+xAxis={{
+  # string
+  # required
+  # a key from the data items you want to use for the xAxis values, e.g. 'date'
+  key, 
+  # number, optional
+  # default is 1
+  # 1 means you show every xTick  e.g. | Sun | Mon | Tue | , 2 - every second | Sun | | Tue|
+  step,
+  # number, optional
+  # default is data.length
+  # explicitly sets the number of items to cut or extend the data to a particular amount
+  ticksNum,
+  # ReactChild, optional
+  # default is <XAxisBarWrapper/> or <XAxisLineWrapper/>
+  # a component for the xAxis section
+  # hint: you can style <XAxisBarWrapper/> or <XAxisLineWrapper/> (for the LineChart) from the lib
+  sectionComponent: <MyXAxisWrapper />,
+  # ReactChild, optional
+  # default is <XAxisItem/>
+  # a component for the xAxis section item
+  # hint: you can style <XAxisItem/> from the lib
+  component: <MyXAxisItem />
+}}
 ```
 
-An alternative to fixing this problem would be to remove aliases altogether and define the dependencies referenced as aliases as dev dependencies instead. [However, that might cause other problems.](https://github.com/palmerhq/tsdx/issues/64)
+
+### yAxis
+
+```bash
+yAxis={{
+  # number, optional
+  # default is a max of all data values 
+  maxValue: 100,
+  # number, optional
+  # default is 0
+  minValue: 0,
+  # number, optional
+  # default is 3
+  # a number a ticks you want to be shown in the yAxis
+  ticksNum: config.yAxisTicksNum,
+  # ReactChild, optional
+  # default is <YAxisBarWrapper/> or <YAxisLineWrapper/>
+  # a component for the yAxis section
+  # hint: you can style <YAxisWrapper> from the lib
+  sectionComponent: <MyYAxisWrapper />,
+  # ReactChild, optional
+  # default is <YAxisItem/>
+  # a component for the yAxis section item
+  # hint: you can style <YAxisItem/> from the lib
+  component: <MyYAxisItem />
+}}
+```
+
+### tooltip
+```bash
+tooltip={{
+  # boolean, optional
+  # indicates that you basically want a tooltip to be visible
+  isVisible: true,
+  # ReactChild, optional
+  # default is <TooltipWrapper/>
+  # a component for the tooltip
+  # hint: you can also style
+  # <TooltipListItem/>
+  # <TooltipList/>
+  # <TooltipValue/>
+  # <TooltipLabel/>
+  # <TooltipXAxisValue/>
+  # <HintPoint />
+  # as a children of your const MyTooltipWrapper = styled(TooltipWrapper)
+  component: <MyTooltipWrapper />,
+  # object, optional
+  hints: {
+    # ReactChild, optional
+    # a component for the hint circle (used in the tooltip and in the LineChart paths)
+    # default for the path values highlighters <HintPoint />
+    # hint: you can style <HintPoint/> from the lib 
+    basicPlan: <MyBasicHint/>,
+    proPlan: <MyProHint/>,
+    conversion: <MyConversionHint/>,
+  }
+}}
+```
+
+### Components you can import and style
+```bash
+
+ChartWrapper - a wrapper for any chart (you can style it in cascade of you compoent)
+#const MyWrapper = style.section`
+#  ${ChartWrapper} {
+#    background: black;
+#  }
+#`
+#...
+#<MyWrapper>
+#  <LineChart/>...
+#</MyWrapper>
+
+BarChart # chart built with bars
+LineChart # chart built with paths
+Bar # default for the bar 
+BarGroup # default for the Bar with isParent flag
+EmptyBar # default for empty values (in case you provided ticksNum in the xAxis > data.length)
+XAxisItem # default for the xAxis component
+XAxisBarWrapper # default for the xAxis sectionComponent of the BarChart
+YAxisItem # default for the yAxis component
+XAxisLineWrapper # default for the yAxis sectionComponent of the BarChart
+TooltipWrapper # dafault for the tooltip compoent
+# TooltipList
+# TooltipListItem
+# TooltipValue
+# TooltipLabel
+# TooltipXAxisValue
+# are nested
+HintPoint # default for the circle hins in tooltip and LineChart paths highlighters 
+```
+
+### Adjusted example
+
+```bash
+import * as React  from 'react'
+import styled from 'styled-components'
+import {
+  BarChart,
+  Bar,
+  BarGroup,
+  TooltipWrapper,
+  EmptyBar,
+  ChartWrapper,
+  XAxisItem,
+  XAxisBarWrapper,
+  YAxisWrapper,
+  YAxisItem,
+} from 'styled-chart'
+
+const StyledBarChart = () => {
+  const MyWrapper = styled.section`
+    ${ChartWrapper} {
+      height: 270px;
+    }
+  `
+
+  const MyXAxisItem = styled(XAxisItem)`
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+  `
+
+  const MyXAxisBarWrapper = styled(XAxisBarWrapper)`
+    border-top: 2px solid gray;
+  `
+
+  const StarredItemText = styled.span`
+    font-size: 14px;
+    font-weight: 700;
+  `
+
+  const StarredItemEmoji = styled.span`
+    font-size: 24px;
+  `
+
+  const StarredItem = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgb(248, 182, 195) 100%);
+    text-align: center;
+    font-size: 12px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 16px 0;
+    width: 100%;
+    height: 100%;
+  `
+
+  const MyYAxisWrapper = styled(YAxisWrapper)`
+    width: 40px;
+    padding: 0 8px;
+    text-align: right;
+    border-right: 2px solid gray;
+  `
+
+  const MyYAxisItem = styled(YAxisItem)`
+    font-weight: bold;
+  `
+
+  const MyTooltipWrapper = styled(TooltipWrapper)`
+    background: azure;
+    color: black; 
+  `
+
+  const MyBarGroup = styled(BarGroup)`
+    position: relative;
+    transition: 0.2s all linear;
+    margin: 0 2px;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+  `
+
+  const ProPlanBar = styled(Bar)`
+    border-top: 2px solid white;
+    background: blanchedalmond;
+  `
+
+  const MyEmptyBar = styled(EmptyBar)`
+    margin: 0 2px;
+    background: azure;
+  `
+
+  const BasicPlanBar = styled(Bar)`
+    background: ghostwhite;
+  `
+
+  const SpecialPlanBar = styled(BasicPlanBar)`
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size:24px;
+  `
+
+  const getSpecialBasicPlan = (number: number) => 
+    <SpecialPlanBar>
+      <StarredItemText>{number}</StarredItemText>
+    </SpecialPlanBar>
+
+  const getConversionList = (number: number, children?: any) => {
+    return (
+      <MyBarGroup>
+        <StarredItem>
+          <StarredItemEmoji>🌟</StarredItemEmoji>
+          <StarredItemText>{number}</StarredItemText>
+        </StarredItem>
+        {children}
+      </MyBarGroup>
+    )
+  }
+
+  return (
+    <MyWrapper>
+      <BarChart
+        tooltip={{
+          isVisible: true,
+          component: <MyTooltipWrapper />,
+        }}
+        yAxis={{
+          maxValue: 100,
+          ticksNum: 5,
+          sectionComponent: <MyYAxisWrapper />,
+          component: <MyYAxisItem />
+        }}
+        xAxis={{
+          key: 'date',
+          step: 2,
+          sectionComponent: <MyXAxisBarWrapper />,
+          component: <MyXAxisItem />,
+          ticksNum: 7,
+        }}
+        config={{
+          conversion: {
+            label: 'Conversion',
+            isParent: true,
+            component: <MyBarGroup />,
+          },
+          basicPlan: {
+            label: 'Basic plan',
+            component: <BasicPlanBar />,
+          },
+          proPlan: {
+            label: 'Pro plan',
+            component: <ProPlanBar />
+          },
+          empty: {
+            label: 'Empty',
+            component: <MyEmptyBar />
+          },
+        }}
+        data={[
+          {
+            date: '19/08',
+            conversion: 22,
+            basicPlan: 1,
+            proPlan:   4,
+          },
+          {
+            date: '20/08',
+            conversion: 11,
+            basicPlan: 1,
+            proPlan: 4,
+          },
+          {
+            date: '21/08',
+            conversion: 64,
+            basicPlan: {
+              value: 90,
+              component: () => getSpecialBasicPlan(90),
+            },
+            proPlan: 4,
+          },
+          {
+            date: '22/08',
+            conversion: {
+              value: 95,
+              component: (children) => getConversionList(95, children),
+            },
+            basicPlan: 23,
+            proPlan: 13,
+          },
+        ]}
+      />
+    </MyWrapper>
+  )
+}
+
+export default StyledBarChart
+```

@@ -42,13 +42,16 @@ export type IXAxis = {
 export type IYAxis = {
   maxValue?: number
   minValue?: number
-  valuesCount?: number
+  ticksNum?: number
   sectionComponent?: IReactComponent
   component?: IReactComponent
 }
 
 export interface ITooltip {
-  isVisible: boolean
+  isVisible?: boolean
+  hints?: {
+    [key: string]: IReactComponent
+  }
   component?: IReactComponent
   innerComponents?: {
     label?: IReactComponent
@@ -59,11 +62,13 @@ export interface ITooltip {
 }
 
 export interface ITooltipData {
+  xAxisValue: IDataItemProperty
   dataConfigKey: string
   barIndex: number
   barValue: number
   tooltipValues: {
     label: string
+    key: string
     value: any
   }[]
 }

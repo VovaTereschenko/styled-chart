@@ -15,42 +15,53 @@ import {
   TooltipListItem,
   TooltipLabel,
   TooltipValue,
+  TooltipXAxisValue,
 } from '../components'
 
 const buildTooltip = (
   tooltipData: ITooltipData,
   barsNum: number,
   maxYAxis: number,
+  minYAxis: number,
   tooltipIsOpen: boolean,
-  tooltipConfig: ITooltip,
+  tooltip: ITooltip,
 ) =>  {
-
   const children =
-    <TooltipList>
-      {tooltipData.tooltipValues.map((tooltipItemData) => 
-        <TooltipListItem>
-          <TooltipLabel>{tooltipItemData.label}</TooltipLabel>
-          <TooltipValue>
-            {!isRichDataObject(tooltipItemData.value)
-              ? tooltipItemData.value
-              : tooltipItemData.value.value}
-          </TooltipValue>
-        </TooltipListItem>
-      )}
-    </TooltipList>
+    <>
+      <TooltipList>
+        {tooltipData.tooltipValues.map((tooltipItemData) => 
+          <TooltipListItem>
+            {tooltip.hints && tooltip.hints[tooltipItemData.key]}
+            <TooltipLabel>
+              {tooltipItemData.label}
+            </TooltipLabel>
+            <TooltipValue>
+              {!isRichDataObject(tooltipItemData.value)
+                ? tooltipItemData.value
+                : tooltipItemData.value.value}
+            </TooltipValue>
+          </TooltipListItem>
+        )}
+      </TooltipList>
+      <TooltipXAxisValue>{tooltipData.xAxisValue}</TooltipXAxisValue>
+    </>
 
-  const component = tooltipConfig.component || <TooltipWrapper /> 
+  const component = tooltip.component || <TooltipWrapper /> 
 
   const componentProps = {
     style: {
       left: `${100/barsNum * tooltipData.barIndex + 100/barsNum/2}%`,
       transform: 'translateX(-50%) translateY(-8px)',
-      bottom: getBarHeight(Number(tooltipData.barValue), maxYAxis),
+      bottom: getBarHeight(Number(tooltipData.barValue), maxYAxis, minYAxis),
     } as {[key: string]: string | number},
     children,
   }
 
-  if (!tooltipIsOpen) componentProps.style.opacity = 0 // so it can be specified by user
+  if (!tooltipIsOpen) {
+    componentProps.style.opacity = 0 // so it can be specified by user
+    componentProps.style.width = 0
+    componentProps.style.fontSize = 0
+  }
   return React.cloneElement(
     component,
     componentProps,

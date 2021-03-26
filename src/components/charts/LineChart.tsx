@@ -8,6 +8,7 @@ import {
   InvisibleBarGroup,
   InvisibleBarsSection,
   InvisibleBar,
+  HintPoint,
 } from '../'
 
 import { 
@@ -33,8 +34,9 @@ import {
   buildTooltip,
   findTooltipKeys,
   getBarHeight,
-  fillMissingValues,
-  removeExtraValues,
+  getInnerBarHeight,
+  getXAxisValues,
+  fillDataRelativeToXAxis,
 } from '../../utls'
 
 interface ILineChart {
@@ -46,19 +48,21 @@ interface ILineChart {
 }
 
 const buildParentBar = (
+  barIndex: number,
   max: number,
   barsNum: number,
   maxYAxis: number,
+  minYAxis: number,
   tooltipData?: ITooltipData,
   setTooltipData?: any,
   toggleTooltip?: any,
   children?: (false | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[],
 ) => {
-    const component = <InvisibleBarGroup>{children}</InvisibleBarGroup>
+    const component = <InvisibleBarGroup key={barIndex}>{children}</InvisibleBarGroup>
     const componentProps = {
-      onMouseOver: () =>  { console.log("yes"); tooltipData && setTooltipData(tooltipData); toggleTooltip(true) },
+      onMouseOver: () =>  { tooltipData && setTooltipData(tooltipData); toggleTooltip(true) },
       style: {
-        height: getBarHeight(max, maxYAxis),
+        height: getBarHeight(max, maxYAxis, minYAxis),
         width: `${100/barsNum}%`,
       },
     } as {
@@ -79,20 +83,25 @@ const buildBasicBar = (
   dataItem: IDataItemProperty,
   config: IConfig,
   innerSum: number,
+  tooltip?: ITooltip,
 ) =>  {
   if (config[dataConfigKey]) {
+    const point = tooltip && tooltip.hints && tooltip.hints[dataConfigKey] || <HintPoint />
     const component = isRichDataObject(dataItem)
       ? <InvisibleBar>
-            {dataItem.component()}
+          {point}
+          {dataItem.component()}
         </InvisibleBar>
-      : <InvisibleBar />
+      : <InvisibleBar>
+          {point}
+        </InvisibleBar>
     const value = isRichDataObject(dataItem)
       ? dataItem.value
       : dataItem
 
     const componentProps = {
       style: {
-        height: getBarHeight(Number(value), innerSum),
+        height: getInnerBarHeight(Number(value), innerSum),
       },
     }
     
@@ -114,18 +123,16 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
 
   const {
     step = 1,
-    ticksNum = data.length,
+    ticksNum: xAxisTicksNum = data.length,
+    key: xAxisKey,
   } = xAxis
 
-  const essentialWidthFactor =  data.length / ticksNum
 
-  if (ticksNum > data.length) {
-    data = fillMissingValues(data, ticksNum, 100)
-  } else if (ticksNum < data.length) {
-    data = removeExtraValues(data, ticksNum)
-  }
+  const essentialWidthFactor =  data.length / xAxisTicksNum
 
+  data = fillDataRelativeToXAxis(data, xAxisTicksNum)
 
+  const xAxisValues = data.map(dataItem => dataItem[xAxisKey])
 
   React.useLayoutEffect(() => {
     if (wrapperRef.current) {
@@ -143,12 +150,22 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
 
   const keys = data.map((item) => findInnerComponentsKeys(item, config))
 
+  /**
+   * @example {
+   *    [x, y]
+   * }
+   */
   const uniqueKeys = keys.reduce((acum, item) => {
     const uniqueIterationKeys = item.filter(key => acum.indexOf(key) === -1)
     return [...acum, ...uniqueIterationKeys]
   }, [])
 
-
+  /**
+   * @example {
+   *    x: [1, 2, 3],
+   *    y: [2, 0, 1],
+   * }
+   */
   const dataSlices = data.reduce((acum, dataItem) => {
     uniqueKeys.forEach((key) => {
       if (!acum[key]) acum[key] = []
@@ -166,26 +183,32 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
     return acum
   }, {} as IDataSlice)
 
-  
+  /**
+   * @example [
+   *    [1, 2, 3],
+   *    [2, 0, 1],
+   * ]
+   */
   const valuesArrays =  Object.entries(dataSlices).map(item => item[1])
 
-  const arrayOfAllValues = valuesArrays.reduce((acum, item) => {
-    return [...acum, ...item]
-  }, [])
+
+  /**
+   * @example [
+   *    1, 2, 3, 2, 0, 1,
+   * ]
+   */
+  const arrayOfAllValues = valuesArrays.reduce((acum, item) =>
+    [...acum, ...item]
+  , [])
 
   const {
     maxValue = Math.max(...arrayOfAllValues),
     minValue = 0,
-    valuesCount = 3,
+    ticksNum : yAxisTicksNum = 3,
   } = yAxis
   
 
-  const yAxisValues = Array.from({length: valuesCount}, (_, i) => {
-    const step = (maxValue - minValue) / (valuesCount - 1)
-    if (!i) return minValue
-    if (i === valuesCount) return maxValue
-    return Math.round(step * i)
-  }).reverse()
+  const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
 
   return (
     <ChartWrapper>
@@ -198,16 +221,18 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
                 const deltaValue = 50,
                   deltaSmall = deltaValue / 3,
                   deltaLarge = deltaValue / 3 * 2
-
+                const calcY = (val: number) => 
+                  SVGHeight - SVGHeight/(maxValue - minValue) * (val - minValue)
+          
                 const
                   prevItem = dataSlice[1][i - 1] || 0,
                   prevIndex = i > 1 ? i - 1 : 0,
-                  prevY = SVGHeight - SVGHeight/maxValue * prevItem,
+                  prevY = calcY(prevItem),
                   prevX = SVGWidth/(cellsNumber - 1) * prevIndex
 
                 const
                   x = SVGWidth/(cellsNumber - 1) * i,
-                  y = SVGHeight - SVGHeight/maxValue * item,
+                  y = calcY(item),
                   delta = (x - prevX) / deltaValue
 
                 const ponintsSlice = i === 0
@@ -218,7 +243,7 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
                   i === dataSlice[1].length - 1
                   && config[dataSlice[0]][ILegend.isFilled]
                     // We build the full chart is isFilled flag is provided
-                    ? `c 0 0 ${delta * deltaLarge} 0 ${x - prevX} ${y - prevY} V ${SVGHeight - 1} H 0`
+                    ? `c 0 0 ${delta * deltaLarge} 0 ${x - prevX} ${y - prevY} V ${SVGHeight} H 0`
                     : undefined
 
                 return acum += lastSlice || ponintsSlice
@@ -232,12 +257,13 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
             })}
           </SVG>
 
-          <InvisibleBarsSection widthFactor={100/data.length}>
+          <InvisibleBarsSection dataLength={data.length}>
             {data.map((dataItem: IDataItem, index) => {
               const tooltipKeys = findTooltipKeys(dataItem, config)
               const tooltipValues = tooltipKeys.reduce((acum, key) => {
                 const tooltipItemValues = {
                   label: config[key].label,
+                  key,
                   value: dataItem[key],
                 }
                 acum.push(tooltipItemValues)
@@ -258,13 +284,17 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
                   dataItem[dataConfigKey],
                   config,
                   maxPathValue,
+                  tooltip,
                 ))
 
               return buildParentBar(
+                index,
                 maxPathValue,
                 data.length,
                 maxValue,
+                minValue,
                 {
+                  xAxisValue: xAxisValues[index],
                   dataConfigKey: '',
                   tooltipValues,
                   barIndex: index,
@@ -283,6 +313,7 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
               tooltipData,
               data.length,
               maxValue,
+              minValue,
               tooltipIsOpen,
               tooltip,
             )}

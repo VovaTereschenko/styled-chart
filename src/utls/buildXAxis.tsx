@@ -17,7 +17,8 @@ export const buildXAxis = (
   step: number,
   isLineChart?: boolean
 ) => {
-  const children = data.map((item, index) => buildXAxisItems(xAxis, step, index, item[xAxis.key]))
+  const children = data.map((item, index) =>
+    buildXAxisItems(xAxis, step, index, item[xAxis.key]))
   return (
     xAxis.sectionComponent
       ? React.cloneElement(
@@ -39,7 +40,7 @@ export const buildXAxisItems = (
   children?: any,
 ) =>
   React.cloneElement(
-    xAxis.component || <XAxisItem />,
+    xAxis.component || <XAxisItem key={index}/>,
     {
       children,
       style: {

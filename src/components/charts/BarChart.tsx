@@ -6,7 +6,7 @@ import {
   ChartVisualsWrapper,
   ChartWithXAxisWrapper,
   EmptyBar,
-} from '../'
+} from '..'
 
 import {
   IYAxis,
@@ -25,11 +25,14 @@ import {
   findTooltipKeys,
   isRichDataObject,
   findStackedYAxisMax,
+  findBarsYAxisMax,
   buildXAxis,
   buildYAxis,
   buildTooltip,
-  removeExtraValues,
-  fillMissingValues,
+  getBarHeight,
+  getInnerBarHeight,
+  getXAxisValues,
+  fillDataRelativeToXAxis,
 } from '../../utls'
 
 interface IStackedBarChart {
@@ -40,29 +43,33 @@ interface IStackedBarChart {
   tooltip?: ITooltip
 }
 
-const getBarHeight = (barValue: number, maxYAxis: number) =>
-  `${Number(barValue) * 100/maxYAxis}%`
-
 const isParentBar = (dataConfigKey: string, config: IConfig) =>
   config[dataConfigKey] && config[dataConfigKey].isParent || dataConfigKey === ILegend.empty
 
 const buildParentBar = (
+  isStackedBarChart: boolean,
   dataConfigKey: string,
   dataItem: IDataItemProperty,
   config: IConfig,
   barsNum: number,
   maxYAxis: number,
+  minYAxis: number,
   children?: (false | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[],
   tooltipData?: ITooltipData,
   setTooltipData?: any,
   toggleTooltip?: any,
 ) => {
-  if (isParentBar(dataConfigKey, config)) {
+  if (isParentBar(dataConfigKey, config)
+    || (!isStackedBarChart
+      && config[dataConfigKey]
+      && config[dataConfigKey].component)
+  ) {
+
     const component = dataConfigKey === ILegend.empty
-    ? config[dataConfigKey] && config[dataConfigKey].component || <EmptyBar />
-    : isRichDataObject(dataItem)
-        ? dataItem.component(children) // we take the compoent right from the data item
-        : config[dataConfigKey].component // we take the component from the config
+      ? config[dataConfigKey] && config[dataConfigKey].component || <EmptyBar />
+      : isRichDataObject(dataItem)
+          ? dataItem.component(children) // we take the compoent right from the data item
+          : config[dataConfigKey] && config[dataConfigKey].component // we take the component from the config
         || <BarGroup /> // or we take the default one
 
     const value = isRichDataObject(dataItem)
@@ -72,7 +79,7 @@ const buildParentBar = (
     const componentProps = {
       onMouseOver: () =>  { tooltipData && dataConfigKey !== ILegend.empty && setTooltipData(tooltipData); toggleTooltip(true) },
       style: {
-        height: getBarHeight(Number(value), maxYAxis),
+        height: getBarHeight(Number(value), maxYAxis, minYAxis),
         width: `${100/barsNum}%`,
       },
     } as {
@@ -110,7 +117,7 @@ const buildBasicBar = (
 
     const componentProps = {
       style: {
-        height: getBarHeight(Number(value), innerSum),
+        height: getInnerBarHeight(Number(value), innerSum),
       },
     }
 
@@ -126,34 +133,29 @@ const getDataItemValue = (dataItem: IDataItemProperty) =>
     ? dataItem.value
     : dataItem
 
-const StackedBarChart = ({ data, config, yAxis, xAxis, tooltip }: IStackedBarChart) => {
+const BarChart = ({ data, config, yAxis, xAxis, tooltip }: IStackedBarChart) => {
   const [tooltipData, setTooltipData] = React.useState<ITooltipData | null>(null)
   const [tooltipIsOpen, toggleTooltip] =  React.useState(false)
+  const isStackedBarChart = Object.entries(config).map(item => item[1]).some(item => item.isParent)
 
   const {
-    maxValue = findStackedYAxisMax(config, data),
+    maxValue = isStackedBarChart ? findStackedYAxisMax(config, data) : findBarsYAxisMax(config, data),
     minValue = 0,
-    valuesCount = 3,
-    // step: yAxisStep  = 1,
+    ticksNum: yAxisTicksNum = 3,
   } = yAxis
       
   const {
     step: xAxisStep = 1,
-    ticksNum = data.length,
+    ticksNum: xAxisTicksNum = data.length,
+    key: xAxisKey,
   } = xAxis
 
-  if (ticksNum > data.length) {
-    data = fillMissingValues(data, ticksNum, maxValue)
-  } else if (ticksNum < data.length) {
-    data = removeExtraValues(data, ticksNum)
-  }
+  
+  data = fillDataRelativeToXAxis(data, xAxisTicksNum)
+  
+  const xAxisValues = data.map(dataItem => dataItem[xAxisKey])
 
-  const yAxisValues = Array.from({length: valuesCount}, (_, i) => {
-    const yAxisStep = (maxValue - minValue) / (valuesCount - 1)
-    if (!i) return minValue
-    if (i === valuesCount) return maxValue
-    return Math.round(yAxisStep * i)
-  }).reverse()
+  const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
 
   return (
     <ChartWrapper>
@@ -166,6 +168,7 @@ const StackedBarChart = ({ data, config, yAxis, xAxis, tooltip }: IStackedBarCha
             const tooltipValues = tooltipKeys.reduce((acum, key) => {
               const tooltipItemValues = {
                 label: config[key].label,
+                key,
                 value: dataItem[key],
               }
               acum.push(tooltipItemValues)
@@ -191,13 +194,16 @@ const StackedBarChart = ({ data, config, yAxis, xAxis, tooltip }: IStackedBarCha
 
             const parent = Object.keys(dataItem).map((dataConfigKey) => 
               buildParentBar(
+                isStackedBarChart,
                 dataConfigKey,
                 dataItem[dataConfigKey],
                 config,
                 data.length,
                 maxValue,
+                minValue,
                 children as (false | IReactComponent)[],
                 {
+                  xAxisValue: xAxisValues[index],
                   dataConfigKey,
                   tooltipValues,
                   barIndex: index,
@@ -218,6 +224,7 @@ const StackedBarChart = ({ data, config, yAxis, xAxis, tooltip }: IStackedBarCha
               tooltipData,
               data.length,
               maxValue,
+              minValue,
               tooltipIsOpen,
               tooltip,
             )}
@@ -228,4 +235,4 @@ const StackedBarChart = ({ data, config, yAxis, xAxis, tooltip }: IStackedBarCha
   )
 }
 
-export default StackedBarChart
+export default BarChart
