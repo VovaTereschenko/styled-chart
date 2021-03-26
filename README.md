@@ -11,6 +11,24 @@ Create beautiful charts with 💅 [Styled-components](https://styled-components.
   <img src="https://i.ibb.co/M2hFgXD/2021-03-26-23-47-19.png" width="380" alt="BarChart example">
 </div>
 
+
+<details>
+<summary>I could use some help...</summary>
+<p>
+
+```javascript
+public class Order
+{
+    public int OrderId { get; set; }
+    public int CustomerId { get; set; }
+
+    public List<int> Products { get; set; }
+}
+\```
+
+</p>
+</details>  
+
 ## Installation
 ```bash
 npm intsall styled-chart --save
