@@ -333,8 +333,27 @@ BarChart: proPlan is before or below (in the stacked version of BarChart) proPla
 ```javascript
 {
   basicPlan: {
-    value: 90, # is equivalent of basicPlan: 90
-    component: () => getSpecialBasicPlan(90), # So you can explicitly return anything instead of the default bar/path or the one which is specified by you in the config
+    // is equivalent of basicPlan: 90
+    value: 90, 
+    // Prvide the function to get the layout
+    // So you can explicitly return anything instead of 
+    // the default bar/path or the one which is specified by you in the config
+    component: () => getSpecialBasicPlan(90), 
+  },
+}
+```
+
+- For the isParent bars to need to pass children (inner bars)  e.g.
+
+```javascript
+{
+  basicPlan: {
+    // is equivalent of basicPlan: 90
+    value: 90, 
+    // Prvide the function to get the layout
+    // So you can explicitly return anything instead of 
+    // the default bar/path or the one which is specified by you in the config
+    component: (children) => getConversionLineList(90 children),
   },
 }
 ```
