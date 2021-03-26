@@ -15,7 +15,7 @@ Create beautiful charts with 💅 [Styled-components](https://styled-components.
 
 ## Installation
 ```bash
-npm intsall styled-chart --save
+npm install styled-chart --save
 ```
 
 There are two basic charts which you can customize: BarChart and LineChart
