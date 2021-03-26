@@ -8,6 +8,12 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.8.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "parcel": "1.12.3",
+    "typescript": "^3.4.5",
     "@types/styled-components": "^5.1.9",
     "react-app-polyfill": "^1.0.0",
     "styled-components": "^5.2.1",
@@ -19,10 +25,6 @@
     "scheduler/tracing": "../node_modules/scheduler/tracing-profiling"
   },
   "devDependencies": {
-    "@types/react": "^16.9.11",
-    "@types/react-dom": "^16.8.4",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "parcel": "1.12.3",
     "typescript": "^3.4.5"
   }
