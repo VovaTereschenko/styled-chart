@@ -525,7 +525,10 @@ tooltip={{
 ### Components you can import and style
 ```javascript
 
-ChartWrapper - a wrapper for any chart (you can style it in cascade of you compoent)
+<ChartWrapper/> // a wrapper for any chart (you can style it in cascade of you compoent)
+
+// Usage example:
+//
 //const MyWrapper = style.section`
 //  ${ChartWrapper} {
 //    background: black;
@@ -536,23 +539,23 @@ ChartWrapper - a wrapper for any chart (you can style it in cascade of you compo
 //  <LineChart/>...
 //</MyWrapper>
 
-BarChart // chart built with bars
-LineChart // chart built with paths
-Bar // default for the bar 
-BarGroup // default for the Bar with isParent flag
-EmptyBar // default for empty values (in case you provided ticksNum in the xAxis > data.length)
-XAxisItem // default for the xAxis component
-XAxisBarWrapper // default for the xAxis sectionComponent of the BarChart
-YAxisItem // default for the yAxis component
-XAxisLineWrapper // default for the yAxis sectionComponent of the BarChart
-TooltipWrapper // dafault for the tooltip compoent
+<BarChart/> // chart built with bars
+<LineChart/> // chart built with paths
+<Bar/> // default for the bar 
+<BarGroup/> // default for the Bar with isParent flag
+<EmptyBar/> // default for empty values (in case you provided ticksNum in the xAxis > data.length)
+<XAxisItem /> // default for the xAxis component
+<XAxisBarWrapper/> // default for the xAxis sectionComponent of the BarChart
+<YAxisItem/> // default for the yAxis component
+<XAxisLineWrapper/> // default for the yAxis sectionComponent of the BarChart
+<TooltipWrapper/> // dafault for the tooltip compoent
 // TooltipList
 // TooltipListItem
 // TooltipValue
 // TooltipLabel
 // TooltipXAxisValue
 // are nested
-HintPoint // default for the circle hins in tooltip and LineChart paths highlighters 
+<HintPoint/> // default for the circle hins in tooltip and LineChart paths highlighters 
 ```
 
 
