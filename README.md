@@ -20,6 +20,68 @@ There are two basic charts which you can customize: BarChart and LineChart
 
 ## BarChart basic example
 
+<img src="https://i.ibb.co/ykPStTb/2021-03-27-0-32-30.png" width="380" title="Basic BarChart">
+
+```bash
+import * as React from 'react'
+import styled from 'styled-components'
+import {
+  BarChart,
+  BarGroup,
+} from 'styled-chart'
+
+const StyledBarChart = () => {
+  const ProPlanBar = styled(BarGroup)`
+    background: DarkKhaki;
+  `
+
+  const BasicPlanBar = styled(BarGroup)`
+    background: Khaki;
+  `
+
+  return (
+    <BarChart
+      tooltip={{
+        isVisible: true,
+      }}
+      yAxis={{
+        ticksNum: 5,
+      }}
+      xAxis={{
+        key: 'date',
+      }}
+      config={{
+        basicPlan: {
+          label: 'Basic plan',
+          component: <BasicPlanBar />,
+        },
+        proPlan: {
+          label: 'Pro plan',
+          component: <ProPlanBar />
+        },
+      }}
+      data={[
+        {
+          date: '19/08',
+          basicPlan: 1,
+          proPlan:   4,
+        },
+        {
+          date: '20/08',
+          basicPlan: 1,
+          proPlan: 4,
+        },
+      ]}
+    />
+  )
+}
+
+export default StyledBarChart
+```
+
+
+## Stacked BarChart basic example
+
 <img src="https://i.ibb.co/Kxt7TjF/2021-03-26-23-57-01.png" width="380" title="Basic BarChart">
 
 ```bash
@@ -31,7 +93,7 @@ import {
   BarGroup,
 } from 'styled-chart'
 
-const StyledBarChart = () => {
+const StyledStackedBarChart = () => {
   const MyBarGroup = styled(BarGroup)`
     margin: 0 2px;
   `
@@ -88,7 +150,7 @@ const StyledBarChart = () => {
   )
 }
 
-export default StyledBarChart
+export default StyledStackedBarChart
 ```
 
 ## LineChart basic example 
