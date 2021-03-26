@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import HintPoint from './HintPoint'
+import HintPoint from '../HandyStuff/HintPoint'
 
 const InvisibleBar = styled.div`
   display: flex;

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import InvisibleBar from './InvisibleBar'
-import HintPoint from './HintPoint'
+import HintPoint from '../HandyStuff/HintPoint'
 
 const InvisibleBarGroup = styled.div`
   display: flex;
