@@ -21,9 +21,9 @@ npm install styled-chart --save
 There are two basic charts which you can customize: BarChart and LineChart
 
 
+## Examples
 
-
-## BarChart basic example
+### BarChart basic example
 
 
 <img src="https://i.ibb.co/ykPStTb/2021-03-27-0-32-30.png" width="380" title="Basic BarChart">
@@ -98,7 +98,7 @@ export default StyledBarChart
 
 
 
-## Stacked BarChart basic example
+### Stacked BarChart basic example
 
 <img src="https://i.ibb.co/Kxt7TjF/2021-03-26-23-57-01.png" width="380" title="Basic BarChart">
 
@@ -185,7 +185,7 @@ export default StyledStackedBarChart
 
 
 
-## LineChart basic example 
+### LineChart basic example 
 
 <img src="https://i.ibb.co/YtLwV7w/2021-03-27-0-00-40.png" width="380" title="Basic LineChart">
 
@@ -534,7 +534,7 @@ HintPoint // default for the circle hins in tooltip and LineChart paths highligh
 
 
 
-
+## More examples
 
 ### Adjusted BarChart example
 
