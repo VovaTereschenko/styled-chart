@@ -14,7 +14,7 @@ Create beautiful charts with 💅 [Styled-components](https://styled-components.
 
 
 ## Installation
-```javascript
+```bash
 npm intsall styled-chart --save
 ```
 
@@ -92,6 +92,8 @@ export default StyledBarChart
 
 </p>
 </details>  
+
+
 
 
 
@@ -177,6 +179,10 @@ export default StyledStackedBarChart
 
 </p>
 </details>  
+
+
+
+
 
 
 ## LineChart basic example 
@@ -269,15 +275,18 @@ export default StyledLineChart
 
 
 
+
+
+
 ## Configuration
 
 There are five entities you can configue any LineChart or BarChart with:
 ```javascript
-data # an array of { key: value }
-config # visual representaion of the data keys
-xAxis # specs for the horizontal line
-yAxis # specs for the verticl line 
-tooltip # specs for the tooltip 🤷
+data // an array of { key: value }
+config // visual representaion of the data keys
+xAxis // specs for the horizontal line
+yAxis // specs for the verticl line 
+tooltip // specs for the tooltip 🤷
 
 ```
 
@@ -335,24 +344,24 @@ Example (BarChart)
 ```javascript
 config={{
   conversion: {
-    # string
-    # required
-    # a label which is used in the tooltip inside <TooltipLabel>
+    // string
+    // required
+    // a label which is used in the tooltip inside <TooltipLabel>
     label: 'Conversion',
-    # ReactChild, required
-    # a component for your bar
-    # hint: you can style <Bar/> from the lib
+    // ReactChild, required
+    // a component for your bar
+    // hint: you can style <Bar/> from the lib
     component: <MyConvertionBarGrop />,
-    # boolean, optional
-    # indicates that the other bars will be wrapped into this one
-    # so you'll get stacked bar chart
-    # one one isParent can be recognized
-    # hint: you can style <BarGroup/> from the lib
+    // boolean, optional
+    // indicates that the other bars will be wrapped into this one
+    // so you'll get stacked bar chart
+    // one one isParent can be recognized
+    // hint: you can style <BarGroup/> from the lib
     isParent: true, 
   },
   basicPlan: {
     label: 'Basic plan',
-    # hint: for the !isFlag bar you can style <Bar/> from the lib
+    // hint: for the !isFlag bar you can style <Bar/> from the lib
     component: <MyBasicPlanBar />,
   },
   proPlan: {
@@ -366,16 +375,16 @@ Example (LineChart)
 ```javascript
 config={{
   conversion: {
-    # string
-    # required
-    # a label which is used in the tooltip
+    // string
+    // required
+    // a label which is used in the tooltip
     label: 'Conversion',
-    # ReactChild, required
-    # a component for your path, must be path tag e.g. styled.path or <path />
-    # hint: you can style <Path/> from the lib
+    // ReactChild, required
+    // a component for your path, must be path tag e.g. styled.path or <path />
+    // hint: you can style <Path/> from the lib
     component: <MyConvertionPath />,
-    # boolean, optional
-    # indicates that the <MyConvertionPath/> path is planned to be filled
+    // boolean, optional
+    // indicates that the <MyConvertionPath/> path is planned to be filled
     isFilled: true,
   },
   basicPlan: {
@@ -402,27 +411,27 @@ empty: {
 
 ```javascript
 xAxis={{
-  # string
-  # required
-  # a key from the data items you want to use for the xAxis values, e.g. 'date'
+  // string
+  // required
+  // a key from the data items you want to use for the xAxis values, e.g. 'date'
   key, 
-  # number, optional
-  # default is 1
-  # 1 means you show every xTick  e.g. | Sun | Mon | Tue | , 2 - every second | Sun | | Tue|
+  // number, optional
+  // default is 1
+  // 1 means you show every xTick  e.g. | Sun | Mon | Tue | , 2 - every second | Sun | | Tue|
   step,
-  # number, optional
-  # default is data.length
-  # explicitly sets the number of items to cut or extend the data to a particular amount
+  // number, optional
+  // default is data.length
+  // explicitly sets the number of items to cut or extend the data to a particular amount
   ticksNum,
-  # ReactChild, optional
-  # default is <XAxisBarWrapper/> or <XAxisLineWrapper/>
-  # a component for the xAxis section
-  # hint: you can style <XAxisBarWrapper/> or <XAxisLineWrapper/> (for the LineChart) from the lib
+  // ReactChild, optional
+  // default is <XAxisBarWrapper/> or <XAxisLineWrapper/>
+  // a component for the xAxis section
+  // hint: you can style <XAxisBarWrapper/> or <XAxisLineWrapper/> (for the LineChart) from the lib
   sectionComponent: <MyXAxisWrapper />,
-  # ReactChild, optional
-  # default is <XAxisItem/>
-  # a component for the xAxis section item
-  # hint: you can style <XAxisItem/> from the lib
+  // ReactChild, optional
+  // default is <XAxisItem/>
+  // a component for the xAxis section item
+  // hint: you can style <XAxisItem/> from the lib
   component: <MyXAxisItem />
 }}
 ```
@@ -432,25 +441,25 @@ xAxis={{
 
 ```javascript
 yAxis={{
-  # number, optional
-  # default is a max of all data values 
+  // number, optional
+  // default is a max of all data values 
   maxValue: 100,
-  # number, optional
-  # default is 0
+  // number, optional
+  // default is 0
   minValue: 0,
-  # number, optional
-  # default is 3
-  # a number a ticks you want to be shown in the yAxis
+  // number, optional
+  // default is 3
+  // a number a ticks you want to be shown in the yAxis
   ticksNum: config.yAxisTicksNum,
-  # ReactChild, optional
-  # default is <YAxisBarWrapper/> or <YAxisLineWrapper/>
-  # a component for the yAxis section
-  # hint: you can style <YAxisWrapper> from the lib
+  // ReactChild, optional
+  // default is <YAxisBarWrapper/> or <YAxisLineWrapper/>
+  // a component for the yAxis section
+  // hint: you can style <YAxisWrapper> from the lib
   sectionComponent: <MyYAxisWrapper />,
-  # ReactChild, optional
-  # default is <YAxisItem/>
-  # a component for the yAxis section item
-  # hint: you can style <YAxisItem/> from the lib
+  // ReactChild, optional
+  // default is <YAxisItem/>
+  // a component for the yAxis section item
+  // hint: you can style <YAxisItem/> from the lib
   component: <MyYAxisItem />
 }}
 ```
@@ -458,27 +467,27 @@ yAxis={{
 ### tooltip
 ```javascript
 tooltip={{
-  # boolean, optional
-  # indicates that you basically want a tooltip to be visible
+  // boolean, optional
+  // indicates that you basically want a tooltip to be visible
   isVisible: true,
-  # ReactChild, optional
-  # default is <TooltipWrapper/>
-  # a component for the tooltip
-  # hint: you can also style
-  # <TooltipListItem/>
-  # <TooltipList/>
-  # <TooltipValue/>
-  # <TooltipLabel/>
-  # <TooltipXAxisValue/>
-  # <HintPoint />
-  # as a children of your const MyTooltipWrapper = styled(TooltipWrapper)
+  // ReactChild, optional
+  // default is <TooltipWrapper/>
+  // a component for the tooltip
+  // hint: you can also style
+  // <TooltipListItem/>
+  // <TooltipList/>
+  // <TooltipValue/>
+  // <TooltipLabel/>
+  // <TooltipXAxisValue/>
+  // <HintPoint />
+  // as a children of your const MyTooltipWrapper = styled(TooltipWrapper)
   component: <MyTooltipWrapper />,
-  # object, optional
+  // object, optional
   hints: {
-    # ReactChild, optional
-    # a component for the hint circle (used in the tooltip and in the LineChart paths)
-    # default for the path values highlighters <HintPoint />
-    # hint: you can style <HintPoint/> from the lib 
+    // ReactChild, optional
+    // a component for the hint circle (used in the tooltip and in the LineChart paths)
+    // default for the path values highlighters <HintPoint />
+    // hint: you can style <HintPoint/> from the lib 
     basicPlan: <MyBasicHint/>,
     proPlan: <MyProHint/>,
     conversion: <MyConversionHint/>,
@@ -486,38 +495,44 @@ tooltip={{
 }}
 ```
 
+
+
+
+
 ### Components you can import and style
 ```javascript
 
 ChartWrapper - a wrapper for any chart (you can style it in cascade of you compoent)
-#const MyWrapper = style.section`
-#  ${ChartWrapper} {
-#    background: black;
-#  }
-#`
-#...
-#<MyWrapper>
-#  <LineChart/>...
-#</MyWrapper>
+//const MyWrapper = style.section`
+//  ${ChartWrapper} {
+//    background: black;
+//  }
+//`
+//...
+//<MyWrapper>
+//  <LineChart/>...
+//</MyWrapper>
 
-BarChart # chart built with bars
-LineChart # chart built with paths
-Bar # default for the bar 
-BarGroup # default for the Bar with isParent flag
-EmptyBar # default for empty values (in case you provided ticksNum in the xAxis > data.length)
-XAxisItem # default for the xAxis component
-XAxisBarWrapper # default for the xAxis sectionComponent of the BarChart
-YAxisItem # default for the yAxis component
-XAxisLineWrapper # default for the yAxis sectionComponent of the BarChart
-TooltipWrapper # dafault for the tooltip compoent
-# TooltipList
-# TooltipListItem
-# TooltipValue
-# TooltipLabel
-# TooltipXAxisValue
-# are nested
-HintPoint # default for the circle hins in tooltip and LineChart paths highlighters 
+BarChart // chart built with bars
+LineChart // chart built with paths
+Bar // default for the bar 
+BarGroup // default for the Bar with isParent flag
+EmptyBar // default for empty values (in case you provided ticksNum in the xAxis > data.length)
+XAxisItem // default for the xAxis component
+XAxisBarWrapper // default for the xAxis sectionComponent of the BarChart
+YAxisItem // default for the yAxis component
+XAxisLineWrapper // default for the yAxis sectionComponent of the BarChart
+TooltipWrapper // dafault for the tooltip compoent
+// TooltipList
+// TooltipListItem
+// TooltipValue
+// TooltipLabel
+// TooltipXAxisValue
+// are nested
+HintPoint // default for the circle hins in tooltip and LineChart paths highlighters 
 ```
+
+
 
 
 
@@ -731,6 +746,9 @@ export default StyledBarChart
 
 </p>
 </details>  
+
+
+
 
 
 ### Adjusted LineChart example
