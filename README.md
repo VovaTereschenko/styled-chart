@@ -1,14 +1,14 @@
 # Styled-chart
 
 
- <img src="https://i.ibb.co/4JLjXHF/2021-03-26-23-46-52.png" width="120" title="Logo">
+ <img src="https://i.ibb.co/4JLjXHF/2021-03-26-23-46-52.png" width="150" title="Logo">
 
 
 Create beautiful charts with 💅 [Styled-components](https://styled-components.com/) (or your own react components). Chart lib for React.js built with Typescript and almost no dependencies.
 
 <div>
-  <img src="https://i.ibb.co/kg8WjBX/2021-03-26-23-47-10.png" width="350" title="LineChart example">
-  <img src="https://i.ibb.co/M2hFgXD/2021-03-26-23-47-19.png" width="350" alt="BarChart example">
+  <img src="https://i.ibb.co/kg8WjBX/2021-03-26-23-47-10.png" width="380" title="LineChart example">
+  <img src="https://i.ibb.co/M2hFgXD/2021-03-26-23-47-19.png" width="380" alt="BarChart example">
 </div>
 
 ## Installation
@@ -16,9 +16,11 @@ Create beautiful charts with 💅 [Styled-components](https://styled-components.
 npm intsall styled-chart --save
 ```
 
-There are two basic charts which you can additionally customize: BarChart and LineChart
+There are two basic charts which you can customize: BarChart and LineChart
 
 ## BarChart basic example
+
+<img src="https://i.ibb.co/Kxt7TjF/2021-03-26-23-57-01.png" width="380" title="Basic BarChart">
 
 ```bash
 import * as React from 'react'
@@ -35,11 +37,11 @@ const StyledBarChart = () => {
   `
 
   const ProPlanBar = styled(Bar)`
-    background: red;
+    background: DarkKhaki;
   `
 
   const BasicPlanBar = styled(Bar)`
-    background: green;
+    background: Khaki;
   `
 
   return (
@@ -91,6 +93,8 @@ export default StyledBarChart
 
 ## LineChart basic example 
 
+<img src="https://i.ibb.co/YtLwV7w/2021-03-27-0-00-40.png" width="380" title="Basic LineChart">
+
 ```bash
 import * as React from 'react'
 import styled from 'styled-components'
@@ -101,17 +105,17 @@ import {
 
 const StyledLineChart = () => {
   const ConversionPath = styled(Path)`
-    stroke: red;
+    stroke: DarkKhaki;
   `
 
   const ProPath = styled(Path)`
-    stroke: blue;
-    fill: blue;
+    stroke: Khaki;
+    fill: Khaki;
   `
 
   const BasicPath = styled(Path)`
-    stroke: green;
-    fill: green;
+    stroke: LemonChiffon;
+    fill: LemonChiffon;
   `
 
   return (
@@ -418,7 +422,9 @@ TooltipWrapper # dafault for the tooltip compoent
 HintPoint # default for the circle hins in tooltip and LineChart paths highlighters 
 ```
 
-### Adjusted example
+### Adjusted BarChart example
+
+<img src="https://i.ibb.co/vLQbCD8/2021-03-27-0-05-38.png" width="380" title="Adjusted BarChart">
 
 ```bash
 import * as React  from 'react'
@@ -465,18 +471,18 @@ const StyledBarChart = () => {
   `
 
   const StarredItem = styled.div`
-    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    box-sizing: border-box;
+    padding: 16px 0;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgb(248, 182, 195) 100%);
     text-align: center;
     font-size: 12px;
     border-radius: 5px;
-    box-sizing: border-box;
-    padding: 16px 0;
-    width: 100%;
-    height: 100%;
   `
 
   const MyYAxisWrapper = styled(YAxisWrapper)`
@@ -491,7 +497,7 @@ const StyledBarChart = () => {
   `
 
   const MyTooltipWrapper = styled(TooltipWrapper)`
-    background: azure;
+    background: OldLace;
     color: black; 
   `
 
@@ -505,16 +511,16 @@ const StyledBarChart = () => {
 
   const ProPlanBar = styled(Bar)`
     border-top: 2px solid white;
-    background: blanchedalmond;
+    background: Plum;
   `
 
   const MyEmptyBar = styled(EmptyBar)`
     margin: 0 2px;
-    background: azure;
+    background: WhiteSmoke;
   `
 
   const BasicPlanBar = styled(Bar)`
-    background: ghostwhite;
+    background: Pink;
   `
 
   const SpecialPlanBar = styled(BasicPlanBar)`
@@ -618,4 +624,231 @@ const StyledBarChart = () => {
 }
 
 export default StyledBarChart
+```
+
+### Adjusted LineChart example
+
+<img src="https://i.ibb.co/LC1tv93/2021-03-27-0-24-22.png" width="380" title="Adjusted BarChart">
+
+```bash
+import * as React  from 'react'
+import styled from 'styled-components'
+
+import {
+  LineChart,
+  Path,
+  TooltipWrapper,
+  TooltipLabel,
+  XAxisLineWrapper,
+  XAxisItem,
+  YAxisItem,
+  HintPoint,
+  YAxisWrapper,
+} from 'styled-chart'
+
+const StyledLineChart = () => {
+
+  const MyTooltip = styled(TooltipWrapper)`
+    background: Black;
+  
+    ${TooltipLabel} {
+      font-style: italic;
+    }
+  `
+
+  const MyXAxisItem = styled(XAxisItem)`
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+  `
+
+  const MyXAxisLineWrapper = styled(XAxisLineWrapper)`
+    border-top: 2px solid gray;
+  `
+
+  const StarredItemText = styled.span`
+    font-size: 14px;
+    font-weight: 700;
+  `
+
+  const StarredLineItem = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: center;
+    border-left: 2px solid HotPink;
+    margin-left: -1px;
+    font-size: 12px;
+    border-radius: 0;
+    box-sizing: border-box;
+    padding: 32px 0;
+    width: 100%;
+    transform: translateX(50%);
+    height: 100%;
+
+    ${StarredItemText} {
+      padding: 4px;
+      font-size: 11px;
+      background: HotPink;
+      text-align: left;
+      transform: translateX(-100%);
+      width: 40px;
+    }
+  `
+
+  const MyPointer = styled(HintPoint)<{color: string}>`
+    ${({ color }) => `
+      background: ${color};
+    `}
+  `
+
+  const MyYAxisWrapper = styled(YAxisWrapper)`
+    width: 40px;
+    padding: 0 8px;
+    text-align: right;
+    border-right: 2px solid Gray;
+  `
+
+  const MyYAxisItem = styled(YAxisItem)`
+    font-weight: bold;
+  `
+
+  const ConversionPath = styled(Path)`
+    stroke: HotPink;
+  `
+
+  const ProPath = styled(Path)`
+    stroke: MediumTurquoise;
+    fill: MediumTurquoise;
+  `
+
+  const BasicPath = styled(Path)`
+    stroke: PaleTurquoise;
+    fill: PaleTurquoise;
+  `
+  
+  const getConversionLineList = (number: number, children?: any) => {
+    return (
+      <StarredLineItem>
+        <StarredItemText>New record!</StarredItemText>
+      </StarredLineItem>
+    )
+  }
+
+  return (
+    <LineChart
+      tooltip={{
+        isVisible: true,
+        component: <MyTooltip/>,
+        hints: {
+          basicPlan: <MyPointer color="PaleTurquoise"/>,
+          proPlan: <MyPointer color="MediumTurquoise"/>,
+          conversion: <MyPointer color="HotPink"/>,
+        }
+      }}
+      yAxis={{
+        maxValue: 100,
+        minValue: 0,
+        ticksNum: 5,
+        sectionComponent: <MyYAxisWrapper />,
+        component: <MyYAxisItem />
+      }}
+      xAxis={{
+        key: 'day',
+        step: 1,
+        component: <MyXAxisItem />,
+        sectionComponent: <MyXAxisLineWrapper />,
+      }}
+      config={{
+        conversion: {
+          label: 'Conversion',
+          component: <ConversionPath />,
+          isFilled: false,
+        },
+        basicPlan: {
+          label: 'Basic plan',
+          isFilled: true,
+          component: <BasicPath />,
+        },
+        proPlan: {
+          label: 'Pro plan',
+          isFilled: true,
+          component: <ProPath />,
+        },
+      }}
+      data={[
+        {
+          date: '19/08',
+          day: 'Sun',
+          basicPlan: 1,
+          proPlan:   4,
+          conversion: 22,
+        
+        },
+        {
+          date: '20/08',
+          day: 'Mon',
+          conversion: 11,
+          basicPlan: 1,
+          proPlan: 4,
+        },
+        {
+          date: '21/08',
+          day: 'Tue',
+          conversion: 15,
+          basicPlan: 24,
+          proPlan: 14,
+        },
+        {
+          date: '22/08',
+          day: 'Wed',
+          conversion: 12,
+          basicPlan: 27,
+          proPlan: 11,
+        },
+        {
+          date: '23/08',
+          day: 'Thu',
+          conversion: 24,
+          basicPlan: 29,
+          proPlan: 8,
+        },
+        {
+          date: '24/08',
+          day: 'Fri',
+          conversion: 64,
+          basicPlan: 90,
+          proPlan: 4,
+        },
+        {
+          date: '25/08',
+          day: 'Sat',
+          conversion: 45,
+          basicPlan: 3,
+          proPlan: 1,
+        },
+        {
+          date: '26/08',
+          day: 'Sun',
+          conversion: {
+            value: 95,
+            component: (children) => getConversionLineList(95, children),
+          },
+          proPlan: 13,
+          basicPlan: 23,
+        },
+        {
+          date: '27/08',
+          day: 'Mon',
+          conversion: 83,
+          proPlan: 13,
+          basicPlan: 33,
+        },
+      ]}
+    />
+  )
+}
+
+export default StyledLineChart
 ```
