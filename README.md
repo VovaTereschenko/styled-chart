@@ -1,6 +1,12 @@
 # Styled-chart
 
+![logo](https://i.ibb.co/4JLjXHF/2021-03-26-23-46-52.png)
+
 Create beautiful charts with 💅 [Styled-components](https://styled-components.com/) (or your own react components). Chart lib for React.js built with Typescript and almost no dependencies.
+
+![LineChart example](https://i.ibb.co/kg8WjBX/2021-03-26-23-47-10.png)
+![BarChart example](https://i.ibb.co/M2hFgXD/2021-03-26-23-47-19.png)
+
 
 ## Installation
 ```bash
