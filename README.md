@@ -319,6 +319,7 @@ Example
 - The order of the values effects on the relationship between paths/bars
 
 LineChart: proPlan is in front of the basicPlan
+
 BarChart: proPlan is before or below (in the stacked version of BarChart) proPlan
 ```javascript
 {
