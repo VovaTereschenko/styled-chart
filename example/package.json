@@ -8,14 +8,10 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.3",
     "@types/styled-components": "^5.1.9",
     "react-app-polyfill": "^1.0.0",
     "styled-components": "^5.2.1",
-    "styled-chart": "^1.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "styled-chart": "^1.0.0"
   },
   "alias": {
     "react": "../node_modules/react",
