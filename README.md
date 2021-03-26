@@ -12,35 +12,28 @@ Create beautiful charts with 💅 [Styled-components](https://styled-components.
 </div>
 
 
-<details>
-<summary>I could use some help...</summary>
-<p>
-
-```javascript
-public class Order
-{
-    public int OrderId { get; set; }
-    public int CustomerId { get; set; }
-
-    public List<int> Products { get; set; }
-}
-\```
-
-</p>
-</details>  
 
 ## Installation
-```bash
+```javascript
 npm intsall styled-chart --save
 ```
 
 There are two basic charts which you can customize: BarChart and LineChart
 
+
+
+
 ## BarChart basic example
+
 
 <img src="https://i.ibb.co/ykPStTb/2021-03-27-0-32-30.png" width="380" title="Basic BarChart">
 
-```bash
+
+<details>
+<summary>Show BarChart example code</summary>
+<p>
+
+```javascript
 import * as React from 'react'
 import styled from 'styled-components'
 import {
@@ -97,12 +90,23 @@ const StyledBarChart = () => {
 export default StyledBarChart
 ```
 
+</p>
+</details>  
+
+
+
 
 ## Stacked BarChart basic example
 
 <img src="https://i.ibb.co/Kxt7TjF/2021-03-26-23-57-01.png" width="380" title="Basic BarChart">
 
-```bash
+
+
+<details>
+<summary>Show Stacked BarChart example code</summary>
+<p>
+
+```javascript
 import * as React from 'react'
 import styled from 'styled-components'
 import {
@@ -171,11 +175,20 @@ const StyledStackedBarChart = () => {
 export default StyledStackedBarChart
 ```
 
+</p>
+</details>  
+
+
 ## LineChart basic example 
 
 <img src="https://i.ibb.co/YtLwV7w/2021-03-27-0-00-40.png" width="380" title="Basic LineChart">
 
-```bash
+
+<details>
+<summary>Show LineChart example code</summary>
+<p>
+
+```javascript
 import * as React from 'react'
 import styled from 'styled-components'
 import {
@@ -251,11 +264,15 @@ const StyledLineChart = () => {
 
 export default StyledLineChart
 ```
+</p>
+</details>  
+
+
 
 ## Configuration
 
 There are five entities you can configue any LineChart or BarChart with:
-```bash
+```javascript
 data # an array of { key: value }
 config # visual representaion of the data keys
 xAxis # specs for the horizontal line
@@ -265,14 +282,14 @@ tooltip # specs for the tooltip 🤷
 ```
 
 ### data
-```bash
+```javascript
 {
   [key: string]: number | React.ReactComponent
 }
 ```
 
 Example
-```bash
+```javascript
 [
   {
     date: '15.08',
@@ -294,7 +311,7 @@ Example
 
 LineChart: proPlan is in front of the basicPlan
 BarChart: proPlan is before or below (in the stacked version of BarChart) proPlan
-```bash
+```javascript
 {
   basicPlan: 15,
   proPlan: 14,
@@ -303,7 +320,7 @@ BarChart: proPlan is before or below (in the stacked version of BarChart) proPla
 
 - For some specific cases you can pass a component to style it
 
-```bash
+```javascript
 {
   basicPlan: {
     value: 90, # is equivalent of basicPlan: 90
@@ -315,7 +332,7 @@ BarChart: proPlan is before or below (in the stacked version of BarChart) proPla
 ### config
 
 Example (BarChart)
-```bash
+```javascript
 config={{
   conversion: {
     # string
@@ -346,7 +363,7 @@ config={{
 ```
 
 Example (LineChart)
-```bash
+```javascript
 config={{
   conversion: {
     # string
@@ -374,7 +391,7 @@ config={{
 
 If you plan to show more bars than the data.length, you can specify a component for the empty values. This empty bar should have the same width as all the other bars.
 
-```bash
+```javascript
 empty: {
   label: 'Empty',
   component: <MyEmptyBar />
@@ -383,7 +400,7 @@ empty: {
 
 ### xAxis
 
-```bash
+```javascript
 xAxis={{
   # string
   # required
@@ -413,7 +430,7 @@ xAxis={{
 
 ### yAxis
 
-```bash
+```javascript
 yAxis={{
   # number, optional
   # default is a max of all data values 
@@ -439,7 +456,7 @@ yAxis={{
 ```
 
 ### tooltip
-```bash
+```javascript
 tooltip={{
   # boolean, optional
   # indicates that you basically want a tooltip to be visible
@@ -470,7 +487,7 @@ tooltip={{
 ```
 
 ### Components you can import and style
-```bash
+```javascript
 
 ChartWrapper - a wrapper for any chart (you can style it in cascade of you compoent)
 #const MyWrapper = style.section`
@@ -502,11 +519,17 @@ TooltipWrapper # dafault for the tooltip compoent
 HintPoint # default for the circle hins in tooltip and LineChart paths highlighters 
 ```
 
+
+
 ### Adjusted BarChart example
 
 <img src="https://i.ibb.co/vLQbCD8/2021-03-27-0-05-38.png" width="380" title="Adjusted BarChart">
 
-```bash
+<details>
+<summary>Show  Adjusted BarChart example code</summary>
+<p>
+
+```javascript
 import * as React  from 'react'
 import styled from 'styled-components'
 import {
@@ -706,11 +729,20 @@ const StyledBarChart = () => {
 export default StyledBarChart
 ```
 
+</p>
+</details>  
+
+
 ### Adjusted LineChart example
 
 <img src="https://i.ibb.co/LC1tv93/2021-03-27-0-24-22.png" width="380" title="Adjusted BarChart">
 
-```bash
+
+<details>
+<summary>Show Adjusted LineChart example code</summary>
+<p>
+
+```javascript
 import * as React  from 'react'
 import styled from 'styled-components'
 
@@ -932,3 +964,6 @@ const StyledLineChart = () => {
 
 export default StyledLineChart
 ```
+
+</p>
+</details>  
