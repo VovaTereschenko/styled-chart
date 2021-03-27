@@ -274,28 +274,40 @@ export default StyledLineChart
 
 There are five entities you can configue any LineChart or BarChart with:
 ```javascript
-height // height of the chart
-data // an array of { key: value }
-config // visual representaion of the data keys
-xAxis // specs for the horizontal line
-yAxis // specs for the verticl line 
-tooltip // specs for the tooltip 🤷
+// {[key: string]: number | object}[]
+// required
+// your chart data
+data 
+// object
+// required
+// data keys visual config
+config
+// object
+// required
+// horizontal line visual config
+xAxis
+// object
+// required
+// vertical line visual config
+yAxis 
+// object
+// optional
+// config for the tooltip 🤷
+tooltip
+// number | string
+// optional
+// height of the chart
+height
 ```
 
-// LineChart only
+LineChart only
 ```javascript
-resizeDependency // if this changes, chart will resize (in case other DOM element pushes it)
+// any[]
+// optional
+// if this changes, chart will resize 
+// (in case other DOM element pushes it)
+resizeDependency 
 ```
-
-
-### height
-```javascript
-// string | number
-// if number, will count in px
-// default is 300px
-height="400px"
-```
-
 
 ### data
 ```javascript
@@ -335,37 +347,36 @@ BarChart: proPlan is before or below (in the stacked version of BarChart) proPla
 }
 ```
 
-- For some specific cases you can pass a component to style it
+- For some specific cases you can pass a component to be able to customize it
 
 ```javascript
 {
   basicPlan: {
     // is equivalent of basicPlan: 90
     value: 90, 
-    // Provide the function to get the layout
-    // So you can explicitly return anything instead of 
+    // provide the function to get the layout
+    // so you can explicitly return anything instead of 
     // the default bar/path or the one which is specified by you in the config
     component: () => getSpecialBasicPlan(90), 
   },
 }
 ```
 
-- For the isParent bars to need to pass children (inner bars). Check out more in the adjusted examples below.
+- For the isParent bars you need to pass children (inner bars). Check out more in the adjusted examples below.
 
 ```javascript
 {
   conversion: {
     value: 90, 
-    // Provide the function to get the layout
-    // So you can explicitly return anything instead of 
-    // the default bar/path or the one which is specified by you in the config
-    // don't forget to add inner bars
+    // provide the function to get the inner layout
+    // so you can explicitly return anything instead of 
+    // the default component or the one specified by you in the config
     component: (children) => getConversionLineList(90 children),
   },
 }
 
-// Where the getConversionLineList is something like 
-const getConversionLineList = (number: number, children?: any) => {
+// don't forget to add inner bars (children)
+const getConversionLineList = (number: number, children: any) => {
   return (
     <MyBarGroup>
       <StarredItemText>New record!</StarredItemText>
@@ -383,16 +394,17 @@ config={{
   conversion: {
     // string
     // required
-    // a label which is used in the tooltip inside <TooltipLabel>
+    // a label which is used in the tooltip inside <TooltipLabel/>
     label: 'Conversion',
-    // ReactChild, required
+    // ReactChild | JSX Element
+    // required
     // a component for your bar
     // hint: you can style <Bar/> from the lib
-    component: <MyConvertionBarGrop />,
+    component: <MyConvertionBarGroup />,
     // boolean, optional
     // indicates that the other bars will be wrapped into this one
     // so you'll get stacked bar chart
-    // one one isParent can be recognized
+    // only a single isParent can be recognized (all the others will be ignored)
     // hint: you can style <BarGroup/> from the lib
     isParent: true, 
   },
@@ -416,7 +428,8 @@ config={{
     // required
     // a label which is used in the tooltip
     label: 'Conversion',
-    // ReactChild, required
+    // ReactChild | JSX.Element
+    // required (otherwise it doesn't make sense)
     // a component for your path, must be path tag e.g. styled.path or <path />
     // hint: you can style <Path/> from the lib
     component: <MyConvertionPath />,
@@ -451,21 +464,25 @@ xAxis={{
   // string
   // required
   // a key from the data items you want to use for the xAxis values, e.g. 'date'
-  key, 
+  key: 'date', 
   // number, optional
   // default is 1
-  // 1 means you show every xTick  e.g. | Sun | Mon | Tue | , 2 - every second | Sun | | Tue|
-  step,
+  // 1 means you show every xTick
+  // example:
+  // 1 -> | Sun | Mon | Tue | Wed |
+  // 2 -> | Sun | x | Tue |
+  // 3 -> | Sun | x | x | Wed |
+  step: 3,
   // number, optional
   // default is data.length
   // explicitly sets the number of items to cut or extend the data to a particular amount
-  ticksNum,
-  // ReactChild, optional
+  ticksNum: 5,
+  // ReactChild | JSX.Element, optional
   // default is <XAxisBarWrapper/> or <XAxisLineWrapper/>
   // a component for the xAxis section
   // hint: you can style <XAxisBarWrapper/> or <XAxisLineWrapper/> (for the LineChart) from the lib
   sectionComponent: <MyXAxisWrapper />,
-  // ReactChild, optional
+  // ReactChild | JSX.Element, optional
   // default is <XAxisItem/>
   // a component for the xAxis section item
   // hint: you can style <XAxisItem/> from the lib
@@ -487,13 +504,13 @@ yAxis={{
   // number, optional
   // default is 3
   // a number a ticks you want to be shown in the yAxis
-  ticksNum: config.yAxisTicksNum,
-  // ReactChild, optional
+  ticksNum: 5,
+  // ReactChild | JSX.Element, optional
   // default is <YAxisBarWrapper/> or <YAxisLineWrapper/>
   // a component for the yAxis section
   // hint: you can style <YAxisWrapper> from the lib
   sectionComponent: <MyYAxisWrapper />,
-  // ReactChild, optional
+  // ReactChild | JSX.Element, optional
   // default is <YAxisItem/>
   // a component for the yAxis section item
   // hint: you can style <YAxisItem/> from the lib
@@ -507,7 +524,7 @@ tooltip={{
   // boolean, optional
   // indicates that you basically want a tooltip to be visible
   isVisible: true,
-  // ReactChild, optional
+  // ReactChild | JSX.Element, optional
   // default is <TooltipWrapper/>
   // a component for the tooltip
   // hint: you can also style
@@ -521,7 +538,7 @@ tooltip={{
   component: <MyTooltipWrapper />,
   // object, optional
   hints: {
-    // ReactChild, optional
+    // ReactChild | JSX.Element, optional
     // a component for the hint circle (used in the tooltip and in the LineChart paths)
     // default for the path values highlighters <HintPoint />
     // hint: you can style <HintPoint/> from the lib 
@@ -533,56 +550,104 @@ tooltip={{
 ```
 
 
+### height
+```javascript
+// string | number
+// if number, will count in px
+// default is 300px
+height="400px"
+```
+
+
 ### resizeDependency
 ```javascript
 // any array
 // optional
-// example if user opens a drawer UI element on your site, the chart has to resize 
+// example:
+// if user opens a drawer UI element on your site, the chart has to resize 
 resizeDependency={[drawerIsOpen]}
 ```
 
 
-### Components you can import and style
+## Components you can import and style
 ```javascript
 
-<ChartWrapper/> // a wrapper for any chart (you can style it in cascade of you compoent)
+// charts:
+// chart built with bars
+<BarChart/> 
+// chart built with 'lines' (paths)
+<LineChart/> 
 
-// Usage example:
-//
-//const MyWrapper = style.section`
-//  ${ChartWrapper} {
-//    background: black;
-//  }
-//`
-//...
-//<MyWrapper>
-//  <LineChart/>...
-//</MyWrapper>
+// bars:
+// default for the bar
+<Bar/> 
+// default for the Bar with isParent flag
+<BarGroup/> 
+ // default for empty values
+ // (in case you provided ticksNum in the xAxis > data.length)
+ // you can style one if provide 'empty' key in config
+ // e.g. empty: <MyEmptyBar>
+<EmptyBar/>
 
-<BarChart/> // chart built with bars
-<LineChart/> // chart built with paths
-<Bar/> // default for the bar 
-<BarGroup/> // default for the Bar with isParent flag
-<EmptyBar/> // default for empty values (in case you provided ticksNum in the xAxis > data.length)
-<XAxisItem /> // default for the xAxis component
-<XAxisBarWrapper/> // default for the xAxis sectionComponent of the BarChart
-<YAxisItem/> // default for the yAxis component
-<XAxisLineWrapper/> // default for the yAxis sectionComponent of the BarChart
-<TooltipWrapper/> // dafault for the tooltip compoent
-// Inside:
-<TooltipList/>
+// xAxis:
+// default for the xAxis component
+<XAxisItem /> 
+// default for the xAxis sectionComponent of the BarChart
+<XAxisBarWrapper/> 
+
+// yAxis:
+ // default for the yAxis component
+<YAxisItem/>
+// default for the yAxis sectionComponent of the LineChart
+<XAxisLineWrapper/> 
+
+// tooltip:
+// dafault for the tooltip component
+<TooltipWrapper/> 
+// inside TooltipWrapper:
+// list of the ticks
+<TooltipList/> 
 <TooltipListItem/>
+// to separate and style the value
 <TooltipValue/>
+// to separate and style the label
 <TooltipLabel/>
-<TooltipXAxisValue/>
+// to style the related TooltipXAxisValue
+<TooltipXAxisValue/> 
+// HintPoint is also included here
+// so you can style the label's colored 'hint dots' 
+// it appears here only if you specify it explicitly
+// see tooltip config
+<HintPoint/>
 
-<HintPoint/> // default for the circle hins in tooltip and LineChart paths highlighters 
-<SVG/> // Wrapper for the LineChart's paths
-<Path/> // default for the paths in LineChart
-<InvisibleBarSection/> // overlay of the LineChart for better interactions with tooltip
-// Inside:
+// SVG related:
+// Wrapper for the LineChart's 'lines' (paths)
+<SVG/>
+// default for the paths in LineChart
+<Path/> 
+
+// invisible elements:
+// overlay of the LineChart
+// is used for better interactions with tooltip 
+// or to explicitly wrapper children and not mess with
+// SVG's foreignItem
+<InvisibleBarSection/> 
+// inside InvisibleBarSection:
 <InvisibleBar/> 
 <InvisibleBarGroup/> 
+
+// wrappers:
+// a wrapper for any chart
+<ChartWrapper/>
+// a wrapper for the 'visual' content (bar groups / svg)
+<ChartVisualsWrapper/> 
+ // a wrapper for any chart visual content and xAxis
+<ChartWithXAxisWrapper/>
+
+// other:
+// default for the 'colored circle hints'
+// in tooltip and LineChart's 'path highlighters'
+<HintPoint/> 
 ```
 
 
@@ -614,7 +679,7 @@ import {
 } from 'styled-chart'
 
 const MyWrapper = styled.section`
-  // That's how use can enforce rules (in cascade)
+  // That's how use can "force" rules (in cascade)
   ${ChartWrapper} {
     height: 270px;
   }
@@ -1053,8 +1118,7 @@ const MyWrapper = styled.section`
     color: #333; 
   }
 `
-// ..
-// ...
+// ... Inside your react component ->
 // Wrap the chart into your styled wrapper
 return (
   <MyWrapper>
