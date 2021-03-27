@@ -24,10 +24,6 @@
     "styled-chart"
   ],
   "homepage": "https://styled-chart.com",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/VovaTereschenko/styled-chart"
-  },
   "engines": {
     "node": ">=10"
   },
