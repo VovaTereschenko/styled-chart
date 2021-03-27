@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import {
   LineChart,
   Path,
-  ChartWrapper,
 } from '../../src/index'
 
 import {
@@ -15,17 +14,12 @@ import {
   MyPointer,
 } from './sharedStyledComponents'
 
-
-
-const MyWrapper = styled.section`
-
-`
+const MyWrapper = styled.section``
 
 const StarredItemText = styled.p`
-font-size: 14px;
-font-weight: 700;
+  font-size: 14px;
+  font-weight: 700;
 `
-
 
 const StarredLineItem = styled.aside`
   display: flex;
@@ -94,10 +88,7 @@ const BasicPath3 = styled(Path)`
  fill: #f6ffcf;
 `
 
-
 const StyledLineChart = () => {
-
-
   const configs = [
     {
       conversionPath: <ConversionPath />,
@@ -143,7 +134,6 @@ const StyledLineChart = () => {
     }
   ]
 
-
   const dates = [
     '19/08',
     '20/08',
@@ -176,12 +166,10 @@ const StyledLineChart = () => {
   const startLength = 6
   const [datesLength, setDatesLength] = React.useState(startLength)
 
-  const restyle = () => {
-
-    setDatesLength(datesLength + 1 > dates.length ? startLength : datesLength + 1)
-    // setCongig(config.index + 1 === configs.length ?  configs[0] : configs[config.index + 1])
-  }
-
+  // const restyle = () => {
+  //   setDatesLength(datesLength + 1 > dates.length ? startLength : datesLength + 1)
+  //   // setCongig(config.index + 1 === configs.length ?  configs[0] : configs[config.index + 1])
+  // }
 
   const getConversionLineList = (number: number, children?: any) => {
     return (
@@ -190,7 +178,6 @@ const StyledLineChart = () => {
       </StarredLineItem>
     )
   }
-
 
   const days = [
     'Sun',
@@ -222,31 +209,22 @@ const StyledLineChart = () => {
   ]
 
   const data = dates.slice(0, datesLength).reduce((acum, item, index) => {
-
-
-
     const getConversion = (val: number) =>
       val === Math.max(...config.conversion.slice(0, datesLength)) ? ({
         value: val,
         component: (children) => getConversionLineList(val, children),
       }) : val
-
-
     const obj = {
       date: item,
       day: days[index],
       basicPlan: config.basicPlan[index],
       proPlan: config.proPlan[index],
       conversion: getConversion(config.conversion[index]),
-
       // day: config.day[index]
     }
     acum.push(obj)
-
     return acum
   }, [] as any)
-
-
 
   return (
     <MyWrapper>
