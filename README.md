@@ -6,11 +6,15 @@
 
 Create beautiful charts with 💅 [Styled-components](https://styled-components.com/) (or your own react components). Chart lib for React.js built with Typescript and almost no dependencies.
 
+
 <div>
   <img src="https://i.ibb.co/kg8WjBX/2021-03-26-23-47-10.png" width="380" title="LineChart example">
   <img src="https://i.ibb.co/M2hFgXD/2021-03-26-23-47-19.png" width="380" alt="BarChart example">
 </div>
 
+
+Contact developer: [vovatdev@gmail.com](mailto:vovatdev@gmail.com)
+Like it? [Buy me a coffee ☕](https://www.buymeacoffee.com/vova)
 
 
 ## Installation
