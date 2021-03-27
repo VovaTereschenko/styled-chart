@@ -391,7 +391,7 @@ const getConversionLineList = (number: number, children: any) => {
 
 ### config
 
-Example (BarChart)
+BarChart
 ```javascript
 config={{
   conversion: {
@@ -423,7 +423,7 @@ config={{
 }}
 ```
 
-Example (LineChart)
+LineChart
 ```javascript
 config={{
   conversion: {
