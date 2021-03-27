@@ -11,16 +11,19 @@ import {
 
 export const buildYAxisItems = (
   yAxis: IYAxis,
-  children?: number,
+  val?: number,
 ) => {
   return (
     yAxis.component
-      ? React.cloneElement(
-        yAxis.component,
-        {
-          children,
-        })
-      : <YAxisItem key={children}>{children}</YAxisItem>
+      ? <React.Fragment key={val}>
+          {React.cloneElement(
+            yAxis.component,
+            {
+              children: val,
+            }
+          )}
+        </React.Fragment> 
+      : <YAxisItem key={val}>{val}</YAxisItem>
   )
 }
 

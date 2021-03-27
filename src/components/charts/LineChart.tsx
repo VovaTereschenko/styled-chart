@@ -45,29 +45,31 @@ interface ILineChart {
   yAxis: IYAxis
   xAxis: IXAxis
   tooltip?: ITooltip
+  height?: number | string
+  resizeDependency?: any[]
 }
 
 const buildParentBar = (
-  barIndex: number,
   max: number,
   barsNum: number,
   maxYAxis: number,
   minYAxis: number,
+  setTooltipData: React.Dispatch<ITooltipData | null>,
+  toggleTooltip: React.Dispatch<boolean>,
+  dataItem: IDataItem,
   tooltipData?: ITooltipData,
-  setTooltipData?: any,
-  toggleTooltip?: any,
   children?: (false | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[],
 ) => {
-    const component = <InvisibleBarGroup key={barIndex}>{children}</InvisibleBarGroup>
+    const component = <InvisibleBarGroup key={dataItem.dataItemUID}>{children}</InvisibleBarGroup>
     const componentProps = {
-      onMouseOver: () =>  { tooltipData && setTooltipData(tooltipData); toggleTooltip(true) },
+      onMouseEnter: () =>  { tooltipData && setTooltipData(tooltipData); toggleTooltip(true) },
       style: {
         height: getBarHeight(max, maxYAxis, minYAxis),
         width: `${100/barsNum}%`,
       },
     } as {
       style: object,
-      onMouseOver: () => {},
+      onMouseEnter: () => {},
     }
 
     return (
@@ -80,24 +82,25 @@ const buildParentBar = (
 
 const buildBasicBar = (
   dataConfigKey: string,
-  dataItem: IDataItemProperty,
+  dataItemProp: IDataItemProperty,
+  dataItem: IDataItem,
   config: IConfig,
   innerSum: number,
   tooltip?: ITooltip,
 ) =>  {
   if (config[dataConfigKey]) {
     const point = tooltip && tooltip.hints && tooltip.hints[dataConfigKey] || <HintPoint />
-    const component = isRichDataObject(dataItem)
+    const component = isRichDataObject(dataItemProp)
       ? <InvisibleBar>
           {point}
-          {dataItem.component()}
+          {dataItemProp.component()}
         </InvisibleBar>
       : <InvisibleBar>
           {point}
         </InvisibleBar>
-    const value = isRichDataObject(dataItem)
-      ? dataItem.value
-      : dataItem
+    const value = isRichDataObject(dataItemProp)
+      ? dataItemProp.value
+      : dataItemProp
 
     const componentProps = {
       style: {
@@ -105,15 +108,18 @@ const buildBasicBar = (
       },
     }
     
-    return React.cloneElement(
-      component,
-      componentProps,
+    return (
+      <React.Fragment key={`inner_${dataItem.dataItemUID}_${dataConfigKey}`}>
+        {React.cloneElement(
+          component,
+          componentProps,
+        )}
+      </React.Fragment>
     )
   }
 }
 
-const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
-  const resizeDependency = undefined
+const LineChart = ({ data, config, yAxis, xAxis, tooltip, height, resizeDependency }: ILineChart) => {
   const [SVGWidth, setSVGWidth] = React.useState<number>(0)
   const [SVGHeight, setSVGHeight] = React.useState<number>(0)
   const [tooltipData, setTooltipData] = React.useState<ITooltipData | null>(null)
@@ -140,7 +146,7 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
       setSVGWidth(clientWidth * essentialWidthFactor)
       setSVGHeight(clientHeight)
     }
-  }, [resizeDependency])
+  }, resizeDependency)
 
   useResize(() => {
     if (wrapperRef.current) {
@@ -191,7 +197,6 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
    */
   const valuesArrays =  Object.entries(dataSlices).map(item => item[1])
 
-
   /**
    * @example [
    *    1, 2, 3, 2, 0, 1,
@@ -211,7 +216,7 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
   const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
 
   return (
-    <ChartWrapper>
+    <ChartWrapper height={height}>
       {buildYAxis(yAxis, yAxisValues)}
       <ChartWithXAxisWrapper onMouseLeave={() => {toggleTooltip(false)}}>
         <ChartVisualsWrapper>
@@ -282,17 +287,20 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
                 buildBasicBar(
                   dataConfigKey,
                   dataItem[dataConfigKey],
+                  dataItem,
                   config,
                   maxPathValue,
                   tooltip,
                 ))
 
               return buildParentBar(
-                index,
                 maxPathValue,
                 data.length,
                 maxValue,
                 minValue,
+                setTooltipData,
+                toggleTooltip,
+                dataItem,
                 {
                   xAxisValue: xAxisValues[index],
                   dataConfigKey: '',
@@ -300,8 +308,6 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip }: ILineChart) => {
                   barIndex: index,
                   barValue: maxPathValue,
                 },
-                setTooltipData,
-                toggleTooltip,
                 children as (false | IReactComponent)[],
               )
             })}

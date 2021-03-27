@@ -46,14 +46,10 @@ const H1 = styled.h1`
   text-align: center;
   span {
     display: block;
-
     &:before {
       font-weight: 400;
       content: '<💅>'
     }
-    /* &:after {
-      content: '>'
-    } */
   }
 
   @media (max-width: 767px) {

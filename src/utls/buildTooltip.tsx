@@ -30,17 +30,19 @@ const buildTooltip = (
     <>
       <TooltipList>
         {tooltipData.tooltipValues.map((tooltipItemData) => 
-          <TooltipListItem>
-            {tooltip.hints && tooltip.hints[tooltipItemData.key]}
-            <TooltipLabel>
-              {tooltipItemData.label}
-            </TooltipLabel>
-            <TooltipValue>
-              {!isRichDataObject(tooltipItemData.value)
-                ? tooltipItemData.value
-                : tooltipItemData.value.value}
-            </TooltipValue>
-          </TooltipListItem>
+          <React.Fragment key={tooltipItemData.key}>
+            <TooltipListItem>
+              {tooltip.hints && tooltip.hints[tooltipItemData.key]}
+              <TooltipLabel>
+                {tooltipItemData.label}
+              </TooltipLabel>
+              <TooltipValue>
+                {!isRichDataObject(tooltipItemData.value)
+                  ? tooltipItemData.value
+                  : tooltipItemData.value.value}
+              </TooltipValue>
+            </TooltipListItem>
+          </React.Fragment>
         )}
       </TooltipList>
       <TooltipXAxisValue>{tooltipData.xAxisValue}</TooltipXAxisValue>

@@ -37,15 +37,15 @@ import {
   BarGroup,
 } from 'styled-chart'
 
+const ProPlanBar = styled(BarGroup)`
+  background: DarkKhaki;
+`
+
+const BasicPlanBar = styled(BarGroup)`
+  background: Khaki;
+`
+
 const StyledBarChart = () => {
-  const ProPlanBar = styled(BarGroup)`
-    background: DarkKhaki;
-  `
-
-  const BasicPlanBar = styled(BarGroup)`
-    background: Khaki;
-  `
-
   return (
     <BarChart
       tooltip={{
@@ -110,18 +110,19 @@ import {
   BarGroup,
 } from 'styled-chart'
 
+const MyBarGroup = styled(BarGroup)`
+  margin: 0 2px;
+`
+
+const ProPlanBar = styled(Bar)`
+  background: DarkKhaki;
+`
+
+const BasicPlanBar = styled(Bar)`
+  background: Khaki;
+`
+
 const StyledStackedBarChart = () => {
-  const MyBarGroup = styled(BarGroup)`
-    margin: 0 2px;
-  `
-
-  const ProPlanBar = styled(Bar)`
-    background: DarkKhaki;
-  `
-
-  const BasicPlanBar = styled(Bar)`
-    background: Khaki;
-  `
 
   return (
     <BarChart
@@ -195,21 +196,21 @@ import {
   Path,
 } from 'styled-chart'
 
+const ConversionPath = styled(Path)`
+  stroke: DarkKhaki;
+`
+
+const ProPath = styled(Path)`
+  stroke: Khaki;
+  fill: Khaki;
+`
+
+const BasicPath = styled(Path)`
+  stroke: LemonChiffon;
+  fill: LemonChiffon;
+`
+
 const StyledLineChart = () => {
-  const ConversionPath = styled(Path)`
-    stroke: DarkKhaki;
-  `
-
-  const ProPath = styled(Path)`
-    stroke: Khaki;
-    fill: Khaki;
-  `
-
-  const BasicPath = styled(Path)`
-    stroke: LemonChiffon;
-    fill: LemonChiffon;
-  `
-
   return (
     <LineChart
       tooltip={{
@@ -269,19 +270,32 @@ export default StyledLineChart
 
 
 
-
-
 ## Configuration
 
 There are five entities you can configue any LineChart or BarChart with:
 ```javascript
+height // height of the chart
 data // an array of { key: value }
 config // visual representaion of the data keys
 xAxis // specs for the horizontal line
 yAxis // specs for the verticl line 
 tooltip // specs for the tooltip 🤷
-
 ```
+
+// LineChart only
+```javascript
+resizeDependency // if this changes, chart will resize (in case other DOM element pushes it)
+```
+
+
+### height
+```javascript
+// string | number
+// if number, will count in px
+// default is 300px
+height="400px"
+```
+
 
 ### data
 ```javascript
@@ -519,7 +533,13 @@ tooltip={{
 ```
 
 
-
+### resizeDependency
+```javascript
+// any array
+// optional
+// example if user opens a drawer UI element on your site, the chart has to resize 
+resizeDependency={[drawerIsOpen]}
+```
 
 
 ### Components you can import and style
@@ -549,13 +569,20 @@ tooltip={{
 <YAxisItem/> // default for the yAxis component
 <XAxisLineWrapper/> // default for the yAxis sectionComponent of the BarChart
 <TooltipWrapper/> // dafault for the tooltip compoent
-// TooltipList
-// TooltipListItem
-// TooltipValue
-// TooltipLabel
-// TooltipXAxisValue
-// are nested
+// Inside:
+<TooltipList/>
+<TooltipListItem/>
+<TooltipValue/>
+<TooltipLabel/>
+<TooltipXAxisValue/>
+
 <HintPoint/> // default for the circle hins in tooltip and LineChart paths highlighters 
+<SVG/> // Wrapper for the LineChart's paths
+<Path/> // default for the paths in LineChart
+<InvisibleBarSection/> // overlay of the LineChart for better interactions with tooltip
+// Inside:
+<InvisibleBar/> 
+<InvisibleBarGroup/> 
 ```
 
 
@@ -586,111 +613,112 @@ import {
   YAxisItem,
 } from 'styled-chart'
 
-const StyledBarChart = () => {
-  const MyWrapper = styled.section`
-    ${ChartWrapper} {
-      height: 270px;
-    }
-  `
-
-  const MyXAxisItem = styled(XAxisItem)`
-    text-align: center;
-    padding: 10px;
-    font-size: 14px;
-    color: black;
-    font-weight: bold;
-  `
-
-  const MyXAxisBarWrapper = styled(XAxisBarWrapper)`
-    border-top: 2px solid gray;
-  `
-
-  const StarredItemText = styled.span`
-    font-size: 14px;
-    font-weight: 700;
-  `
-
-  const StarredItemEmoji = styled.span`
-    font-size: 24px;
-  `
-
-  const StarredItem = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    box-sizing: border-box;
-    padding: 16px 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgb(248, 182, 195) 100%);
-    text-align: center;
-    font-size: 12px;
-    border-radius: 5px;
-  `
-
-  const MyYAxisWrapper = styled(YAxisWrapper)`
-    width: 40px;
-    padding: 0 8px;
-    text-align: right;
-    border-right: 2px solid gray;
-  `
-
-  const MyYAxisItem = styled(YAxisItem)`
-    font-weight: bold;
-  `
-
-  const MyTooltipWrapper = styled(TooltipWrapper)`
-    background: OldLace;
-    color: black; 
-  `
-
-  const MyBarGroup = styled(BarGroup)`
-    position: relative;
-    transition: 0.2s all linear;
-    margin: 0 2px;
-    border-radius: 8px 8px 0 0;
-    overflow: hidden;
-  `
-
-  const ProPlanBar = styled(Bar)`
-    border-top: 2px solid white;
-    background: Plum;
-  `
-
-  const MyEmptyBar = styled(EmptyBar)`
-    margin: 0 2px;
-    background: WhiteSmoke;
-  `
-
-  const BasicPlanBar = styled(Bar)`
-    background: Pink;
-  `
-
-  const SpecialPlanBar = styled(BasicPlanBar)`
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-size:24px;
-  `
-
-  const getSpecialBasicPlan = (number: number) => 
-    <SpecialPlanBar>
-      <StarredItemText>{number}</StarredItemText>
-    </SpecialPlanBar>
-
-  const getConversionList = (number: number, children?: any) => {
-    return (
-      <MyBarGroup>
-        <StarredItem>
-          <StarredItemEmoji>🌟</StarredItemEmoji>
-          <StarredItemText>{number}</StarredItemText>
-        </StarredItem>
-        {children}
-      </MyBarGroup>
-    )
+const MyWrapper = styled.section`
+  // That's how use can enforce rules (in cascade)
+  ${ChartWrapper} {
+    height: 270px;
   }
+`
 
+const MyXAxisItem = styled(XAxisItem)`
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+`
+
+const MyXAxisBarWrapper = styled(XAxisBarWrapper)`
+  border-top: 2px solid gray;
+`
+
+const StarredItemText = styled.span`
+  font-size: 14px;
+  font-weight: 700;
+`
+
+const StarredItemEmoji = styled.span`
+  font-size: 24px;
+`
+
+const StarredItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  box-sizing: border-box;
+  padding: 16px 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgb(248, 182, 195) 100%);
+  text-align: center;
+  font-size: 12px;
+  border-radius: 5px;
+`
+
+const MyYAxisWrapper = styled(YAxisWrapper)`
+  width: 40px;
+  padding: 0 8px;
+  text-align: right;
+  border-right: 2px solid gray;
+`
+
+const MyYAxisItem = styled(YAxisItem)`
+  font-weight: bold;
+`
+
+const MyTooltipWrapper = styled(TooltipWrapper)`
+  background: OldLace;
+  color: black; 
+`
+
+const MyBarGroup = styled(BarGroup)`
+  position: relative;
+  transition: 0.2s all linear;
+  margin: 0 2px;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+`
+
+const ProPlanBar = styled(Bar)`
+  border-top: 2px solid white;
+  background: Plum;
+`
+
+const MyEmptyBar = styled(EmptyBar)`
+  margin: 0 2px;
+  background: WhiteSmoke;
+`
+
+const BasicPlanBar = styled(Bar)`
+  background: Pink;
+`
+
+const SpecialPlanBar = styled(BasicPlanBar)`
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size:24px;
+`
+
+const getSpecialBasicPlan = (number: number) => 
+  <SpecialPlanBar>
+    <StarredItemText>{number}</StarredItemText>
+  </SpecialPlanBar>
+
+const getConversionList = (number: number, children?: any) => {
+  return (
+    <MyBarGroup>
+      <StarredItem>
+        <StarredItemEmoji>🌟</StarredItemEmoji>
+        <StarredItemText>{number}</StarredItemText>
+      </StarredItem>
+      {children}
+    </MyBarGroup>
+  )
+}
+
+const StyledBarChart = () => {
   return (
     <MyWrapper>
       <BarChart
@@ -802,95 +830,95 @@ import {
   YAxisWrapper,
 } from 'styled-chart'
 
-const StyledLineChart = () => {
+const MyTooltip = styled(TooltipWrapper)`
+  background: Black;
 
-  const MyTooltip = styled(TooltipWrapper)`
-    background: Black;
-  
-    ${TooltipLabel} {
-      font-style: italic;
-    }
-  `
-
-  const MyXAxisItem = styled(XAxisItem)`
-    text-align: center;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: bold;
-  `
-
-  const MyXAxisLineWrapper = styled(XAxisLineWrapper)`
-    border-top: 2px solid gray;
-  `
-
-  const StarredItemText = styled.span`
-    font-size: 14px;
-    font-weight: 700;
-  `
-
-  const StarredLineItem = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: center;
-    border-left: 2px solid HotPink;
-    margin-left: -1px;
-    font-size: 12px;
-    border-radius: 0;
-    box-sizing: border-box;
-    padding: 32px 0;
-    width: 100%;
-    transform: translateX(50%);
-    height: 100%;
-
-    ${StarredItemText} {
-      padding: 4px;
-      font-size: 11px;
-      background: HotPink;
-      text-align: left;
-      transform: translateX(-100%);
-      width: 40px;
-    }
-  `
-
-  const MyPointer = styled(HintPoint)<{color: string}>`
-    ${({ color }) => `
-      background: ${color};
-    `}
-  `
-
-  const MyYAxisWrapper = styled(YAxisWrapper)`
-    width: 40px;
-    padding: 0 8px;
-    text-align: right;
-    border-right: 2px solid Gray;
-  `
-
-  const MyYAxisItem = styled(YAxisItem)`
-    font-weight: bold;
-  `
-
-  const ConversionPath = styled(Path)`
-    stroke: HotPink;
-  `
-
-  const ProPath = styled(Path)`
-    stroke: MediumTurquoise;
-    fill: MediumTurquoise;
-  `
-
-  const BasicPath = styled(Path)`
-    stroke: PaleTurquoise;
-    fill: PaleTurquoise;
-  `
-  
-  const getConversionLineList = (number: number, children?: any) => {
-    return (
-      <StarredLineItem>
-        <StarredItemText>New record!</StarredItemText>
-      </StarredLineItem>
-    )
+  ${TooltipLabel} {
+    font-style: italic;
   }
+`
+
+const MyXAxisItem = styled(XAxisItem)`
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+`
+
+const MyXAxisLineWrapper = styled(XAxisLineWrapper)`
+  border-top: 2px solid gray;
+`
+
+const StarredItemText = styled.span`
+  font-size: 14px;
+  font-weight: 700;
+`
+
+const StarredLineItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: center;
+  border-left: 2px solid HotPink;
+  margin-left: -1px;
+  font-size: 12px;
+  border-radius: 0;
+  box-sizing: border-box;
+  padding: 32px 0;
+  width: 100%;
+  transform: translateX(50%);
+  height: 100%;
+
+  ${StarredItemText} {
+    padding: 4px;
+    font-size: 11px;
+    background: HotPink;
+    text-align: left;
+    transform: translateX(-100%);
+    width: 40px;
+  }
+`
+
+const MyPointer = styled(HintPoint)<{color: string}>`
+  ${({ color }) => `
+    background: ${color};
+  `}
+`
+
+const MyYAxisWrapper = styled(YAxisWrapper)`
+  width: 40px;
+  padding: 0 8px;
+  text-align: right;
+  border-right: 2px solid Gray;
+`
+
+const MyYAxisItem = styled(YAxisItem)`
+  font-weight: bold;
+`
+
+const ConversionPath = styled(Path)`
+  stroke: HotPink;
+`
+
+const ProPath = styled(Path)`
+  stroke: MediumTurquoise;
+  fill: MediumTurquoise;
+`
+
+const BasicPath = styled(Path)`
+  stroke: PaleTurquoise;
+  fill: PaleTurquoise;
+`
+
+const getConversionLineList = (number: number, children?: any) => {
+  return (
+    <StarredLineItem>
+      <StarredItemText>New record!</StarredItemText>
+    </StarredLineItem>
+  )
+}
+
+const StyledLineChart = () => {
 
   return (
     <LineChart
@@ -1009,5 +1037,31 @@ const StyledLineChart = () => {
 export default StyledLineChart
 ```
 
+### Styling in cascade
+To access all the elements of the Chart, use the cascade styling. This is handy if something goes wrong with direct styling.
+
+```javascript
+import {
+  LineChart,
+  BarChart,
+  TooltipWrapper,
+} from 'styled-chart'
+
+const MyWrapper = styled.section`
+  ${TooltipWrapper} {
+    background: #cfcfcf;
+    color: #333; 
+  }
+`
+// ..
+// ...
+// Wrap the chart into your styled wrapper
+return (
+  <MyWrapper>
+    <LineChart />
+    <BarChart />
+  </MyWrapper>
+)
+```
 </p>
 </details>  

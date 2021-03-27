@@ -18,14 +18,14 @@ export const buildXAxis = (
   isLineChart?: boolean
 ) => {
   const children = data.map((item, index) =>
-    buildXAxisItems(xAxis, step, index, item[xAxis.key]))
+    buildXAxisItem(xAxis, step, index, item, item[xAxis.key]))
   return (
     xAxis.sectionComponent
       ? React.cloneElement(
-        xAxis.sectionComponent, 
-        {
-          children,
-        },
+          xAxis.sectionComponent, 
+          {
+            children,
+          },
       )
       : isLineChart
         ? <XAxisLineWrapper>{children}</XAxisLineWrapper>
@@ -33,18 +33,20 @@ export const buildXAxis = (
   )
 }
 
-export const buildXAxisItems = (
+export const buildXAxisItem = (
   xAxis: IXAxis,
   step: number,
   index: number,
+  dataItem: IDataItem,
   children?: any,
 ) =>
-  React.cloneElement(
-    xAxis.component || <XAxisItem key={index}/>,
-    {
-      children,
-      style: {
-        opacity: (index) % step ? 0 : 1
-      }
-    })
-
+  <React.Fragment key={dataItem.dataItemUID}>
+    {React.cloneElement(
+      xAxis.component || <XAxisItem key={index}/>,
+      {
+        children,
+        style: {
+          opacity: (index) % step ? 0 : 1
+        }
+      })}
+  </React.Fragment>

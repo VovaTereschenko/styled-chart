@@ -35,11 +35,6 @@ export const MyXAxisLineWrapper = styled(XAxisLineWrapper)`
   border-top: 2px solid #757575;
 `
 
-export const StarredItemText = styled.span`
-  font-size: 14px;
-  font-weight: 700;
-`
-
 export const StarredItemEmoji = styled.span`
   font-size: 24px;
 `
@@ -57,31 +52,6 @@ export const StarredItem = styled.div`
   padding: 16px 0;
   width: 100%;
   height: 100%;
-`
-
-export const StarredLineItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: center;
-  border-left: 2px solid #f66dc347;
-  margin-left: -1px;
-  font-size: 12px;
-  border-radius: 0;
-  box-sizing: border-box;
-  padding: 32px 0;
-  width: 100%;
-  transform: translateX(50%);
-  height: 100%;
-
-  ${StarredItemText} {
-    padding: 4px;
-    font-size: 11px;
-    background: #f66dc347;
-    text-align: left;
-    transform: translateX(-100%);
-    width: 40px;
-  }
 `
 
 export const MyPointer = styled(HintPoint)<{color: string}>`

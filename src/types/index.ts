@@ -8,9 +8,14 @@ export interface IRichDataObject {
 
 export type IDataItemProperty =  string | number | IRichDataObject
 
-export interface IDataItem {
+interface WithUIDs {
+  dataItemUID: string
+}
+
+export interface IDataItem extends WithUIDs {
   [key: string]: IDataItemProperty
 } 
+
 
 export enum ILegend {
   empty = 'empty',

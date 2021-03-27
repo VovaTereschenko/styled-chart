@@ -41,6 +41,7 @@ interface IStackedBarChart {
   yAxis: IYAxis
   xAxis: IXAxis
   tooltip?: ITooltip
+  height?: string | number
 }
 
 const isParentBar = (dataConfigKey: string, config: IConfig) =>
@@ -49,15 +50,16 @@ const isParentBar = (dataConfigKey: string, config: IConfig) =>
 const buildParentBar = (
   isStackedBarChart: boolean,
   dataConfigKey: string,
-  dataItem: IDataItemProperty,
+  dataItem: IDataItem,
+  dataItemProp: IDataItemProperty,
   config: IConfig,
   barsNum: number,
   maxYAxis: number,
   minYAxis: number,
+  setTooltipData: React.Dispatch<ITooltipData | null>,
+  toggleTooltip: React.Dispatch<boolean>,
   children?: (false | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[],
   tooltipData?: ITooltipData,
-  setTooltipData?: any,
-  toggleTooltip?: any,
 ) => {
   if (isParentBar(dataConfigKey, config)
     || (!isStackedBarChart
@@ -67,53 +69,58 @@ const buildParentBar = (
 
     const component = dataConfigKey === ILegend.empty
       ? config[dataConfigKey] && config[dataConfigKey].component || <EmptyBar />
-      : isRichDataObject(dataItem)
-          ? dataItem.component(children) // we take the compoent right from the data item
+      : isRichDataObject(dataItemProp)
+          ? dataItemProp.component(children) // we take the compoent right from the data item
           : config[dataConfigKey] && config[dataConfigKey].component // we take the component from the config
         || <BarGroup /> // or we take the default one
 
-    const value = isRichDataObject(dataItem)
-      ? dataItem.value
-      : dataItem
+    const value = isRichDataObject(dataItemProp)
+      ? dataItemProp.value
+      : dataItemProp
 
     const componentProps = {
-      onMouseOver: () =>  { tooltipData && dataConfigKey !== ILegend.empty && setTooltipData(tooltipData); toggleTooltip(true) },
+      onMouseEnter: () =>  {
+        tooltipData && dataConfigKey !== ILegend.empty && setTooltipData(tooltipData);
+        toggleTooltip(true) },
       style: {
         height: getBarHeight(Number(value), maxYAxis, minYAxis),
         width: `${100/barsNum}%`,
       },
     } as {
       style: object,
-      onMouseOver: () => {},
+      onMouseEnter: () => {},
       children: typeof children,
     }
   
-    if (!isRichDataObject(dataItem)) componentProps.children = children
+    if (!isRichDataObject(dataItemProp)) componentProps.children = children
 
     return (
-      React.cloneElement(
-        component,
-        componentProps,
-      )
+      <React.Fragment key={dataItem.dataItemUID}>
+        {React.cloneElement(
+          component,
+          componentProps,
+        )}
+      </React.Fragment>
     )
   }
 }
 
 const buildBasicBar = (
   dataConfigKey: string,
-  dataItem: IDataItemProperty,
+  dataItem: IDataItem,
+  dataItemProp: IDataItemProperty,
   config: IConfig,
   innerSum: number,
 ) =>  {
   if (config[dataConfigKey] && !config[dataConfigKey].isParent) {
-    const component = isRichDataObject(dataItem)
-      ? dataItem.component() // we take the compoent right from the data item
+    const component = isRichDataObject(dataItemProp)
+      ? dataItemProp.component() // we take the compoent right from the data item
       : config[dataConfigKey].component // we take the component from the config
     || <BarGroup /> // or we take the default one
 
-    const value = isRichDataObject(dataItem)
-      ? dataItem.value
-      : dataItem
+    const value = isRichDataObject(dataItemProp)
+      ? dataItemProp.value
+      : dataItemProp
 
     const componentProps = {
       style: {
@@ -121,9 +128,13 @@ const buildBasicBar = (
       },
     }
 
-    return React.cloneElement(
-      component,
-      componentProps,
+    return (
+      <React.Fragment key={`inner_${dataItem.dataItemUID}_${dataConfigKey}`}>
+        {React.cloneElement(
+          component,
+          componentProps,
+        )}
+      </React.Fragment>
     )
   }
 }
@@ -133,7 +144,7 @@ const getDataItemValue = (dataItem: IDataItemProperty) =>
     ? dataItem.value
     : dataItem
 
-const BarChart = ({ data, config, yAxis, xAxis, tooltip }: IStackedBarChart) => {
+const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarChart) => {
   const [tooltipData, setTooltipData] = React.useState<ITooltipData | null>(null)
   const [tooltipIsOpen, toggleTooltip] =  React.useState(false)
   const isStackedBarChart = Object.entries(config).map(item => item[1]).some(item => item.isParent)
@@ -154,13 +165,14 @@ const BarChart = ({ data, config, yAxis, xAxis, tooltip }: IStackedBarChart) => 
   data = fillDataRelativeToXAxis(data, xAxisTicksNum)
   
   const xAxisValues = data.map(dataItem => dataItem[xAxisKey])
-
   const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
 
   return (
-    <ChartWrapper>
+    <ChartWrapper height={height}>
       {buildYAxis(yAxis, yAxisValues)}
-      <ChartWithXAxisWrapper onMouseLeave={() => {toggleTooltip(false)}}>
+      <ChartWithXAxisWrapper
+        onMouseLeave={() => { toggleTooltip(false)}}
+      >
         <ChartVisualsWrapper>
           {data.map((dataItem: IDataItem, index) => {
             const innerBarsKeys = findInnerComponentsKeys(dataItem, config)
@@ -187,6 +199,7 @@ const BarChart = ({ data, config, yAxis, xAxis, tooltip }: IStackedBarChart) => 
             const children = Object.keys(dataItem).map((dataConfigKey) =>
               buildBasicBar(
                 dataConfigKey,
+                dataItem,
                 dataItem[dataConfigKey],
                 config,
                 innerBarsSum,
@@ -196,11 +209,14 @@ const BarChart = ({ data, config, yAxis, xAxis, tooltip }: IStackedBarChart) => 
               buildParentBar(
                 isStackedBarChart,
                 dataConfigKey,
+                dataItem,
                 dataItem[dataConfigKey],
                 config,
                 data.length,
                 maxValue,
                 minValue,
+                setTooltipData,
+                toggleTooltip,
                 children as (false | IReactComponent)[],
                 {
                   xAxisValue: xAxisValues[index],
@@ -209,15 +225,9 @@ const BarChart = ({ data, config, yAxis, xAxis, tooltip }: IStackedBarChart) => 
                   barIndex: index,
                   barValue: Number(getDataItemValue(dataItem[dataConfigKey])),
                 },
-                setTooltipData,
-                toggleTooltip,
               ))
 
-            return (
-              <>
-                {parent}
-              </>
-            )
+            return parent
           })}
           {tooltip && tooltip.isVisible && tooltipData
             && buildTooltip(

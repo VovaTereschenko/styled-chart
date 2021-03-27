@@ -10,6 +10,7 @@ const ChartWrapper = styled.div`
 
 const BasicChartsWrapper = styled.section`
   display: flex;
+  padding: 16px 0;
   margin: 16px auto;
   align-items: center;
   justify-content: space-between;

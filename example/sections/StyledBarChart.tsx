@@ -13,58 +13,62 @@ import {
   MyXAxisItem,
   MyXAxisBarWrapper,
   StarredItem,
-  StarredItemText,
   StarredItemEmoji,
   MyYAxisWrapper,
   MyYAxisItem,
 } from './sharedStyledComponents'
 
-const StyledBarChart = () => {
-  const MyWrapper = styled.section`
-    /* ${ChartWrapper} {
-      height: 270px;
-    } */
-  `
 
-
-  const MyTooltipWrapper = styled(TooltipWrapper)`
+const MyWrapper = styled.section`
+/* ${ChartWrapper} {
+  height: 270px;
+} */
+  ${TooltipWrapper} {
     background: #cfcfcf;
     color: #333; 
-  `
+  }
+`
 
-  const MyBarGroup = styled(BarGroup)`
-    position: relative;
-    transition: 0.2s all linear;
-    margin: 0 2px;
-    border-radius: 8px 8px 0 0;
-    overflow: hidden;
-  `
+const StarredItemText = styled.span`
+  font-size: 14px;
+  font-weight: 700;
+`
 
-  const ProPlanBar = styled(Bar)`
-    border-top: 2px solid #fff;
-    background: #ecddb4;
-  `
+const MyBarGroup = styled(BarGroup)`
+  position: relative;
+  transition: 0.2s all linear;
+  margin: 0 2px;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+`
 
-  const MyEmptyBar = styled(EmptyBar)`
-    margin: 0 2px;
-    background: #f7f7f7;
-  `
+const ProPlanBar = styled(Bar)`
+  border-top: 2px solid #fff;
+  background: #ecddb4;
+`
 
-  const BasicPlanBar = styled(Bar)`
-    background:#FBEECA;
-  `
+const MyEmptyBar = styled(EmptyBar)`
+  margin: 0 2px;
+  background: #f7f7f7;
+`
 
-  const SpecialPlanBar = styled(BasicPlanBar)`
-    align-items: center;
-    justify-content: center;
-    color: #000;
-    font-size:24px;
-  `
+const BasicPlanBar = styled(Bar)`
+background:#FBEECA;
+`
 
-  const getSpecialBasicPlan = (number: number) => 
-    <SpecialPlanBar>
-      <StarredItemText>{number}</StarredItemText>
-    </SpecialPlanBar>
+const SpecialPlanBar = styled(BasicPlanBar)`
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size:24px;
+`
+
+const getSpecialBasicPlan = (number: number) => 
+  <SpecialPlanBar>
+    <StarredItemText>{number}</StarredItemText>
+  </SpecialPlanBar>
+
+const StyledBarChart = () => {
 
   const getConversionList = (number: number, children?: any) => {
     return (
@@ -81,9 +85,9 @@ const StyledBarChart = () => {
   return (
     <MyWrapper>
       <BarChart
+        height="300px"
         tooltip={{
           isVisible: true,
-          component: <MyTooltipWrapper />,
         }}
         yAxis={{
           maxValue: 100,

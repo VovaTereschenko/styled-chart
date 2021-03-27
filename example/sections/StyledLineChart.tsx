@@ -1,4 +1,4 @@
-import * as React  from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 
 import {
@@ -10,64 +10,93 @@ import {
 import {
   MyXAxisItem,
   MyXAxisLineWrapper,
-  StarredItemText,
   MyYAxisWrapper,
   MyYAxisItem,
   MyPointer,
-  StarredLineItem,
 } from './sharedStyledComponents'
 
 
+
+const MyWrapper = styled.section`
+
+`
+
+const StarredItemText = styled.p`
+font-size: 14px;
+font-weight: 700;
+`
+
+
+const StarredLineItem = styled.aside`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: center;
+  border-left: 2px solid #f66dc347;
+  margin-left: -1px;
+  font-size: 12px;
+  border-radius: 0;
+  box-sizing: border-box;
+  padding: 32px 0;
+  width: 100%;
+  transform: translateX(50%);
+  height: 100%;
+
+  ${StarredItemText} {
+    padding: 4px;
+    font-size: 11px;
+    background: #f66dc347;
+    text-align: left;
+    transform: translateX(-100%);
+    width: 40px;
+  }
+`
+
+const ConversionPath = styled(Path)`
+ stroke: #f66dc3;
+`
+
+const ProPath = styled(Path)`
+ stroke: rgb(134, 196, 255);
+ fill: #86c4ff80;
+`
+
+const BasicPath = styled(Path)`
+ stroke: #cfe8ff;
+ fill: #cfe8ff52;
+`
+
+const ConversionPath2 = styled(Path)`
+ stroke: #6f6df6;
+`
+
+const ProPath2 = styled(Path)`
+ stroke: rgb(235, 226, 111);
+ fill: rgb(235, 226, 111);
+`
+
+const BasicPath2 = styled(Path)`
+ stroke: #cfe8ff;
+ fill: #cfe8ff;
+`
+
+const ConversionPath3 = styled(Path)`
+ stroke: #6f6df6;
+`
+
+const ProPath3 = styled(Path)`
+ stroke: rgb(134, 196, 255);
+ fill: rgb(134, 196, 255);
+`
+
+const BasicPath3 = styled(Path)`
+ stroke: #f6ffcf;
+ fill: #f6ffcf;
+`
+
+
 const StyledLineChart = () => {
-  
 
-  const MyWrapper = styled.section`
-   /* ${ChartWrapper} {
-     height: 300px;
-   } */
-  `
-
-  const ConversionPath = styled(Path)`
-    stroke: #f66dc3;
-  `
-
-  const ProPath = styled(Path)`
-    stroke: rgb(134, 196, 255);
-    fill: #86c4ff80;
-  `
-
-  const BasicPath = styled(Path)`
-    stroke: #cfe8ff;
-    fill: #cfe8ff52;
-  `
-
-  const ConversionPath2 = styled(Path)`
-    stroke: #6f6df6;
-  `
-
-  const ProPath2 = styled(Path)`
-    stroke: rgb(235, 226, 111);
-    fill: rgb(235, 226, 111);
-  `
-
-  const BasicPath2 = styled(Path)`
-    stroke: #cfe8ff;
-    fill: #cfe8ff;
-  `
-
-  const ConversionPath3 = styled(Path)`
-    stroke: #6f6df6;
-  `
-
-  const ProPath3 = styled(Path)`
-    stroke: rgb(134, 196, 255);
-    fill: rgb(134, 196, 255);
-  `
-
-  const BasicPath3 = styled(Path)`
-    stroke: #f6ffcf;
-    fill: #f6ffcf;
-  `
 
   const configs = [
     {
@@ -141,7 +170,7 @@ const StyledLineChart = () => {
     '11/09',
     '12/09',
   ]
-  
+
   const dafaultConfig = configs[0]
   const [config, setCongig] = React.useState(dafaultConfig)
   const startLength = 6
@@ -194,14 +223,14 @@ const StyledLineChart = () => {
 
   const data = dates.slice(0, datesLength).reduce((acum, item, index) => {
 
-  
+
 
     const getConversion = (val: number) =>
       val === Math.max(...config.conversion.slice(0, datesLength)) ? ({
         value: val,
         component: (children) => getConversionLineList(val, children),
       }) : val
-  
+
 
     const obj = {
       date: item,
@@ -209,7 +238,7 @@ const StyledLineChart = () => {
       basicPlan: config.basicPlan[index],
       proPlan: config.proPlan[index],
       conversion: getConversion(config.conversion[index]),
-     
+
       // day: config.day[index]
     }
     acum.push(obj)
@@ -221,48 +250,49 @@ const StyledLineChart = () => {
 
   return (
     <MyWrapper>
-    {/* <button onClick={restyle}>Restyle!</button> */}
-    <LineChart
-      tooltip={{
-        isVisible: true,
-        hints: {
-          basicPlan: <MyPointer color="#b0d6fa"/>,
-          proPlan: <MyPointer color="rgb(113, 187, 255)"/>,
-          conversion: <MyPointer color="#f359bb"/>,
-        }
-      }}
-      yAxis={{
-        maxValue: config.yAxisMaxValue,
-        minValue: 0,
-        ticksNum: config.yAxisTicksNum,
-        sectionComponent: <MyYAxisWrapper />,
-        component: <MyYAxisItem />
-      }}
-      xAxis={{
-        key: config.xAxisKey,
-        step: config.xAxisStep,
-        component: <MyXAxisItem />,
-        sectionComponent: <MyXAxisLineWrapper />,
-      }}
-      config={{
-        conversion: {
-          label: 'Conversion',
-          component: config.conversionPath,
-          isFilled: false,
-        },
-        basicPlan: {
-          label: 'Basic plan',
-          isFilled: true,
-          component: config.basicPath,
-        },
-        proPlan: {
-          label: 'Pro plan',
-          isFilled: true,
-          component: config.proPath,
-        },
-      }}
-      data={data}
-    />
+      {/* <button onClick={restyle}>Restyle!</button> */}
+      <LineChart
+        height="300px"
+        tooltip={{
+          isVisible: true,
+          hints: {
+            basicPlan: <MyPointer color="#b0d6fa" />,
+            proPlan: <MyPointer color="rgb(113, 187, 255)" />,
+            conversion: <MyPointer color="#f359bb" />,
+          }
+        }}
+        yAxis={{
+          maxValue: config.yAxisMaxValue,
+          minValue: 0,
+          ticksNum: config.yAxisTicksNum,
+          sectionComponent: <MyYAxisWrapper />,
+          component: <MyYAxisItem />
+        }}
+        xAxis={{
+          key: config.xAxisKey,
+          step: config.xAxisStep,
+          component: <MyXAxisItem />,
+          sectionComponent: <MyXAxisLineWrapper />,
+        }}
+        config={{
+          conversion: {
+            label: 'Conversion',
+            component: config.conversionPath,
+            isFilled: false,
+          },
+          basicPlan: {
+            label: 'Basic plan',
+            isFilled: true,
+            component: config.basicPath,
+          },
+          proPlan: {
+            label: 'Pro plan',
+            isFilled: true,
+            component: config.proPath,
+          },
+        }}
+        data={data}
+      />
     </MyWrapper>
   )
 }
