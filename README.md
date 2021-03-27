@@ -98,7 +98,11 @@ export default StyledBarChart
 
 
 <details>
-<summary><span style="color:DodgerBlue;">Show Stacked BarChart example code</span></summary>
+<summary>
+```diff
+@@ Show Stacked BarChart example code (and bold)@@
+```
+</summary>
 <p>
 
 ```javascript
@@ -572,13 +576,17 @@ resizeDependency={[drawerIsOpen]}
 ## Components you can import and style
 ```javascript
 
+// ----------
 // charts:
+// ----------
 // chart built with bars
 <BarChart/> 
 // chart built with 'lines' (paths)
 <LineChart/> 
 
+// ----------
 // bars:
+// ----------
 // default for the bar
 <Bar/> 
 // default for the Bar with isParent flag
@@ -589,19 +597,25 @@ resizeDependency={[drawerIsOpen]}
  // e.g. empty: <MyEmptyBar>
 <EmptyBar/>
 
+// ----------
 // xAxis:
+// ----------
 // default for the xAxis component
 <XAxisItem /> 
 // default for the xAxis sectionComponent of the BarChart
 <XAxisBarWrapper/> 
 
+// ----------
 // yAxis:
- // default for the yAxis component
+// ----------
+// default for the yAxis component
 <YAxisItem/>
 // default for the yAxis sectionComponent of the LineChart
 <XAxisLineWrapper/> 
 
+// ----------
 // tooltip:
+// ----------
 // dafault for the tooltip component
 <TooltipWrapper/> 
 // inside TooltipWrapper:
@@ -620,13 +634,17 @@ resizeDependency={[drawerIsOpen]}
 // see tooltip config
 <HintPoint/>
 
+// ----------
 // SVG related:
+// ----------
 // Wrapper for the LineChart's 'lines' (paths)
 <SVG/>
 // default for the paths in LineChart
 <Path/> 
 
+// ----------
 // invisible elements:
+// ----------
 // overlay of the LineChart
 // is used for better interactions with tooltip 
 // or to explicitly wrapper children and not mess with
@@ -636,7 +654,9 @@ resizeDependency={[drawerIsOpen]}
 <InvisibleBar/> 
 <InvisibleBarGroup/> 
 
+// ----------
 // wrappers:
+// ----------
 // a wrapper for any chart
 <ChartWrapper/>
 // a wrapper for the 'visual' content (bar groups / svg)
@@ -644,7 +664,9 @@ resizeDependency={[drawerIsOpen]}
  // a wrapper for any chart visual content and xAxis
 <ChartWithXAxisWrapper/>
 
+// ----------
 // other:
+// ----------
 // default for the 'colored circle hints'
 // in tooltip and LineChart's 'path highlighters'
 <HintPoint/> 
