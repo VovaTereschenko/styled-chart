@@ -98,7 +98,7 @@ export default StyledBarChart
 
 
 <details>
-<summary style="color:DodgerBlue;">Show Stacked BarChart example code</summary>
+<summary><span style="color:DodgerBlue;">Show Stacked BarChart example code</span></summary>
 <p>
 
 ```javascript
@@ -185,7 +185,7 @@ export default StyledStackedBarChart
 
 
 <details>
-<summary style="color:DodgerBlue;">Show LineChart example code</summary>
+<summary><span style="color:DodgerBlue;">Show LineChart example code</span></summary>
 <p>
 
 ```javascript
@@ -659,7 +659,7 @@ resizeDependency={[drawerIsOpen]}
 <img src="https://i.ibb.co/vLQbCD8/2021-03-27-0-05-38.png" width="380" title="Adjusted BarChart">
 
 <details>
-<summary style="color:DodgerBlue;">Show  Adjusted BarChart example code</summary>
+<summary><span style="color:DodgerBlue;">Show  Adjusted BarChart example code</span></summary>
 <p>
 
 ```javascript
@@ -876,7 +876,7 @@ export default StyledBarChart
 
 
 <details>
-<summary style="color:DodgerBlue;">Show Adjusted LineChart example code</summary>
+<summary><span style="color:DodgerBlue;">Show Adjusted LineChart example code</span></summary>
 <p>
 
 ```javascript
