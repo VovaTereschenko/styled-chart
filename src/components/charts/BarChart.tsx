@@ -18,6 +18,7 @@ import {
   IReactComponent,
   ITooltip,
   ITooltipData,
+  INotUniqueDataItem,
 } from '../../types'
 
 import {
@@ -37,7 +38,7 @@ import {
 
 interface IStackedBarChart {
   config: IConfig
-  data: IDataItem[]
+  data: INotUniqueDataItem[]
   yAxis: IYAxis
   xAxis: IXAxis
   tooltip?: ITooltip
@@ -150,20 +151,19 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
   const isStackedBarChart = Object.entries(config).map(item => item[1]).some(item => item.isParent)
 
   const {
-    maxValue = isStackedBarChart ? findStackedYAxisMax(config, data) : findBarsYAxisMax(config, data),
-    minValue = 0,
-    ticksNum: yAxisTicksNum = 3,
-  } = yAxis
-      
-  const {
     step: xAxisStep = 1,
     ticksNum: xAxisTicksNum = data.length,
     key: xAxisKey,
   } = xAxis
 
-  
-  data = fillDataRelativeToXAxis(data, xAxisTicksNum)
-  
+  const uiniqueKeysData = fillDataRelativeToXAxis(data, xAxisTicksNum)
+
+  const {
+    maxValue = isStackedBarChart ? findStackedYAxisMax(config, uiniqueKeysData) : findBarsYAxisMax(config, uiniqueKeysData),
+    minValue = 0,
+    ticksNum: yAxisTicksNum = 3,
+  } = yAxis
+      
   const xAxisValues = data.map(dataItem => dataItem[xAxisKey])
   const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
 
@@ -174,7 +174,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
         onMouseLeave={() => { toggleTooltip(false)}}
       >
         <ChartVisualsWrapper>
-          {data.map((dataItem: IDataItem, index) => {
+          {uiniqueKeysData.map((dataItem: IDataItem, index) => {
             const innerBarsKeys = findInnerComponentsKeys(dataItem, config)
             const tooltipKeys = findTooltipKeys(dataItem, config)
             const tooltipValues = tooltipKeys.reduce((acum, key) => {
@@ -239,7 +239,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
               tooltip,
             )}
         </ChartVisualsWrapper>
-        {buildXAxis(xAxis, data, xAxisStep)}
+        {buildXAxis(xAxis, uiniqueKeysData, xAxisStep)}
       </ChartWithXAxisWrapper>
     </ChartWrapper>
   )

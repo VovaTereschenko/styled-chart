@@ -12,10 +12,13 @@ interface WithUIDs {
   dataItemUID: string
 }
 
+export interface INotUniqueDataItem {
+  [key: string]: IDataItemProperty
+}
+
 export interface IDataItem extends WithUIDs {
   [key: string]: IDataItemProperty
-} 
-
+}
 
 export enum ILegend {
   empty = 'empty',

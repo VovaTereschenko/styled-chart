@@ -22,6 +22,7 @@ import {
   IDataItemProperty,
   ITooltipData,
   IReactComponent,
+  INotUniqueDataItem,
 } from '../../types'
 
 import {
@@ -41,7 +42,7 @@ import {
 
 interface ILineChart {
   config: IConfig
-  data: IDataItem[]
+  data: INotUniqueDataItem[]
   yAxis: IYAxis
   xAxis: IXAxis
   tooltip?: ITooltip
@@ -136,7 +137,8 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip, height, resizeDependen
 
   const essentialWidthFactor =  data.length / xAxisTicksNum
 
-  data = fillDataRelativeToXAxis(data, xAxisTicksNum)
+  const uiniqueKeysData = fillDataRelativeToXAxis(data, xAxisTicksNum)
+
 
   const xAxisValues = data.map(dataItem => dataItem[xAxisKey])
 
@@ -154,7 +156,7 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip, height, resizeDependen
     }
   })
 
-  const keys = data.map((item) => findInnerComponentsKeys(item, config))
+  const keys = uiniqueKeysData.map((item) => findInnerComponentsKeys(item, config))
 
   /**
    * @example {
@@ -172,7 +174,7 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip, height, resizeDependen
    *    y: [2, 0, 1],
    * }
    */
-  const dataSlices = data.reduce((acum, dataItem) => {
+  const dataSlices = uiniqueKeysData.reduce((acum, dataItem) => {
     uniqueKeys.forEach((key) => {
       if (!acum[key]) acum[key] = []
       const dataItemProperty = dataItem[key]
@@ -263,7 +265,7 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip, height, resizeDependen
           </SVG>
 
           <InvisibleBarsSection dataLength={data.length}>
-            {data.map((dataItem: IDataItem, index) => {
+            {uiniqueKeysData.map((dataItem: IDataItem, index) => {
               const tooltipKeys = findTooltipKeys(dataItem, config)
               const tooltipValues = tooltipKeys.reduce((acum, key) => {
                 const tooltipItemValues = {
@@ -324,7 +326,7 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip, height, resizeDependen
               tooltip,
             )}
         </ChartVisualsWrapper>
-        {buildXAxis(xAxis, data, step, true)}
+        {buildXAxis(xAxis, uiniqueKeysData, step, true)}
       </ChartWithXAxisWrapper>
     </ChartWrapper>
   )
