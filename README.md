@@ -98,11 +98,7 @@ export default StyledBarChart
 
 
 <details>
-<summary>
-```diff
-@@ Show Stacked BarChart example code (and bold)@@
-```
-</summary>
+<summary><span style="color:DodgerBlue;">Show Stacked BarChart example code</span></summary>
 <p>
 
 ```javascript
