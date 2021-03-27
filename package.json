@@ -54,7 +54,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@vovatdev/styled-chart",
+  "name": "styled-chart",
   "author": "vovatdev <vovatdev@gmail.com>",
   "module": "dist/styled-chart.esm.js",
   "size-limit": [
