@@ -143,11 +143,8 @@ const App = () =>
     <BasicCharts />
 
     <Feedback>
-      <p>Contact developer</p>
-      <div>
-        email <a href="mailto:vovatdev@gmail.com">vovatdev@gmail.com</a>
-      </div>
-      <div>hash for twitter #styled-chart</div>
+      <p>Like it? <a target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/vova">Buy me a coffee ☕</a></p>
+      <p>Contact developer <a href="mailto:vovatdev@gmail.com">vovatdev@gmail.com</a></p>
     </Feedback>
   </Wrapper> 
 
