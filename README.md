@@ -304,6 +304,11 @@ height
 
 LineChart only
 ```javascript
+// number from 0 to 100
+// optional
+// sets the flexure of the lines
+// (can be adjusted pointwise in the config)
+flexure
 // any[]
 // optional
 // if this changes, chart will resize 
@@ -443,6 +448,10 @@ config={{
     // optional
     // denotation of values
     denoteAs: '%',
+    // number from 0 to 100
+    // optional
+    // sets the flexure of the line
+    flexure,
     // boolean, optional
     // indicates that the <MyConvertionPath/> path is planned to be filled
     isFilled: true,

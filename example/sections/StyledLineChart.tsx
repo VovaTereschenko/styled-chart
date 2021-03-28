@@ -231,6 +231,7 @@ const StyledLineChart = () => {
       {/* <button onClick={restyle}>Restyle!</button> */}
       <LineChart
         height="300px"
+        flexure="20"
         tooltip={{
           isVisible: true,
           hints: {
@@ -257,6 +258,7 @@ const StyledLineChart = () => {
             label: 'Conversion',
             component: config.conversionPath,
             isFilled: false,
+            flexure: 100,
           },
           basicPlan: {
             label: 'Basic plan',

@@ -48,6 +48,7 @@ interface ILineChart {
   tooltip?: ITooltip
   height?: number | string
   resizeDependency?: any[]
+  flexure?: number | string
 }
 
 const buildParentBar = (
@@ -120,7 +121,16 @@ const buildBasicBar = (
   }
 }
 
-const LineChart = ({ data, config, yAxis, xAxis, tooltip, height, resizeDependency }: ILineChart) => {
+const LineChart = ({
+  data,
+  config,
+  yAxis,
+  xAxis,
+  tooltip,
+  height,
+  resizeDependency,
+  flexure = 20,
+}: ILineChart) => {
   const [SVGWidth, setSVGWidth] = React.useState<number>(0)
   const [SVGHeight, setSVGHeight] = React.useState<number>(0)
   const [tooltipData, setTooltipData] = React.useState<ITooltipData | null>(null)
@@ -224,13 +234,12 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip, height, resizeDependen
         <ChartVisualsWrapper>
           <SVG ref={wrapperRef}>
             {Object.entries(dataSlices).map(dataSlice => {
-              const d = dataSlice[1].reduce((acum, item, i) => {
-                const deltaValue = 50,
-                  deltaSmall = deltaValue / 3,
-                  deltaLarge = deltaValue / 3 * 2
+              const d = dataSlice[1].reduce((acum, item, i) => {              
                 const calcY = (val: number) => 
                   SVGHeight - SVGHeight/(maxValue - minValue) * (val - minValue)
           
+               
+
                 const
                   prevItem = dataSlice[1][i - 1] || 0,
                   prevIndex = i > 1 ? i - 1 : 0,
@@ -239,8 +248,21 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip, height, resizeDependen
 
                 const
                   x = SVGWidth/(cellsNumber - 1) * i,
-                  y = calcY(item),
-                  delta = (x - prevX) / deltaValue
+                  y = calcY(item)
+
+                flexure = config[dataSlice[0]] && config[dataSlice[0]].flexure || flexure
+                if (Number(flexure) >= 0 || Number(flexure) <= 100) {
+                  flexure = Number(flexure)
+                } else {
+                  throw Error("Flexure must be between 0 and 100")
+                }
+
+                const
+                  deltaPull = 100,
+                  deltaSmall = flexure,
+                  deltaLarge = 100 - flexure
+
+                const delta = (x - prevX) / deltaPull
 
                 const ponintsSlice = i === 0
                   ? `m ${x} ${y} `
@@ -250,7 +272,7 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip, height, resizeDependen
                   i === dataSlice[1].length - 1
                   && config[dataSlice[0]][ILegend.isFilled]
                     // We build the full chart is isFilled flag is provided
-                    ? `c 0 0 ${delta * deltaLarge} 0 ${x - prevX} ${y - prevY} V ${SVGHeight} H 0`
+                    ? `c ${delta * deltaSmall} 0 ${delta * deltaLarge} ${y - prevY} ${x - prevX} ${y - prevY} V ${SVGHeight} H 0`
                     : undefined
 
                 return acum += lastSlice || ponintsSlice

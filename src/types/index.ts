@@ -37,6 +37,7 @@ export type IConfig = {
     component?: IReactComponent
     denoteAs?: string
     isParent?: boolean
+    flexure?: string | number
   }
 }
 
