@@ -404,15 +404,18 @@ config={{
     // a label which is used in the tooltip inside <TooltipLabel/>
     label: 'Conversion',
     // ReactChild | JSX Element
+    // default is <BarGroup/>
     // required
     // a component for your bar
     // hint: you can style <Bar/> from the lib
     component: <MyConvertionBarGroup />,
     // string
+    // default is ''
     // optional
     // denotation of values
     denoteAs: '%',
     // boolean, optional
+    // default is false
     // indicates that the other bars will be wrapped into this one
     // so you'll get stacked bar chart
     // only a single isParent can be recognized (all the others will be ignored)
@@ -440,19 +443,23 @@ config={{
     // a label which is used in the tooltip
     label: 'Conversion',
     // ReactChild | JSX.Element
+    // default is <Path/>
     // required (otherwise it doesn't make sense)
     // a component for your path, must be path tag e.g. styled.path or <path />
     // hint: you can style <Path/> from the lib
     component: <MyConvertionPath />,
     // string
+    // default is ''
     // optional
     // denotation of values
     denoteAs: '%',
     // number from 0 to 100
+    // default is 20
     // optional
     // sets the flexure of the line
-    flexure,
+    flexure: 0,
     // boolean, optional
+    // default is false
     // indicates that the <MyConvertionPath/> path is planned to be filled
     isFilled: true,
   },
@@ -544,6 +551,7 @@ yAxis={{
 ```javascript
 tooltip={{
   // boolean, optional
+  // default is false
   // indicates that you basically want a tooltip to be visible
   isVisible: true,
   // ReactChild | JSX.Element, optional
