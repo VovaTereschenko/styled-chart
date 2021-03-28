@@ -9,7 +9,7 @@ Create beautiful charts with 💅 [Styled-components](https://styled-components.
 
 <div>
   <img src="https://i.ibb.co/kg8WjBX/2021-03-26-23-47-10.png" width="380" title="LineChart example">
-  <img src="https://i.ibb.co/M2hFgXD/2021-03-26-23-47-19.png" width="380" alt="BarChart example">
+  <img src="https://i.ibb.co/Ny3RxNW/2021-03-28-17-03-45.png" width="380" alt="BarChart example">
 </div>
 
 
@@ -402,6 +402,10 @@ config={{
     // a component for your bar
     // hint: you can style <Bar/> from the lib
     component: <MyConvertionBarGroup />,
+    // string
+    // optional
+    // denotation of values
+    denoteAs: '%',
     // boolean, optional
     // indicates that the other bars will be wrapped into this one
     // so you'll get stacked bar chart
