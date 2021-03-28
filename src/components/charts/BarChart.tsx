@@ -84,7 +84,7 @@ const buildParentBar = (
         tooltipData && dataConfigKey !== ILegend.empty && setTooltipData(tooltipData)
         toggleTooltip(true) },
       style: {
-        height: getBarHeight(Number(value), maxYAxis, minYAxis),
+        height: `${getBarHeight(Number(value), maxYAxis, minYAxis)}%`,
         width: `${100/barsNum}%`,
       },
     } as {
@@ -238,6 +238,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
               tooltipIsOpen,
               tooltip,
               config,
+              'isBarChart',
             )}
         </ChartVisualsWrapper>
         {buildXAxis(xAxis, uiniqueKeysData, xAxisStep)}

@@ -134,7 +134,7 @@ const StyledBarChart = () => {
           },
           {
             date: '21/08',
-            conversion: 15,
+            conversion: 55,
             basicPlan: 24,
             proPlan: 14,
           },
@@ -168,7 +168,7 @@ const StyledBarChart = () => {
           {
             date: '26/08',
             conversion: {
-              value: 95,
+              value: 22,
               component: (children) => getConversionList(95, children),
             },
             basicPlan: 23,

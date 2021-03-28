@@ -66,7 +66,7 @@ const buildParentBar = (
   const componentProps = {
     onMouseEnter: () =>  { tooltipData && setTooltipData(tooltipData); toggleTooltip(true) },
     style: {
-      height: getBarHeight(max, maxYAxis, minYAxis),
+      height: `${getBarHeight(max, maxYAxis, minYAxis)}%`,
       width: `${100/barsNum}%`,
     },
   } as {

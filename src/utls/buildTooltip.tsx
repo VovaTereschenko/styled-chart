@@ -2,6 +2,7 @@ import React from 'react'
 import {
   isRichDataObject,
   getBarHeight,
+  buildTooltipTransform,
 } from '../utls'
 
 import {
@@ -27,7 +28,13 @@ const buildTooltip = (
   tooltipIsOpen: boolean,
   tooltip: ITooltip,
   config: IConfig,
+  isBarChart?: string | boolean,
 ) =>  {
+  const {
+    isSmartTooltipPositioning = true,
+    hints,
+  } = tooltip
+  
   const children =
     <>
       <TooltipList>
@@ -38,7 +45,7 @@ const buildTooltip = (
           return (
             <React.Fragment key={tooltipItemData.key}>
               <TooltipListItem>
-                {tooltip.hints && tooltip.hints[tooltipItemData.key]}
+                {hints && hints[tooltipItemData.key]}
                 <TooltipLabel>
                   {tooltipItemData.label}
                 </TooltipLabel>
@@ -57,12 +64,37 @@ const buildTooltip = (
     </>
 
   const component = tooltip.component || <TooltipWrapper /> 
+  const bottom = getBarHeight(Number(tooltipData.barValue), maxYAxis, minYAxis)
+
+  const barNumAdjustment = isBarChart ? 0 : -1
+  const singleBarPersentage = 100/(barsNum + barNumAdjustment)
+
+  const barsPersentageAdjustment = isBarChart ? singleBarPersentage : 0
+
+  const defaultLeft = isSmartTooltipPositioning
+    ? singleBarPersentage * tooltipData.barIndex
+    : 100/barsNum * tooltipData.barIndex + 100/barsNum/2
+
+
+  const { left, translateX, translateY, xOffset, yOffset } =
+    buildTooltipTransform(
+      defaultLeft,
+      bottom,
+      singleBarPersentage,
+      barsPersentageAdjustment,
+      Boolean(isBarChart),
+      isSmartTooltipPositioning
+    )
+  
+  const transform = `
+    translateX(calc(${translateX}% + ${xOffset}px)) translateY(calc(${translateY}% + ${yOffset}px))
+  `
 
   const componentProps = {
     style: {
-      left: `${100/barsNum * tooltipData.barIndex + 100/barsNum/2}%`,
-      transform: 'translateX(-50%) translateY(-8px)',
-      bottom: getBarHeight(Number(tooltipData.barValue), maxYAxis, minYAxis),
+      left: `${left}%`,
+      transform,
+      bottom: `${bottom}%`,
     } as {[key: string]: string | number},
     children,
   }

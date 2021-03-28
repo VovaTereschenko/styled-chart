@@ -556,6 +556,10 @@ tooltip={{
   // default is false
   // indicates that you basically want a tooltip to be visible
   isVisible: true,
+  // boolean, optional
+  // default is true
+  // you can turn it off if you want it to appear about the bars/lines
+  isSmartTooltipPositioning: false,
   // ReactChild | JSX.Element, optional
   // default is <TooltipWrapper/>
   // a component for the tooltip

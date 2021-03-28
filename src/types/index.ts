@@ -59,6 +59,7 @@ export type IYAxis = {
 }
 
 export interface ITooltip {
+  isSmartTooltipPositioning?: boolean
   isVisible?: boolean
   hints?: {
     [key: string]: IReactComponent
