@@ -7,6 +7,7 @@
 Create beautiful charts with 💅 [Styled-components](https://styled-components.com/) (or your own react components). Chart lib for React.js built with Typescript and almost no dependencies.
 
 Like it? [Buy me a coffee ☕](https://www.buymeacoffee.com/vova).
+Questions, suggestions? Contact developer: [vovatdev@gmail.com](mailto:vovatdev@gmail.com)
 
 
 <div>
@@ -1150,5 +1151,3 @@ return (
 ```
 </p>
 </details>  
-
-Contact developer: [vovatdev@gmail.com](mailto:vovatdev@gmail.com)
