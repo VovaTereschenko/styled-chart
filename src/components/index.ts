@@ -20,8 +20,9 @@ export { default as Path } from '../components/shared/SVGRelated/Path'
 export { default as XAxisItem } from '../components/shared/XAxis/XAxisItem'
 export { default as XAxisBarWrapper } from '../components/shared/XAxis/XAxisBarWrapper'
 export { default as XAxisLineWrapper } from '../components/shared/XAxis/XAxisLineWrapper'
-export { default as YAxisItem } from '../components/shared/YAxis/YAxisItem'
 
+export { default as YAxisWrapper } from '../components/shared/YAxis/YAxisWrapper'
+export { default as YAxisItem } from '../components/shared/YAxis/YAxisItem'
 
 export { default as TooltipWrapper } from '../components/shared/Tooltip/TooltipWrapper'
 export { default as TooltipListItem } from '../components/shared/Tooltip/TooltipListItem'
@@ -30,8 +31,7 @@ export { default as TooltipValue } from '../components/shared/Tooltip/TooltipVal
 export { default as TooltipLabel } from '../components/shared/Tooltip/TooltipLabel'
 export { default as TooltipXAxisValue } from '../components/shared/Tooltip/TooltipXAxisValue'
 
-
 export { default as HintPoint} from '../components/shared/HandyStuff/HintPoint'
 
-export { default as YAxisWrapper } from '../components/shared/YAxis/YAxisWrapper'
+
 

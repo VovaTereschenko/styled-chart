@@ -17,13 +17,13 @@ const buildPath = (
     const component = config[key].component
     return component
       ? <React.Fragment key={key}>
-          {React.cloneElement(
-            component,
-            {
-              d,
-            }
-          )}
-        </React.Fragment>
+        {React.cloneElement(
+          component,
+          {
+            d,
+          }
+        )}
+      </React.Fragment>
       : <Path key={key} d={d}></Path>
   }
 }

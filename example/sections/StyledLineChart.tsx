@@ -220,7 +220,6 @@ const StyledLineChart = () => {
       basicPlan: config.basicPlan[index],
       proPlan: config.proPlan[index],
       conversion: getConversion(config.conversion[index]),
-      // day: config.day[index]
     }
     acum.push(obj)
     return acum

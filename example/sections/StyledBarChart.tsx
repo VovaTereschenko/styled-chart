@@ -20,9 +20,6 @@ import {
 
 
 const MyWrapper = styled.section`
-/* ${ChartWrapper} {
-  height: 270px;
-} */
   ${TooltipWrapper} {
     background: #cfcfcf;
     color: #333; 
@@ -91,7 +88,6 @@ const StyledBarChart = () => {
         }}
         yAxis={{
           maxValue: 100,
-          // minValue: 60,
           denoteAs: '%',
           ticksNum: 5,
           sectionComponent: <MyYAxisWrapper />,
@@ -102,7 +98,6 @@ const StyledBarChart = () => {
           step: 2,
           sectionComponent: <MyXAxisBarWrapper />,
           component: <MyXAxisItem />,
-          // ticksNum: 12,
         }}
         config={{
           conversion: {

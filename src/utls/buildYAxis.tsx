@@ -17,13 +17,13 @@ export const buildYAxisItems = (
   return (
     yAxis.component
       ? <React.Fragment key={val}>
-          {React.cloneElement(
-            yAxis.component,
-            {
-              children: resultingValue,
-            }
-          )}
-        </React.Fragment> 
+        {React.cloneElement(
+          yAxis.component,
+          {
+            children: resultingValue,
+          }
+        )}
+      </React.Fragment> 
       : <YAxisItem key={val}>{resultingValue}</YAxisItem>
   )
 }

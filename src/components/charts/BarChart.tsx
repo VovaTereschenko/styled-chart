@@ -71,8 +71,8 @@ const buildParentBar = (
     const component = dataConfigKey === ILegend.empty
       ? config[dataConfigKey] && config[dataConfigKey].component || <EmptyBar />
       : isRichDataObject(dataItemProp)
-          ? dataItemProp.component(children) // we take the compoent right from the data item
-          : config[dataConfigKey] && config[dataConfigKey].component // we take the component from the config
+        ? dataItemProp.component(children) // we take the compoent right from the data item
+        : config[dataConfigKey] && config[dataConfigKey].component // we take the component from the config
         || <BarGroup /> // or we take the default one
 
     const value = isRichDataObject(dataItemProp)
@@ -81,7 +81,7 @@ const buildParentBar = (
 
     const componentProps = {
       onMouseEnter: () =>  {
-        tooltipData && dataConfigKey !== ILegend.empty && setTooltipData(tooltipData);
+        tooltipData && dataConfigKey !== ILegend.empty && setTooltipData(tooltipData)
         toggleTooltip(true) },
       style: {
         height: getBarHeight(Number(value), maxYAxis, minYAxis),

@@ -62,24 +62,24 @@ const buildParentBar = (
   tooltipData?: ITooltipData,
   children?: (false | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[],
 ) => {
-    const component = <InvisibleBarGroup key={dataItem.dataItemUID}>{children}</InvisibleBarGroup>
-    const componentProps = {
-      onMouseEnter: () =>  { tooltipData && setTooltipData(tooltipData); toggleTooltip(true) },
-      style: {
-        height: getBarHeight(max, maxYAxis, minYAxis),
-        width: `${100/barsNum}%`,
-      },
-    } as {
+  const component = <InvisibleBarGroup key={dataItem.dataItemUID}>{children}</InvisibleBarGroup>
+  const componentProps = {
+    onMouseEnter: () =>  { tooltipData && setTooltipData(tooltipData); toggleTooltip(true) },
+    style: {
+      height: getBarHeight(max, maxYAxis, minYAxis),
+      width: `${100/barsNum}%`,
+    },
+  } as {
       style: object,
       onMouseEnter: () => {},
     }
 
-    return (
-      React.cloneElement(
-        component,
-        componentProps
-      )
+  return (
+    React.cloneElement(
+      component,
+      componentProps
     )
+  )
 }
 
 const buildBasicBar = (
@@ -94,12 +94,12 @@ const buildBasicBar = (
     const point = tooltip && tooltip.hints && tooltip.hints[dataConfigKey] || <HintPoint />
     const component = isRichDataObject(dataItemProp)
       ? <InvisibleBar>
-          {point}
-          {dataItemProp.component()}
-        </InvisibleBar>
+        {point}
+        {dataItemProp.component()}
+      </InvisibleBar>
       : <InvisibleBar>
-          {point}
-        </InvisibleBar>
+        {point}
+      </InvisibleBar>
     const value = isRichDataObject(dataItemProp)
       ? dataItemProp.value
       : dataItemProp
@@ -238,8 +238,6 @@ const LineChart = ({
                 const calcY = (val: number) => 
                   SVGHeight - SVGHeight/(maxValue - minValue) * (val - minValue)
           
-               
-
                 const
                   prevItem = dataSlice[1][i - 1] || 0,
                   prevIndex = i > 1 ? i - 1 : 0,
@@ -254,7 +252,7 @@ const LineChart = ({
                 if (Number(flexure) >= 0 || Number(flexure) <= 100) {
                   flexure = Number(flexure)
                 } else {
-                  throw Error("Flexure must be between 0 and 100")
+                  throw Error('Flexure must be between 0 and 100')
                 }
 
                 const
@@ -302,7 +300,7 @@ const LineChart = ({
               const valuesEachArray =
                 valuesArrays
                   .map(array => array
-                  .find((_, sliceIndex) => sliceIndex === index))
+                    .find((_, sliceIndex) => sliceIndex === index))
                   .map(val => Number(val))
 
               const maxPathValue = Math.max(...valuesEachArray) 

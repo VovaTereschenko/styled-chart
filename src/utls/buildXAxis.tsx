@@ -22,10 +22,10 @@ export const buildXAxis = (
   return (
     xAxis.sectionComponent
       ? React.cloneElement(
-          xAxis.sectionComponent, 
-          {
-            children,
-          },
+        xAxis.sectionComponent, 
+        {
+          children,
+        },
       )
       : isLineChart
         ? <XAxisLineWrapper>{children}</XAxisLineWrapper>

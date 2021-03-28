@@ -9,8 +9,8 @@ import {
 const fillDataRelativeToXAxis = (data: INotUniqueDataItem[], xAxisTicksNum: number): IDataItem[] =>  {
   const dataWithUniqueIDs = data.map(
     dataItem => !dataItem.dataItemUID
-    ? Object.assign(dataItem, {dataItemUID: generateUID()})
-    : dataItem)
+      ? Object.assign(dataItem, {dataItemUID: generateUID()})
+      : dataItem)
 
   if (xAxisTicksNum > data.length) return fillMissingValues(dataWithUniqueIDs, xAxisTicksNum, 100) as IDataItem[]
   else if (xAxisTicksNum < data.length) removeExtraValues(dataWithUniqueIDs, xAxisTicksNum) as IDataItem[]
