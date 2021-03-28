@@ -92,6 +92,7 @@ const StyledBarChart = () => {
         yAxis={{
           maxValue: 100,
           // minValue: 60,
+          denoteAs: '%',
           ticksNum: 5,
           sectionComponent: <MyYAxisWrapper />,
           component: <MyYAxisItem />
@@ -107,6 +108,7 @@ const StyledBarChart = () => {
           conversion: {
             label: 'Conversion',
             isParent: true,
+            denoteAs: '%',
             component: <MyBarGroup />,
           },
           basicPlan: {

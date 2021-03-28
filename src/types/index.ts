@@ -35,6 +35,7 @@ export type IConfig = {
     label: string
     [key: string]: any
     component?: IReactComponent
+    denoteAs?: string
     isParent?: boolean
   }
 }
@@ -51,6 +52,7 @@ export type IYAxis = {
   maxValue?: number
   minValue?: number
   ticksNum?: number
+  denoteAs?: string 
   sectionComponent?: IReactComponent
   component?: IReactComponent
 }

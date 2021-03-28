@@ -237,6 +237,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
               minValue,
               tooltipIsOpen,
               tooltip,
+              config,
             )}
         </ChartVisualsWrapper>
         {buildXAxis(xAxis, uiniqueKeysData, xAxisStep)}

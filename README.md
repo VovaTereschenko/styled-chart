@@ -6,9 +6,6 @@
 
 Create beautiful charts with 💅 [Styled-components](https://styled-components.com/) (or your own react components). Chart lib for React.js built with Typescript and almost no dependencies.
 
-Like it? [Buy me a coffee ☕](https://www.buymeacoffee.com/vova).
-Questions, suggestions? Contact developer: [vovatdev@gmail.com](mailto:vovatdev@gmail.com)
-
 
 <div>
   <img src="https://i.ibb.co/kg8WjBX/2021-03-26-23-47-10.png" width="380" title="LineChart example">
@@ -437,6 +434,10 @@ config={{
     // a component for your path, must be path tag e.g. styled.path or <path />
     // hint: you can style <Path/> from the lib
     component: <MyConvertionPath />,
+    // string
+    // optional
+    // denotation of values
+    denoteAs: '%',
     // boolean, optional
     // indicates that the <MyConvertionPath/> path is planned to be filled
     isFilled: true,
@@ -505,6 +506,9 @@ yAxis={{
   // number, optional
   // default is 0
   minValue: 0,
+  // string, optional
+  // denotation of values
+  denoteAs: '%',
   // number, optional
   // default is 3
   // a number a ticks you want to be shown in the yAxis
@@ -997,12 +1001,10 @@ const BasicPath = styled(Path)`
   fill: PaleTurquoise;
 `
 
-const getConversionLineList = (number: number, children?: any) => {
-  return (
-    <StarredLineItem>
-      <StarredItemText>New record!</StarredItemText>
-    </StarredLineItem>
-  )
+const getConversionLineList = () =>
+  <StarredLineItem>
+    <StarredItemText>New record!</StarredItemText>
+  </StarredLineItem>
 }
 
 const StyledLineChart = () => {
@@ -1053,7 +1055,7 @@ const StyledLineChart = () => {
           date: '19/08',
           day: 'Sun',
           basicPlan: 1,
-          proPlan:   4,
+          proPlan: 4,
           conversion: 22,
         
         },
@@ -1104,7 +1106,7 @@ const StyledLineChart = () => {
           day: 'Sun',
           conversion: {
             value: 95,
-            component: (children) => getConversionLineList(95, children),
+            component: () => getConversionLineList(),
           },
           proPlan: 13,
           basicPlan: 23,
@@ -1123,6 +1125,9 @@ const StyledLineChart = () => {
 
 export default StyledLineChart
 ```
+
+</p>
+</details>  
 
 ### Styling in cascade
 To access all the elements of the Chart, use the cascade styling. This is handy if something goes wrong with direct styling.

@@ -324,6 +324,7 @@ const LineChart = ({ data, config, yAxis, xAxis, tooltip, height, resizeDependen
               minValue,
               tooltipIsOpen,
               tooltip,
+              config,
             )}
         </ChartVisualsWrapper>
         {buildXAxis(xAxis, uiniqueKeysData, step, true)}

@@ -9,7 +9,6 @@ import {
 } from '../../src/index'
 
 export const MyYAxisWrapper = styled(YAxisWrapper)`
-  width: 40px;
   padding: 0 8px;
   text-align: right;
   border-right: 2px solid #757575;
