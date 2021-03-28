@@ -6,6 +6,8 @@
 
 Create beautiful charts with 💅 [Styled-components](https://styled-components.com/) (or your own react components). Chart lib for React.js built with Typescript and almost no dependencies.
 
+Live examples on https://styled-chart.com/.
+
 Questions, suggestions? Contact developer: [vovatdev@gmail.com](mailto:vovatdev@gmail.com)
 
 <div>
