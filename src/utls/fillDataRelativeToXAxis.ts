@@ -7,7 +7,8 @@ import {
 
 
 const fillDataRelativeToXAxis = (data: INotUniqueDataItem[], xAxisTicksNum: number): IDataItem[] =>  {
-  const dataWithUniqueIDs = data.map(
+  const dataCopy = [...data]
+  const dataWithUniqueIDs = dataCopy.map(
     dataItem => !dataItem.dataItemUID
       ? Object.assign(dataItem, {dataItemUID: generateUID()})
       : dataItem)
