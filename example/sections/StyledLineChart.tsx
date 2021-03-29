@@ -101,9 +101,9 @@ const StyledLineChart = () => {
       yAxisMaxValue: 100,
       yAxisTicksNum: 6,
       xAxisStep: 1,
-      conversion: [38, 9, 92, 33, 10, 64, 65, 50, 81, 43, 15, 14, 38, 49, 63, 14, 0, 24, 96, 90, 81, 63, 55, 14],
+      conversion: [100, 50, 50, 50, 32, 10, 65, 50, 81, 43, 15, 14, 38, 49, 63, 14, 0, 24, 96, 90, 81, 63, 55, 14],
       basicPlan: [11, 4, 14, 33,12, 30, 44, 51, 66, 44, 14, 52, 11, 22, 14, 52, 37, 30, 44, 51, 66, 44, 14, 52],
-      proPlan: [3, 4, 6, 3, 17, 1, 3, 17, 22, 12, 1, 3, 3, 4, 6, 3, 17, 1, 3, 17, 22, 12, 1, 3],
+      proPlan: [12, 4, 6, 3, 17, 1, 3, 17, 22, 12, 1, 3, 3, 4, 6, 3, 17, 1, 3, 17, 22, 12, 1, 3],
 
     },
     {
@@ -232,7 +232,7 @@ const StyledLineChart = () => {
       {/* <button onClick={restyle}>Restyle!</button> */}
       <LineChart
         height="300px"
-        flexure="20"
+        flexure="1"
         tooltip={{
           isVisible: true,
           hints: {
@@ -259,7 +259,6 @@ const StyledLineChart = () => {
             label: 'Conversion',
             component: config.conversionPath,
             isFilled: false,
-            flexure: 100,
           },
           basicPlan: {
             label: 'Basic plan',

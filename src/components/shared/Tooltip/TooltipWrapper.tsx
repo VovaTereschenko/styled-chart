@@ -6,7 +6,6 @@ const TooltipWrapper = styled.div`
   flex-direction: column;
   position: absolute;
   height: auto;
-  width: 120px;
   background: #303030;
   border-radius: 5px;
   color: #fff;
