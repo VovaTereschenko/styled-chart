@@ -14,7 +14,7 @@ const fillDataRelativeToXAxis = (data: INotUniqueDataItem[], xAxisTicksNum: numb
       : dataItem)
 
   if (xAxisTicksNum > data.length) return fillMissingValues(dataWithUniqueIDs, xAxisTicksNum, 100) as IDataItem[]
-  else if (xAxisTicksNum < data.length) removeExtraValues(dataWithUniqueIDs, xAxisTicksNum) as IDataItem[]
+  else if (xAxisTicksNum < data.length) return removeExtraValues(dataWithUniqueIDs, xAxisTicksNum) as IDataItem[]
   return dataWithUniqueIDs  as IDataItem[]
 }
 

@@ -98,6 +98,7 @@ const StyledBarChart = () => {
         }}
         xAxis={{
           key: 'date',
+          ticksNum: 4,
           step: 5,
           sectionComponent: <MyXAxisBarWrapper />,
           component: <MyXAxisItem />,

@@ -222,7 +222,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
                 dataItem,
                 dataItem[dataConfigKey],
                 config,
-                data.length,
+                uiniqueKeysData.length,
                 maxValue,
                 minValue,
                 setTooltipData,
@@ -242,7 +242,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
           {tooltip && tooltip.isVisible && tooltipData
             && buildTooltip(
               tooltipData,
-              data.length,
+              uiniqueKeysData.length,
               maxValue,
               minValue,
               tooltipIsOpen,

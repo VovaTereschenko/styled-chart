@@ -137,7 +137,6 @@ const LineChart = ({
   const [SVGHeight, setSVGHeight] = React.useState<number>(0)
   const [tooltipData, setTooltipData] = React.useState<ITooltipData | null>(null)
   const [tooltipIsOpen, toggleTooltip] =  React.useState(false)
-  const cellsNumber = data.length
   const wrapperRef = React.useRef<SVGSVGElement>(null)
 
   const {
@@ -146,13 +145,12 @@ const LineChart = ({
     key: xAxisKey,
   } = xAxis
 
-
-  const essentialWidthFactor =  data.length / xAxisTicksNum
-
   const uiniqueKeysData = fillDataRelativeToXAxis(data, xAxisTicksNum)
+  const essentialWidthFactor =  uiniqueKeysData.length / xAxisTicksNum
 
 
-  const xAxisValues = data.map(dataItem => dataItem[xAxisKey])
+  const cellsNumber = uiniqueKeysData.length
+  const xAxisValues = uiniqueKeysData.map(dataItem => dataItem[xAxisKey])
 
   React.useLayoutEffect(() => {
     if (wrapperRef.current) {
@@ -186,6 +184,7 @@ const LineChart = ({
    *    y: [2, 0, 1],
    * }
    */
+
   const dataSlices = uiniqueKeysData.reduce((acum, dataItem) => {
     uniqueKeys.forEach((key) => {
       if (!acum[key]) acum[key] = []
@@ -288,7 +287,7 @@ const LineChart = ({
             })}
           </SVG>
 
-          <InvisibleBarsSection dataLength={data.length}>
+          <InvisibleBarsSection dataLength={uiniqueKeysData.length}>
             {uiniqueKeysData.map((dataItem: IDataItem, index) => {
               const tooltipKeys = findTooltipKeys(dataItem, config)
               const tooltipValues = tooltipKeys.reduce((acum, key) => {
@@ -322,7 +321,7 @@ const LineChart = ({
 
               return buildParentBar(
                 maxPathValue,
-                data.length,
+                uiniqueKeysData.length,
                 maxValue,
                 minValue,
                 setTooltipData,
@@ -344,7 +343,7 @@ const LineChart = ({
           {tooltip && tooltip.isVisible && tooltipData
             && buildTooltip(
               tooltipData,
-              data.length,
+              uiniqueKeysData.length,
               maxValue,
               minValue,
               tooltipIsOpen,
