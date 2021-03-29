@@ -1,10 +1,9 @@
 import styled from 'styled-components'
 
-const XAxisBarWrapper = styled.aside`
+const XAxisBarWrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-shrink: 0;
-  justify-content: space-around;
+  position: relative;
 `
 
 export default XAxisBarWrapper

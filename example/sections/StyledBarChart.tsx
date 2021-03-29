@@ -20,6 +20,9 @@ import {
 
 
 const MyWrapper = styled.section`
+  display: block;
+  width: 100%;
+  justify-content: center;
   ${TooltipWrapper} {
     background: #cfcfcf;
     color: #333; 
@@ -171,6 +174,48 @@ const StyledBarChart = () => {
               value: 22,
               component: (children) => getConversionList(95, children),
             },
+            basicPlan: 23,
+            proPlan: 13,
+          },
+          {
+            date: '27/08',
+            conversion: 83,
+            basicPlan: 23,
+            proPlan: 13,
+          },
+          {
+            date: '28/08',
+            conversion: 83,
+            basicPlan: 23,
+            proPlan: 13,
+          },
+          {
+            date: '29/08',
+            conversion: 83,
+            basicPlan: 23,
+            proPlan: 13,
+          },
+          {
+            date: '30/08',
+            conversion: 83,
+            basicPlan: 23,
+            proPlan: 13,
+          },
+          {
+            date: '01/09',
+            conversion: 83,
+            basicPlan: 23,
+            proPlan: 13,
+          },
+          {
+            date: '01/09',
+            conversion: 83,
+            basicPlan: 23,
+            proPlan: 13,
+          },
+          {
+            date: '02/09',
+            conversion: 83,
             basicPlan: 23,
             proPlan: 13,
           },

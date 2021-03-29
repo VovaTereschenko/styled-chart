@@ -4,8 +4,15 @@ import StyledLineChart from './StyledLineChart'
 import StyledBarChart from './StyledBarChart'
 
 const ChartWrapper = styled.div`
+  display: flex;
+  justify-content: center;
   width: 50%;
   padding: 0;
+  margin: 0 auto;
+  @media (max-width: 767px) {
+    width: 100%;
+    margin: 0;
+  }
 `
 
 const BasicChartsWrapper = styled.section`
@@ -19,10 +26,6 @@ const BasicChartsWrapper = styled.section`
   height: auto;
   @media (max-width: 767px) {
     flex-wrap: wrap;
-    ${ChartWrapper} {
-      width: 100%;
-      margin: 0;
-    }
   }
 `
 

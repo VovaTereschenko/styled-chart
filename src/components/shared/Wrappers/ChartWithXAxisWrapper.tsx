@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const ChartWithXAxisWrapper =  styled.section`
-  display: flex;
+  display: block;
   flex-wrap: wrap;
   align-content: flex-start;
   width: 100%;

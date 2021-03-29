@@ -14,7 +14,9 @@ import {
   MyPointer,
 } from './sharedStyledComponents'
 
-const MyWrapper = styled.section``
+const MyWrapper = styled.section`
+  width: 100%;
+`
 
 const StarredItemText = styled.p`
   font-size: 14px;

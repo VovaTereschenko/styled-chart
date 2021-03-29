@@ -14,7 +14,7 @@ const ChartWrapper = styled.section<{height?: string | number}>`
     height: ${getHeight(height)};
   `}
   box-sizing: border-box;
-  padding: 8px 32px 48px 8px;
+  padding: 8px 8px 48px 8px;
   overflow: hidden;
 `
 
