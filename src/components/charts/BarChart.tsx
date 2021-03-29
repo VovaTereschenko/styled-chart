@@ -34,6 +34,9 @@ import {
   getInnerBarHeight,
   getXAxisValues,
   fillDataRelativeToXAxis,
+  findParentBar,
+  checkIfAllBarsHaveKeyOrEmpty,
+  fillStackedBarChartWithParents,
 } from '../../utls'
 
 interface IStackedBarChart {
@@ -62,6 +65,8 @@ const buildParentBar = (
   children?: (false | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[],
   tooltipData?: ITooltipData,
 ) => {
+
+
   if (isParentBar(dataConfigKey, config)
     || (!isStackedBarChart
       && config[dataConfigKey]
@@ -156,7 +161,12 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
     key: xAxisKey,
   } = xAxis
 
-  const uiniqueKeysData = fillDataRelativeToXAxis(data, xAxisTicksNum)
+  let uiniqueKeysData = fillDataRelativeToXAxis(data, xAxisTicksNum)
+
+  const parentBar = findParentBar(config)
+  if (parentBar && !checkIfAllBarsHaveKeyOrEmpty(uiniqueKeysData, parentBar)) {
+    uiniqueKeysData = fillStackedBarChartWithParents(uiniqueKeysData, parentBar)
+  }
 
   const {
     maxValue = isStackedBarChart ? findStackedYAxisMax(config, uiniqueKeysData) : findBarsYAxisMax(config, uiniqueKeysData),

@@ -92,6 +92,8 @@ const buildBasicBar = (
 ) =>  {
   if (config[dataConfigKey]) {
     const point = tooltip && tooltip.hints && tooltip.hints[dataConfigKey] || <HintPoint />
+    if (!dataItemProp) return
+
     const component = isRichDataObject(dataItemProp)
       ? <InvisibleBar>
         {point}
@@ -252,8 +254,10 @@ const LineChart = ({
                 if (Number(flexure) >= 0 || Number(flexure) <= 100) {
                   flexure = Number(flexure)
                 } else {
-                  throw Error('Flexure must be between 0 and 100')
+                  throw new Error('Flexure must be between 0 and 100')
                 }
+
+                const reservedStrokeWidth = 100
 
                 const
                   deltaPull = 100,
@@ -270,7 +274,7 @@ const LineChart = ({
                   i === dataSlice[1].length - 1
                   && config[dataSlice[0]][ILegend.isFilled]
                     // We build the full chart is isFilled flag is provided
-                    ? `c ${delta * deltaSmall} 0 ${delta * deltaLarge} ${y - prevY} ${x - prevX} ${y - prevY} V ${SVGHeight} H 0`
+                    ? `c ${delta * deltaSmall} 0 ${delta * deltaLarge} ${y - prevY} ${x - prevX} ${y - prevY} V ${SVGHeight + reservedStrokeWidth} H 0`
                     : undefined
 
                 return acum += lastSlice || ponintsSlice
@@ -302,7 +306,8 @@ const LineChart = ({
                   .map(array => array
                     .find((_, sliceIndex) => sliceIndex === index))
                   .map(val => Number(val))
-
+                  .filter(val => val && val)
+ 
               const maxPathValue = Math.max(...valuesEachArray) 
   
               const children = Object.keys(dataItem).map((dataConfigKey) =>

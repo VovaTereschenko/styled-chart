@@ -50,6 +50,8 @@ const StarredLineItem = styled.aside`
 
 const ConversionPath = styled(Path)`
  stroke: #f66dc3;
+ fill: #fafafa;
+ stroke-width: 20;
 `
 
 const ProPath = styled(Path)`
@@ -101,7 +103,7 @@ const StyledLineChart = () => {
       yAxisMaxValue: 100,
       yAxisTicksNum: 6,
       xAxisStep: 1,
-      conversion: [100, 50, 50, 50, 32, 10, 65, 50, 81, 43, 15, 14, 38, 49, 63, 14, 0, 24, 96, 90, 81, 63, 55, 14],
+      conversion: [100, 50, 50],
       basicPlan: [11, 4, 14, 33,12, 30, 44, 51, 66, 44, 14, 52, 11, 22, 14, 52, 37, 30, 44, 51, 66, 44, 14, 52],
       proPlan: [12, 4, 6, 3, 17, 1, 3, 17, 22, 12, 1, 3, 3, 4, 6, 3, 17, 1, 3, 17, 22, 12, 1, 3],
 
@@ -258,7 +260,7 @@ const StyledLineChart = () => {
           conversion: {
             label: 'Conversion',
             component: config.conversionPath,
-            isFilled: false,
+            isFilled: true,
           },
           basicPlan: {
             label: 'Basic plan',

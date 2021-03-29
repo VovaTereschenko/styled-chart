@@ -30,15 +30,17 @@ export type IDataSlice = {
   [key: string]: number[]
 }
 
+export interface IConfigItem {
+  label: string
+  [key: string]: any
+  component?: IReactComponent
+  denoteAs?: string
+  isParent?: boolean
+  flexure?: string | number
+}
+
 export type IConfig = {
-  [key: string]: {
-    label: string
-    [key: string]: any
-    component?: IReactComponent
-    denoteAs?: string
-    isParent?: boolean
-    flexure?: string | number
-  }
+  [key: string]: IConfigItem
 }
 
 export type IXAxis = {

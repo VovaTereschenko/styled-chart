@@ -14,9 +14,9 @@ const buildPath = (
   d: string,
 ) =>  {
   if (config[key]) {
-    const component = config[key].component
-    return component
-      ? <React.Fragment key={key}>
+    const component = config[key].component || <Path />
+    return (
+      <React.Fragment key={key}>
         {React.cloneElement(
           component,
           {
@@ -24,7 +24,7 @@ const buildPath = (
           }
         )}
       </React.Fragment>
-      : <Path key={key} d={d}></Path>
+    )
   }
 }
 

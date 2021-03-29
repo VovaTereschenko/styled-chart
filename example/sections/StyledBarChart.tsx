@@ -131,25 +131,25 @@ const StyledBarChart = () => {
           },
           {
             date: '20/08',
-            conversion: 11,
+            conversion: 0,
             basicPlan: 1,
             proPlan: 4,
           },
           {
             date: '21/08',
-            conversion: 55,
+            conversion: 0,
             basicPlan: 24,
             proPlan: 14,
           },
           {
             date: '22/08',
-            conversion: 12,
+            // conversion: 12,
             basicPlan: 27,
             proPlan: 11,
           },
           {
             date: '23/08',
-            conversion: 24,
+            // conversion: 24,
             basicPlan: 29,
             proPlan: 8,
           },
@@ -209,7 +209,6 @@ const StyledBarChart = () => {
           },
           {
             date: '01/09',
-            conversion: 83,
             basicPlan: 23,
             proPlan: 13,
           },
@@ -217,7 +216,6 @@ const StyledBarChart = () => {
             date: '02/09',
             conversion: 83,
             basicPlan: 23,
-            proPlan: 13,
           },
           {
             date: '27/08',

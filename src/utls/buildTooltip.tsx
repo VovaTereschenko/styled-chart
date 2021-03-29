@@ -100,9 +100,9 @@ const buildTooltip = (
   }
 
   if (!tooltipIsOpen) {
-    componentProps.style.opacity = 0 // so it can be specified by user
-    componentProps.style.width = 0
     componentProps.style.fontSize = 0
+    componentProps.style.opacity = 0 // so it can be specified by user
+    componentProps.style.maxWidth = 0
   }
   return React.cloneElement(
     component,
