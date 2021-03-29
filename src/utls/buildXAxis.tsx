@@ -39,7 +39,7 @@ export const buildXAxisItem = (
   index: number,
   dataItem: IDataItem,
   itemsNum: number,
-  isLineChart: boolean,
+  isLineChart?: boolean,
   children?: any,
 ) => {
   const stepCoef = step > 2 ? step - 1 : 1
