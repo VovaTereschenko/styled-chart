@@ -103,7 +103,7 @@ const StyledLineChart = () => {
       yAxisMaxValue: 100,
       yAxisTicksNum: 6,
       xAxisStep: 1,
-      conversion: [100, 50, 50],
+      conversion: [100, 50, 50, 11, 4, 14, 33,12, 30, 44, 51, 66, 44, 14, 52, 11,],
       basicPlan: [11, 4, 14, 33,12, 30, 44, 51, 66, 44, 14, 52, 11, 22, 14, 52, 37, 30, 44, 51, 66, 44, 14, 52],
       proPlan: [12, 4, 6, 3, 17, 1, 3, 17, 22, 12, 1, 3, 3, 4, 6, 3, 17, 1, 3, 17, 22, 12, 1, 3],
 
@@ -167,7 +167,7 @@ const StyledLineChart = () => {
 
   const dafaultConfig = configs[0]
   const [config, setCongig] = React.useState(dafaultConfig)
-  const startLength = 6
+  const startLength = 20
   const [datesLength, setDatesLength] = React.useState(startLength)
 
   // const restyle = () => {
@@ -252,7 +252,7 @@ const StyledLineChart = () => {
         }}
         xAxis={{
           key: config.xAxisKey,
-          step: config.xAxisStep,
+          step: 4,
           component: <MyXAxisItem />,
           sectionComponent: <MyXAxisLineWrapper />,
         }}

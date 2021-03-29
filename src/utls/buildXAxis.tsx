@@ -42,7 +42,6 @@ export const buildXAxisItem = (
   isLineChart?: boolean,
   children?: any,
 ) => {
-  const stepCoef = step > 2 ? step - 1 : 1
   const singleItemWidth = isLineChart ?  100 / (itemsNum - 1) : 100 / itemsNum
 
   return (
@@ -52,7 +51,7 @@ export const buildXAxisItem = (
         {
           children,
           style: {
-            left: `${index * singleItemWidth * stepCoef}%`,
+            left: `${index * singleItemWidth }%`,
           }
         })}
     </React.Fragment>
