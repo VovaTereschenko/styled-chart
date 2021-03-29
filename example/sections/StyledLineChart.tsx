@@ -170,10 +170,10 @@ const StyledLineChart = () => {
   const startLength = 20
   const [datesLength, setDatesLength] = React.useState(startLength)
 
-  // const restyle = () => {
-  //   setDatesLength(datesLength + 1 > dates.length ? startLength : datesLength + 1)
-  //   // setCongig(config.index + 1 === configs.length ?  configs[0] : configs[config.index + 1])
-  // }
+  const restyle = () => {
+    setDatesLength(datesLength + 1 > dates.length ? startLength : datesLength + 1)
+    // setCongig(config.index + 1 === configs.length ?  configs[0] : configs[config.index + 1])
+  }
 
   const getConversionLineList = (number: number, children?: any) => {
     return (
@@ -231,7 +231,7 @@ const StyledLineChart = () => {
 
   return (
     <MyWrapper>
-      {/* <button onClick={restyle}>Restyle!</button> */}
+      {<button onClick={restyle}>Restyle!</button> }
       <LineChart
         height="300px"
         flexure="1"

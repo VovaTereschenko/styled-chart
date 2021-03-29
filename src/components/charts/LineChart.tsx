@@ -5,40 +5,30 @@ import {
   ChartWrapper,
   ChartWithXAxisWrapper,
   ChartVisualsWrapper,
-  InvisibleBarGroup,
-  InvisibleBarsSection,
-  InvisibleBar,
-  HintPoint,
 } from '../'
 
 import { 
   IXAxis,
   IYAxis,
-  IDataItem,
   IConfig,
-  IDataSlice,
   ILegend,
   ITooltip,
-  IDataItemProperty,
   ITooltipData,
-  IReactComponent,
   INotUniqueDataItem,
 } from '../../types'
 
 import {
-  findInnerComponentsKeys,
   useResize,
   buildYAxis,
   buildXAxis,
-  isRichDataObject,
   buildPath,
   buildTooltip,
-  findTooltipKeys,
-  getBarHeight,
-  getInnerBarHeight,
   getXAxisValues,
   fillDataRelativeToXAxis,
+  buildDataSlices,
 } from '../../utls'
+
+import LineChartBarsOverlay from '../../features/LineChartBarsOverlay'
 
 interface ILineChart {
   config: IConfig
@@ -49,78 +39,6 @@ interface ILineChart {
   height?: number | string
   resizeDependency?: any[]
   flexure?: number | string
-}
-
-const buildParentBar = (
-  max: number,
-  barsNum: number,
-  maxYAxis: number,
-  minYAxis: number,
-  setTooltipData: React.Dispatch<ITooltipData | null>,
-  toggleTooltip: React.Dispatch<boolean>,
-  dataItem: IDataItem,
-  tooltipData?: ITooltipData,
-  children?: (false | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[],
-) => {
-  const component = <InvisibleBarGroup key={dataItem.dataItemUID}>{children}</InvisibleBarGroup>
-  const componentProps = {
-    onMouseEnter: () =>  { tooltipData && setTooltipData(tooltipData); toggleTooltip(true) },
-    style: {
-      height: `${getBarHeight(max, maxYAxis, minYAxis)}%`,
-      width: `${100/barsNum}%`,
-    },
-  } as {
-      style: object,
-      onMouseEnter: () => {},
-    }
-
-  return (
-    React.cloneElement(
-      component,
-      componentProps
-    )
-  )
-}
-
-const buildBasicBar = (
-  dataConfigKey: string,
-  dataItemProp: IDataItemProperty,
-  dataItem: IDataItem,
-  config: IConfig,
-  innerSum: number,
-  tooltip?: ITooltip,
-) =>  {
-  if (config[dataConfigKey]) {
-    const point = tooltip && tooltip.hints && tooltip.hints[dataConfigKey] || <HintPoint />
-    if (!dataItemProp) return
-
-    const component = isRichDataObject(dataItemProp)
-      ? <InvisibleBar>
-        {point}
-        {dataItemProp.component()}
-      </InvisibleBar>
-      : <InvisibleBar>
-        {point}
-      </InvisibleBar>
-    const value = isRichDataObject(dataItemProp)
-      ? dataItemProp.value
-      : dataItemProp
-
-    const componentProps = {
-      style: {
-        height: getInnerBarHeight(Number(value), innerSum),
-      },
-    }
-    
-    return (
-      <React.Fragment key={`inner_${dataItem.dataItemUID}_${dataConfigKey}`}>
-        {React.cloneElement(
-          component,
-          componentProps,
-        )}
-      </React.Fragment>
-    )
-  }
 }
 
 const LineChart = ({
@@ -135,8 +53,6 @@ const LineChart = ({
 }: ILineChart) => {
   const [SVGWidth, setSVGWidth] = React.useState<number>(0)
   const [SVGHeight, setSVGHeight] = React.useState<number>(0)
-  const [tooltipData, setTooltipData] = React.useState<ITooltipData | null>(null)
-  const [tooltipIsOpen, toggleTooltip] =  React.useState(false)
   const wrapperRef = React.useRef<SVGSVGElement>(null)
 
   const {
@@ -166,41 +82,8 @@ const LineChart = ({
     }
   })
 
-  const keys = uiniqueKeysData.map((item) => findInnerComponentsKeys(item, config))
 
-  /**
-   * @example {
-   *    [x, y]
-   * }
-   */
-  const uniqueKeys = keys.reduce((acum, item) => {
-    const uniqueIterationKeys = item.filter(key => acum.indexOf(key) === -1)
-    return [...acum, ...uniqueIterationKeys]
-  }, [])
-
-  /**
-   * @example {
-   *    x: [1, 2, 3],
-   *    y: [2, 0, 1],
-   * }
-   */
-
-  const dataSlices = uiniqueKeysData.reduce((acum, dataItem) => {
-    uniqueKeys.forEach((key) => {
-      if (!acum[key]) acum[key] = []
-      const dataItemProperty = dataItem[key]
-  
-      if (dataItemProperty) {
-        const value = isRichDataObject(dataItemProperty)
-          ? Number(dataItemProperty.value)
-          : Number(dataItemProperty)
-
-        acum[key].push(value)
-      }
-    
-    })
-    return acum
-  }, {} as IDataSlice)
+  const dataSlices = buildDataSlices(uiniqueKeysData, config)
 
   /**
    * @example [
@@ -228,10 +111,11 @@ const LineChart = ({
 
   const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
 
+
   return (
     <ChartWrapper height={height}>
       {buildYAxis(yAxis, yAxisValues)}
-      <ChartWithXAxisWrapper onMouseLeave={() => {toggleTooltip(false)}}>
+      <ChartWithXAxisWrapper>
         <ChartVisualsWrapper>
           <SVG ref={wrapperRef}>
             {Object.entries(dataSlices).map(dataSlice => {
@@ -287,69 +171,16 @@ const LineChart = ({
             })}
           </SVG>
 
-          <InvisibleBarsSection dataLength={uiniqueKeysData.length}>
-            {uiniqueKeysData.map((dataItem: IDataItem, index) => {
-              const tooltipKeys = findTooltipKeys(dataItem, config)
-              const tooltipValues = tooltipKeys.reduce((acum, key) => {
-                const tooltipItemValues = {
-                  label: config[key].label,
-                  key,
-                  value: dataItem[key],
-                }
-                acum.push(tooltipItemValues)
-                return acum
-              }, [] as ITooltipData['tooltipValues'])
-
-              const valuesEachArray =
-                valuesArrays
-                  .map(array => array
-                    .find((_, sliceIndex) => sliceIndex === index))
-                  .map(val => Number(val))
-                  .filter(val => val && val)
- 
-              const maxPathValue = Math.max(...valuesEachArray) 
-  
-              const children = Object.keys(dataItem).map((dataConfigKey) =>
-                buildBasicBar(
-                  dataConfigKey,
-                  dataItem[dataConfigKey],
-                  dataItem,
-                  config,
-                  maxPathValue,
-                  tooltip,
-                ))
-
-              return buildParentBar(
-                maxPathValue,
-                uiniqueKeysData.length,
-                maxValue,
-                minValue,
-                setTooltipData,
-                toggleTooltip,
-                dataItem,
-                {
-                  xAxisValue: xAxisValues[index],
-                  dataConfigKey: '',
-                  tooltipValues,
-                  barIndex: index,
-                  barValue: maxPathValue,
-                },
-                children as (false | IReactComponent)[],
-              )
-            })}
-          </InvisibleBarsSection>
-
-
-          {tooltip && tooltip.isVisible && tooltipData
-            && buildTooltip(
-              tooltipData,
-              uiniqueKeysData.length,
-              maxValue,
-              minValue,
-              tooltipIsOpen,
-              tooltip,
-              config,
-            )}
+          <LineChartBarsOverlay 
+            uiniqueKeysData={uiniqueKeysData}
+            config={config}
+            valuesArrays={valuesArrays}
+            xAxisValues={xAxisValues}
+            maxValue={maxValue}
+            minValue={minValue}
+            tooltip={tooltip}
+          />
+          
         </ChartVisualsWrapper>
         {buildXAxis(xAxis, uiniqueKeysData, step, true)}
       </ChartWithXAxisWrapper>
