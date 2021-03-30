@@ -13,7 +13,6 @@ import {
   IConfig,
   ILegend,
   ITooltip,
-  ITooltipData,
   INotUniqueDataItem,
 } from '../../types'
 
@@ -22,7 +21,6 @@ import {
   buildYAxis,
   buildXAxis,
   buildPath,
-  buildTooltip,
   getXAxisValues,
   fillDataRelativeToXAxis,
   buildDataSlices,
@@ -108,9 +106,7 @@ const LineChart = ({
     ticksNum : yAxisTicksNum = 3,
   } = yAxis
   
-
   const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
-
 
   return (
     <ChartWrapper height={height}>

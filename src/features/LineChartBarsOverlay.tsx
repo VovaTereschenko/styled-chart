@@ -45,10 +45,11 @@ const buildParentBar = (
   children?: (false | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[],
 ) => {
   const component = <InvisibleBarGroup key={dataItem.dataItemUID}>{children}</InvisibleBarGroup>
+  const height = getBarHeight(max, maxYAxis, minYAxis)
   const componentProps = {
     onMouseEnter: () =>  { tooltipData && setTooltipData(tooltipData); toggleTooltip(true) },
     style: {
-      height: `${getBarHeight(max, maxYAxis, minYAxis)}%`,
+      height: `${height || 30}%`,
       width: `${100/barsNum}%`,
     },
   } as {
@@ -138,7 +139,7 @@ const LineChartBarsOverlay = ({
               .map(val => Number(val))
               .filter(val => val && val)
 
-          const maxPathValue = Math.max(...valuesEachArray) 
+          const maxPathValue = valuesEachArray.length ? Math.max(...valuesEachArray) : 0
 
           const children = React.useMemo(() => Object.keys(dataItem).map((dataConfigKey) =>
             buildBasicBar(

@@ -5,7 +5,7 @@ const findTooltipKeys = (dataItem: IDataItem, config: IConfig) =>
     .keys(dataItem)
     .filter((key: string) => {
       const dataItemProperty = dataItem[key]
-      if (dataItemProperty) {
+      if (typeof dataItemProperty !== undefined) {
         const isTooltipKey = config[key] &&  (config[key].tooltip || config[key].label)
         return Boolean(isTooltipKey)
       }

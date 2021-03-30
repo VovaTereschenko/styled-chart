@@ -206,16 +206,16 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
                 return acum + value
               }, 0)
 
-            const children = Object.keys(dataItem).map((dataConfigKey) =>
+            const children = React.useMemo(() => Object.keys(dataItem).map((dataConfigKey) =>
               buildBasicBar(
                 dataConfigKey,
                 dataItem,
                 dataItem[dataConfigKey],
                 config,
                 innerBarsSum,
-              ))
+              )), [])
 
-            const parent = Object.keys(dataItem).map((dataConfigKey) => 
+            const parent = React.useMemo(() =>  Object.keys(dataItem).map((dataConfigKey) => 
               buildParentBar(
                 isStackedBarChart,
                 dataConfigKey,
@@ -235,7 +235,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
                   barIndex: index,
                   barValue: Number(getDataItemValue(dataItem[dataConfigKey])),
                 },
-              ))
+              )), [])
 
             return parent
           })}
