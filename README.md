@@ -644,7 +644,8 @@ resizeDependency={[drawerIsOpen]}
 <XAxisItem /> 
 // default for the xAxis sectionComponent of the BarChart
 <XAxisBarWrapper/> 
-
+// default grid borders for xAxis
+<XGrid/>
 // ----------
 // yAxis:
 // ----------
@@ -652,7 +653,8 @@ resizeDependency={[drawerIsOpen]}
 <YAxisItem/>
 // default for the yAxis sectionComponent of the LineChart
 <XAxisLineWrapper/> 
-
+// default grid borders for yAxis
+<YGrid/>
 // ----------
 // tooltip:
 // ----------
