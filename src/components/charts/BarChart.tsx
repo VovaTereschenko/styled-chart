@@ -37,6 +37,7 @@ import {
   findParentBar,
   checkIfAllBarsHaveKeyOrEmpty,
   fillStackedBarChartWithParents,
+  buildGrid,
 } from '../../utls'
 
 interface IStackedBarChart {
@@ -159,6 +160,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
     step: xAxisStep = 1,
     ticksNum: xAxisTicksNum = data.length,
     key: xAxisKey,
+    grid: xAxisGrid,
   } = xAxis
 
   let uiniqueKeysData = fillDataRelativeToXAxis(data, xAxisTicksNum)
@@ -172,6 +174,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
     maxValue = isStackedBarChart ? findStackedYAxisMax(config, uiniqueKeysData) : findBarsYAxisMax(config, uiniqueKeysData),
     minValue = 0,
     ticksNum: yAxisTicksNum = 3,
+    grid: yAxisGrid,
   } = yAxis
       
   const xAxisValues = data.map(dataItem => dataItem[xAxisKey])
@@ -184,6 +187,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
         onMouseLeave={() => { toggleTooltip(false)}}
       >
         <ChartVisualsWrapper>
+          {buildGrid(xAxisValues, xAxisGrid, yAxisValues, yAxisGrid)}
           {uiniqueKeysData.map((dataItem: IDataItem, index) => {
             const innerBarsKeys = findInnerComponentsKeys(dataItem, config)
             const tooltipKeys = findTooltipKeys(dataItem, config)

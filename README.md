@@ -501,6 +501,10 @@ xAxis={{
   // 2 -> | Sun | x | Tue |
   // 3 -> | Sun | x | x | Wed |
   step: 3,
+  // boolean | ReactChild | JSX.Element, optional
+  // default is false
+  // adds xAxis grid to the chart
+  grid: true,
   // number, optional
   // default is data.length
   // explicitly sets the number of items to cut or extend the data to a particular amount
@@ -532,6 +536,10 @@ yAxis={{
   // string, optional
   // denotation of values
   denoteAs: '%',
+  // boolean | ReactChild | JSX.Element, optional
+  // default is false
+  // adds xAxis grid to the chart
+  grid: true,
   // number, optional
   // default is 3
   // a number a ticks you want to be shown in the yAxis

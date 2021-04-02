@@ -24,6 +24,10 @@ export { default as XAxisLineWrapper } from '../components/shared/XAxis/XAxisLin
 export { default as YAxisWrapper } from '../components/shared/YAxis/YAxisWrapper'
 export { default as YAxisItem } from '../components/shared/YAxis/YAxisItem'
 
+export { default as XGrid } from '../components/shared/Grid/XGrid'
+export { default as YGrid } from '../components/shared/Grid/YGrid'
+
+
 export { default as TooltipWrapper } from '../components/shared/Tooltip/TooltipWrapper'
 export { default as TooltipListItem } from '../components/shared/Tooltip/TooltipListItem'
 export { default as TooltipList } from '../components/shared/Tooltip/TooltipList'

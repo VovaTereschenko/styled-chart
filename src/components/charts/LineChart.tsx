@@ -21,6 +21,7 @@ import {
   buildYAxis,
   buildXAxis,
   buildPath,
+  buildGrid,
   getXAxisValues,
   fillDataRelativeToXAxis,
   buildDataSlices,
@@ -57,6 +58,7 @@ const LineChart = ({
     step = 1,
     ticksNum: xAxisTicksNum = data.length,
     key: xAxisKey,
+    grid: xAxisGrid,
   } = xAxis
 
   const uiniqueKeysData = fillDataRelativeToXAxis(data, xAxisTicksNum)
@@ -104,6 +106,7 @@ const LineChart = ({
     maxValue = Math.max(...arrayOfAllValues),
     minValue = 0,
     ticksNum : yAxisTicksNum = 3,
+    grid: yAxisGrid,
   } = yAxis
   
   const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
@@ -113,6 +116,7 @@ const LineChart = ({
       {buildYAxis(yAxis, yAxisValues)}
       <ChartWithXAxisWrapper>
         <ChartVisualsWrapper>
+          {buildGrid(xAxisValues, xAxisGrid, yAxisValues, yAxisGrid)}
           <SVG ref={wrapperRef}>
             {Object.entries(dataSlices).map(dataSlice => {
               const d = dataSlice[1].reduce((acum, item, i) => {              

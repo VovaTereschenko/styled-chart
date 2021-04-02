@@ -91,6 +91,7 @@ const StyledBarChart = () => {
         }}
         yAxis={{
           maxValue: 100,
+          grid: true,
           denoteAs: '%',
           ticksNum: 5,
           sectionComponent: <MyYAxisWrapper />,
@@ -98,6 +99,7 @@ const StyledBarChart = () => {
         }}
         xAxis={{
           key: 'date',
+          grid: true,
           ticksNum: 4,
           step: 5,
           sectionComponent: <MyXAxisBarWrapper />,

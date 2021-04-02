@@ -47,6 +47,7 @@ export type IXAxis = {
   key: string
   step?: number
   ticksNum?: number
+  grid?: boolean | IReactComponent
   sectionComponent?: IReactComponent
   component?: IReactComponent
 }
@@ -55,7 +56,8 @@ export type IYAxis = {
   maxValue?: number
   minValue?: number
   ticksNum?: number
-  denoteAs?: string 
+  denoteAs?: string
+  grid?: boolean | IReactComponent
   sectionComponent?: IReactComponent
   component?: IReactComponent
 }
