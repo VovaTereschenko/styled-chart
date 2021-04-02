@@ -692,7 +692,8 @@ resizeDependency={[drawerIsOpen]}
 <InvisibleBarSection/> 
 // inside InvisibleBarSection:
 <InvisibleBar/> 
-<InvisibleBarGroup/> 
+<InvisibleBarGroup/>
+<InvisibleBarGroupWrapper/>
 
 // ----------
 // wrappers:

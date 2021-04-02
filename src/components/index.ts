@@ -11,6 +11,7 @@ export { default as BarGroup } from '../components/shared/Bars/BarGroup'
 export { default as InvisibleBarGroup } from '../components/shared/Invisibles/InvisibleBarGroup'
 export { default as InvisibleBarsSection } from '../components/shared/Invisibles/InvisibleBarsSection'
 export { default as InvisibleBar } from '../components/shared/Invisibles/InvisibleBar'
+export { default as InvisibleBarGroupWrapper } from '../components/shared/Invisibles/InvisibleBarGroupWrapper'
 
 export { default as EmptyBar } from '../components/shared/Empty/EmptyBar'
 

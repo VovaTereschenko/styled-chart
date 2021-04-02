@@ -2,6 +2,7 @@ import React from 'react'
 import { 
   InvisibleBarGroup,
   InvisibleBarsSection,
+  InvisibleBarGroupWrapper,
   InvisibleBar,
   HintPoint,
 } from '../components'
@@ -44,13 +45,13 @@ const buildParentBar = (
   tooltipData?: ITooltipData,
   children?: (false | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[],
 ) => {
-  const component = <InvisibleBarGroup key={dataItem.dataItemUID}>{children}</InvisibleBarGroup>
+  const component = <InvisibleBarGroup>{children}</InvisibleBarGroup>
   const height = getBarHeight(max, maxYAxis, minYAxis)
   const componentProps = {
     onMouseEnter: () =>  { tooltipData && setTooltipData(tooltipData); toggleTooltip(true) },
     style: {
       height: `${height || 30}%`,
-      width: `${100/barsNum}%`,
+     
     },
   } as {
       style: object,
@@ -58,10 +59,15 @@ const buildParentBar = (
     }
 
   return (
-    React.cloneElement(
-      component,
-      componentProps
-    )
+    <InvisibleBarGroupWrapper
+      width={`${100/barsNum}%`}
+      key={dataItem.dataItemUID}
+      onMouseEnter={() =>  { tooltipData && setTooltipData(tooltipData); toggleTooltip(true) }}>
+      {React.cloneElement(
+        component,
+        componentProps
+      )}
+    </InvisibleBarGroupWrapper>
   )
 }
 

@@ -6,6 +6,7 @@ import {
   ChartVisualsWrapper,
   ChartWithXAxisWrapper,
   EmptyBar,
+  InvisibleBarGroupWrapper,
 } from '..'
 
 import {
@@ -91,7 +92,7 @@ const buildParentBar = (
         toggleTooltip(true) },
       style: {
         height: `${getBarHeight(Number(value), maxYAxis, minYAxis)}%`,
-        width: `${100/barsNum}%`,
+        width: `${100}%`,
       },
     } as {
       style: object,
@@ -102,12 +103,18 @@ const buildParentBar = (
     if (!isRichDataObject(dataItemProp)) componentProps.children = children
 
     return (
-      <React.Fragment key={dataItem.dataItemUID}>
+      <InvisibleBarGroupWrapper
+        key={dataItem.dataItemUID}
+        width={ `${100/barsNum}%`}
+        onMouseEnter= {() => {
+          tooltipData && dataConfigKey !== ILegend.empty && setTooltipData(tooltipData)
+          toggleTooltip(true) }}
+      >
         {React.cloneElement(
           component,
           componentProps,
         )}
-      </React.Fragment>
+      </InvisibleBarGroupWrapper>
     )
   }
 }
