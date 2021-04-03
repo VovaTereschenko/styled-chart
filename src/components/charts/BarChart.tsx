@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 import {
   BarGroup,
@@ -246,7 +246,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
                   barIndex: index,
                   barValue: Number(getDataItemValue(dataItem[dataConfigKey])),
                 },
-              )), [])
+              )), [uiniqueKeysData])
 
             return parent
           })}

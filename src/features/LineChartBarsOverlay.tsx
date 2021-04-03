@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { 
   InvisibleBarGroup,
   InvisibleBarsSection,
@@ -128,6 +128,7 @@ const LineChartBarsOverlay = ({
       <InvisibleBarsSection dataLength={uiniqueKeysData.length} onMouseLeave={() => {toggleTooltip(false)}}>
         {uiniqueKeysData.map((dataItem: IDataItem, index) => {
           const tooltipKeys = findTooltipKeys(dataItem, config)
+          const tooltipLabels = tooltipKeys.map(key => config[key].label)
           const tooltipValues = tooltipKeys.reduce((acum, key) => {
             const tooltipItemValues = {
               label: config[key].label,
@@ -155,8 +156,16 @@ const LineChartBarsOverlay = ({
               config,
               maxPathValue,
               tooltip,
-            )),[])
+            )), [])
               
+          const tooltipData = {
+            xAxisValue: xAxisValues[index],
+            dataConfigKey: '',
+            tooltipValues,
+            barIndex: index,
+            barValue: maxPathValue,
+          }
+
           return React.useMemo(() => buildParentBar(
             maxPathValue,
             uiniqueKeysData.length,
@@ -165,15 +174,9 @@ const LineChartBarsOverlay = ({
             setTooltipData,
             toggleTooltip,
             dataItem,
-            {
-              xAxisValue: xAxisValues[index],
-              dataConfigKey: '',
-              tooltipValues,
-              barIndex: index,
-              barValue: maxPathValue,
-            },
+            tooltipData,
             children as (false | IReactComponent)[],
-          ), [])
+          ), [uiniqueKeysData])
   
         })}
       </InvisibleBarsSection>
