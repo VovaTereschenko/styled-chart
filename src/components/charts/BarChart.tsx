@@ -224,7 +224,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
                 dataItem[dataConfigKey],
                 config,
                 innerBarsSum,
-              )), [])
+              )), [uiniqueKeysData])
 
             const parent = React.useMemo(() =>  Object.keys(dataItem).map((dataConfigKey) => 
               buildParentBar(

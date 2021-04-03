@@ -156,7 +156,7 @@ const LineChartBarsOverlay = ({
               config,
               maxPathValue,
               tooltip,
-            )), [])
+            )), [uiniqueKeysData])
               
           const tooltipData = {
             xAxisValue: xAxisValues[index],
