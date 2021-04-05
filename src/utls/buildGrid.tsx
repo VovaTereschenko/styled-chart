@@ -17,6 +17,7 @@ const buildGrid = (
   xAxisGrid: IXAxis['grid'],
   yAxisValues: number[],
   yAxisGrid: IYAxis['grid'],
+  isBarChart?: string
 ) =>  {
   const yComponent = yAxisGrid
     && isBoolean(yAxisGrid)
@@ -24,12 +25,13 @@ const buildGrid = (
   const xComponent = xAxisGrid
     && isBoolean(xAxisGrid)
     ? <XGrid /> : xAxisGrid
-    
-  const singleItemWidth = 100 / (xTicks.length - 1)
+  
+  const xMap = Array.from(Array(isBarChart ? xTicks.length + 1 : xTicks.length).keys())
+  const singleItemWidth = 100 / (isBarChart ? xTicks.length : xTicks.length - 1)
 
   return (
     <React.Fragment>
-      {yComponent && xTicks.map((_, index) =>
+      {yComponent && xMap.map((_, index) =>
         <React.Fragment key={index}>
           {React.cloneElement(yComponent, {
             style: {

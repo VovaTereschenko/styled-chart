@@ -11,12 +11,13 @@ import {
 
 export const buildYAxisItems = (
   yAxis: IYAxis,
+  index: number,
   val?: number,
 ) => {
   const resultingValue = `${val}${yAxis.denoteAs ? yAxis.denoteAs : ''}`
   return (
     yAxis.component
-      ? <React.Fragment key={val}>
+      ? <React.Fragment key={index}>
         {React.cloneElement(
           yAxis.component,
           {
@@ -24,7 +25,7 @@ export const buildYAxisItems = (
           }
         )}
       </React.Fragment> 
-      : <YAxisItem key={val}>{resultingValue}</YAxisItem>
+      : <YAxisItem key={index}>{resultingValue}</YAxisItem>
   )
 }
 
@@ -32,7 +33,7 @@ export const buildYAxis = (
   yAxis: IYAxis,
   data: number[],
 ) => {
-  const children = data.map((item) => buildYAxisItems(yAxis, item))
+  const children = data.map((item, index) => buildYAxisItems(yAxis, index, item))
   return (
     yAxis.sectionComponent
       ? React.cloneElement(

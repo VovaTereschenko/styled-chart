@@ -3,6 +3,7 @@ import {
   isRichDataObject,
   getBarHeight,
   buildTooltipTransform,
+  findParentBar,
 } from '../utls'
 
 import {
@@ -18,6 +19,8 @@ import {
   TooltipLabel,
   TooltipValue,
   TooltipXAxisValue,
+  TooltipParentItem,
+  TooltipListItemTextContent,
 } from '../components'
 
 const buildTooltip = (
@@ -34,27 +37,56 @@ const buildTooltip = (
     isSmartTooltipPositioning = true,
     hints,
   } = tooltip
-  
+
+
+  let tooltipValues = tooltipData.tooltipValues
+  const parentKey = findParentBar(config)
+  if (parentKey && isBarChart) {
+    tooltipValues =  [...tooltipData.tooltipValues.filter(item => item.key !== parentKey)]
+  }
+
+  const parentItem = parentKey && isBarChart ? tooltipData.tooltipValues.find(item => item.key === parentKey) : undefined
+
+  const getDenotation = (key: string) => 
+    config[key] && config[key].denoteAs
+      ? config[key].denoteAs
+      : ''
+
   const children =
     <>
       <TooltipList>
-        {tooltipData.tooltipValues.map((tooltipItemData) => {
-          const denoteAs = config[tooltipItemData.key] && config[tooltipItemData.key].denoteAs
-            ? config[tooltipItemData.key].denoteAs
-            : ''
+        {parentItem && (
+          <TooltipListItem>
+            <TooltipParentItem>
+              <TooltipLabel>
+                {parentItem.label}
+              </TooltipLabel>
+              <TooltipValue>
+                {!isRichDataObject(parentItem.value)
+                  ? `${parentItem.value}${getDenotation(parentItem.key)}`
+                  : `${parentItem.value.value}${getDenotation(parentItem.key)}`
+                }
+              </TooltipValue>
+            </TooltipParentItem>
+          </TooltipListItem>
+        )}
+        {tooltipValues.map((tooltipItemData) => {
+          const denoteAs = getDenotation(tooltipItemData.key)
           return (
             <React.Fragment key={tooltipItemData.key}>
               <TooltipListItem>
                 {hints && hints[tooltipItemData.key]}
-                <TooltipLabel>
-                  {tooltipItemData.label}
-                </TooltipLabel>
-                <TooltipValue>
-                  {!isRichDataObject(tooltipItemData.value)
-                    ? `${tooltipItemData.value}${denoteAs}`
-                    : `${tooltipItemData.value.value}${denoteAs}`
-                  }
-                </TooltipValue>
+                <TooltipListItemTextContent>
+                  <TooltipLabel>
+                    {tooltipItemData.label}
+                  </TooltipLabel>
+                  <TooltipValue>
+                    {!isRichDataObject(tooltipItemData.value)
+                      ? `${tooltipItemData.value}${denoteAs}`
+                      : `${tooltipItemData.value.value}${denoteAs}`
+                    }
+                  </TooltipValue>
+                </TooltipListItemTextContent>
               </TooltipListItem>
             </React.Fragment>
           )
@@ -74,7 +106,6 @@ const buildTooltip = (
   const defaultLeft = isSmartTooltipPositioning
     ? singleBarPersentage * tooltipData.barIndex
     : 100/barsNum * tooltipData.barIndex + 100/barsNum/2
-
 
   const { left, translateX, translateY, xOffset, yOffset } =
     buildTooltipTransform(

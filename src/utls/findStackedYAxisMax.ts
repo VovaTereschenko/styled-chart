@@ -14,6 +14,7 @@ const findStackedYAxisMax = (config: IConfig, data: IDataItem[]) => {
   const maxYAxis = 
     Math.max(...data.map(dataItem => {
       const dataItemProperty = dataItem[parentBarKey]
+      if (typeof dataItemProperty === 'undefined') return 0
       return (
         isRichDataObject(dataItemProperty)
           ? Number(dataItemProperty.value)

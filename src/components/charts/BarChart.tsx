@@ -1,45 +1,34 @@
 import * as React from 'react'
 
 import {
-  BarGroup,
   ChartWrapper,
   ChartVisualsWrapper,
   ChartWithXAxisWrapper,
-  EmptyBar,
-  InvisibleBarGroupWrapper,
 } from '..'
 
 import {
   IYAxis,
   IXAxis,
   IConfig,
-  IDataItem,
-  IDataItemProperty,
-  ILegend,
-  IReactComponent,
   ITooltip,
-  ITooltipData,
   INotUniqueDataItem,
 } from '../../types'
 
 import {
-  findInnerComponentsKeys,
-  findTooltipKeys,
-  isRichDataObject,
   findStackedYAxisMax,
   findBarsYAxisMax,
   buildXAxis,
   buildYAxis,
-  buildTooltip,
-  getBarHeight,
-  getInnerBarHeight,
   getXAxisValues,
   fillDataRelativeToXAxis,
   findParentBar,
   checkIfAllBarsHaveKeyOrEmpty,
   fillStackedBarChartWithParents,
   buildGrid,
+  getDenotedHeight,
 } from '../../utls'
+
+import BarChartBars from '../../features/BarChartBars'
 
 interface IStackedBarChart {
   config: IConfig
@@ -50,117 +39,8 @@ interface IStackedBarChart {
   height?: string | number
 }
 
-const isParentBar = (dataConfigKey: string, config: IConfig) =>
-  config[dataConfigKey] && config[dataConfigKey].isParent || dataConfigKey === ILegend.empty
-
-const buildParentBar = (
-  isStackedBarChart: boolean,
-  dataConfigKey: string,
-  dataItem: IDataItem,
-  dataItemProp: IDataItemProperty,
-  config: IConfig,
-  barsNum: number,
-  maxYAxis: number,
-  minYAxis: number,
-  setTooltipData: React.Dispatch<ITooltipData | null>,
-  toggleTooltip: React.Dispatch<boolean>,
-  children?: (false | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[],
-  tooltipData?: ITooltipData,
-) => {
-
-
-  if (isParentBar(dataConfigKey, config)
-    || (!isStackedBarChart
-      && config[dataConfigKey]
-      && config[dataConfigKey].component)
-  ) {
-
-    const component = dataConfigKey === ILegend.empty
-      ? config[dataConfigKey] && config[dataConfigKey].component || <EmptyBar />
-      : isRichDataObject(dataItemProp)
-        ? dataItemProp.component(children) // we take the compoent right from the data item
-        : config[dataConfigKey] && config[dataConfigKey].component // we take the component from the config
-        || <BarGroup /> // or we take the default one
-
-    const value = isRichDataObject(dataItemProp)
-      ? dataItemProp.value
-      : dataItemProp
-
-    const componentProps = {
-      onMouseEnter: () =>  {
-        tooltipData && dataConfigKey !== ILegend.empty && setTooltipData(tooltipData)
-        toggleTooltip(true) },
-      style: {
-        height: `${getBarHeight(Number(value), maxYAxis, minYAxis)}%`,
-        width: `${100}%`,
-      },
-    } as {
-      style: object,
-      onMouseEnter: () => {},
-      children: typeof children,
-    }
-  
-    if (!isRichDataObject(dataItemProp)) componentProps.children = children
-
-    return (
-      <InvisibleBarGroupWrapper
-        key={dataItem.dataItemUID}
-        width={ `${100/barsNum}%`}
-        onMouseEnter= {() => {
-          tooltipData && dataConfigKey !== ILegend.empty && setTooltipData(tooltipData)
-          toggleTooltip(true) }}
-      >
-        {React.cloneElement(
-          component,
-          componentProps,
-        )}
-      </InvisibleBarGroupWrapper>
-    )
-  }
-}
-
-const buildBasicBar = (
-  dataConfigKey: string,
-  dataItem: IDataItem,
-  dataItemProp: IDataItemProperty,
-  config: IConfig,
-  innerSum: number,
-) =>  {
-  if (config[dataConfigKey] && !config[dataConfigKey].isParent) {
-    const component = isRichDataObject(dataItemProp)
-      ? dataItemProp.component() // we take the compoent right from the data item
-      : config[dataConfigKey].component // we take the component from the config
-    || <BarGroup /> // or we take the default one
-
-    const value = isRichDataObject(dataItemProp)
-      ? dataItemProp.value
-      : dataItemProp
-
-    const componentProps = {
-      style: {
-        height: getInnerBarHeight(Number(value), innerSum),
-      },
-    }
-
-    return (
-      <React.Fragment key={`inner_${dataItem.dataItemUID}_${dataConfigKey}`}>
-        {React.cloneElement(
-          component,
-          componentProps,
-        )}
-      </React.Fragment>
-    )
-  }
-}
-
-const getDataItemValue = (dataItem: IDataItemProperty) =>
-  isRichDataObject(dataItem)
-    ? dataItem.value
-    : dataItem
 
 const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarChart) => {
-  const [tooltipData, setTooltipData] = React.useState<ITooltipData | null>(null)
-  const [tooltipIsOpen, toggleTooltip] =  React.useState(false)
   const isStackedBarChart = Object.entries(config).map(item => item[1]).some(item => item.isParent)
 
   const {
@@ -188,79 +68,19 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
   const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
 
   return (
-    <ChartWrapper height={height}>
+    <ChartWrapper height={height && getDenotedHeight(height)}>
       {buildYAxis(yAxis, yAxisValues)}
-      <ChartWithXAxisWrapper
-        onMouseLeave={() => { toggleTooltip(false)}}
-      >
+      <ChartWithXAxisWrapper>
         <ChartVisualsWrapper>
-          {buildGrid(xAxisValues, xAxisGrid, yAxisValues, yAxisGrid)}
-          {uiniqueKeysData.map((dataItem: IDataItem, index) => {
-            const innerBarsKeys = findInnerComponentsKeys(dataItem, config)
-            const tooltipKeys = findTooltipKeys(dataItem, config)
-            const tooltipValues = tooltipKeys.reduce((acum, key) => {
-              const tooltipItemValues = {
-                label: config[key].label,
-                key,
-                value: dataItem[key],
-              }
-              acum.push(tooltipItemValues)
-              return acum
-            }, [] as ITooltipData['tooltipValues'])
-
-            const innerBarsSum = innerBarsKeys.reduce(
-              (acum, key) => {
-                const dataItemProperty = dataItem[key]
-                const value = isRichDataObject(dataItemProperty)
-                  ? Number(dataItemProperty.value)
-                  : Number(dataItemProperty)
-                return acum + value
-              }, 0)
-
-            const children = React.useMemo(() => Object.keys(dataItem).map((dataConfigKey) =>
-              buildBasicBar(
-                dataConfigKey,
-                dataItem,
-                dataItem[dataConfigKey],
-                config,
-                innerBarsSum,
-              )), [uiniqueKeysData])
-
-            const parent = React.useMemo(() =>  Object.keys(dataItem).map((dataConfigKey) => 
-              buildParentBar(
-                isStackedBarChart,
-                dataConfigKey,
-                dataItem,
-                dataItem[dataConfigKey],
-                config,
-                uiniqueKeysData.length,
-                maxValue,
-                minValue,
-                setTooltipData,
-                toggleTooltip,
-                children as (false | IReactComponent)[],
-                {
-                  xAxisValue: xAxisValues[index],
-                  dataConfigKey,
-                  tooltipValues,
-                  barIndex: index,
-                  barValue: Number(getDataItemValue(dataItem[dataConfigKey])),
-                },
-              )), [uiniqueKeysData])
-
-            return parent
-          })}
-          {tooltip && tooltip.isVisible && tooltipData
-            && buildTooltip(
-              tooltipData,
-              uiniqueKeysData.length,
-              maxValue,
-              minValue,
-              tooltipIsOpen,
-              tooltip,
-              config,
-              'isBarChart',
-            )}
+          {buildGrid(xAxisValues, xAxisGrid, yAxisValues, yAxisGrid, 'isBarChart')}
+          <BarChartBars 
+            uiniqueKeysData={uiniqueKeysData}
+            config={config}
+            xAxisValues={xAxisValues}
+            minValue={minValue}
+            maxValue={maxValue}
+            tooltip={tooltip}
+          />
         </ChartVisualsWrapper>
         {buildXAxis(xAxis, uiniqueKeysData, xAxisStep)}
       </ChartWithXAxisWrapper>

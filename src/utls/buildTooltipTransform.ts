@@ -17,7 +17,7 @@ const buildTooltipTransform = (
     }
   }
   
-  const isRightSide = left > 50,
+  const isRightSide = left >= 50,
     mdOffset = 8,
     smOffset = 4
 

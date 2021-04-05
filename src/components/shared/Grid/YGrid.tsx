@@ -5,6 +5,7 @@ const YGrid = styled.div`
   width: 1px;
   background: #e0e0e0;
   position: absolute;
+  z-index: -1;
 `
 
 export default YGrid

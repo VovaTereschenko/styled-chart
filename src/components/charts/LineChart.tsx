@@ -25,6 +25,7 @@ import {
   getXAxisValues,
   fillDataRelativeToXAxis,
   buildDataSlices,
+  getDenotedHeight,
 } from '../../utls'
 
 import LineChartBarsOverlay from '../../features/LineChartBarsOverlay'
@@ -112,7 +113,7 @@ const LineChart = ({
   const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
 
   return (
-    <ChartWrapper height={height}>
+    <ChartWrapper height={height && getDenotedHeight(height)}>
       {buildYAxis(yAxis, yAxisValues)}
       <ChartWithXAxisWrapper>
         <ChartVisualsWrapper>

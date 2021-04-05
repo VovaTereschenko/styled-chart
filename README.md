@@ -6,15 +6,9 @@
 
 Create beautiful charts with 💅 [Styled-components](https://styled-components.com/) (or your own react components). Chart lib for React.js built with Typescript and almost no dependencies.
 
-Live examples on https://styled-chart.com/.
+Start creating your chart with live editor https://styled-chart.com/editor.
 
 Questions, suggestions? Contact developer: [vovatdev@gmail.com](mailto:vovatdev@gmail.com)
-
-<div>
-  <img src="https://i.ibb.co/kg8WjBX/2021-03-26-23-47-10.png" width="380" title="LineChart example">
-  <img src="https://i.ibb.co/Ny3RxNW/2021-03-28-17-03-45.png" width="380" alt="BarChart example">
-</div>
-
 
 
 ## Installation
@@ -23,255 +17,6 @@ npm install styled-chart --save
 ```
 
 There are two basic charts which you can customize: BarChart and LineChart
-
-
-## Examples
-
-### BarChart basic example
-
-
-<img src="https://i.ibb.co/ykPStTb/2021-03-27-0-32-30.png" width="380" title="Basic BarChart">
-
-
-```javascript
-import * as React from 'react'
-import styled from 'styled-components'
-import {
-  BarChart,
-  BarGroup,
-} from 'styled-chart'
-
-const ProPlanBar = styled(BarGroup)`
-  background: DarkKhaki;
-`
-
-const BasicPlanBar = styled(BarGroup)`
-  background: Khaki;
-`
-
-const StyledBarChart = () => {
-  return (
-    <BarChart
-      tooltip={{
-        isVisible: true,
-      }}
-      yAxis={{
-        ticksNum: 5,
-      }}
-      xAxis={{
-        key: 'date',
-      }}
-      config={{
-        basicPlan: {
-          label: 'Basic plan',
-          component: <BasicPlanBar />,
-        },
-        proPlan: {
-          label: 'Pro plan',
-          component: <ProPlanBar />
-        },
-      }}
-      data={[
-        {
-          date: '19/08',
-          basicPlan: 1,
-          proPlan:   4,
-        },
-        {
-          date: '20/08',
-          basicPlan: 1,
-          proPlan: 4,
-        },
-      ]}
-    />
-  )
-}
-
-export default StyledBarChart
-```
-
-
-
-
-
-
-### Stacked BarChart basic example
-
-<img src="https://i.ibb.co/Kxt7TjF/2021-03-26-23-57-01.png" width="380" title="Basic BarChart">
-
-
-
-<details>
-<summary><span style="color:DodgerBlue;">Show Stacked BarChart example code</span></summary>
-<p>
-
-```javascript
-import * as React from 'react'
-import styled from 'styled-components'
-import {
-  BarChart,
-  Bar,
-  BarGroup,
-} from 'styled-chart'
-
-const MyBarGroup = styled(BarGroup)`
-  margin: 0 2px;
-`
-
-const ProPlanBar = styled(Bar)`
-  background: DarkKhaki;
-`
-
-const BasicPlanBar = styled(Bar)`
-  background: Khaki;
-`
-
-const StyledStackedBarChart = () => {
-
-  return (
-    <BarChart
-      tooltip={{
-        isVisible: true,
-      }}
-      yAxis={{
-        ticksNum: 5,
-      }}
-      xAxis={{
-        key: 'date',
-      }}
-      config={{
-        conversion: {
-          label: 'Conversion',
-          isParent: true,
-          component: <MyBarGroup />,
-        },
-        basicPlan: {
-          label: 'Basic plan',
-          component: <BasicPlanBar />,
-        },
-        proPlan: {
-          label: 'Pro plan',
-          component: <ProPlanBar />
-        },
-      }}
-      data={[
-        {
-          date: '19/08',
-          conversion: 22,
-          basicPlan: 1,
-          proPlan:   4,
-        },
-        {
-          date: '20/08',
-          conversion: 11,
-          basicPlan: 1,
-          proPlan: 4,
-        },
-      ]}
-    />
-  )
-}
-
-export default StyledStackedBarChart
-```
-
-</p>
-</details>  
-
-
-
-
-
-
-### LineChart basic example 
-
-<img src="https://i.ibb.co/YtLwV7w/2021-03-27-0-00-40.png" width="380" title="Basic LineChart">
-
-
-<details>
-<summary><span style="color:DodgerBlue;">Show LineChart example code</span></summary>
-<p>
-
-```javascript
-import * as React from 'react'
-import styled from 'styled-components'
-import {
-  LineChart,
-  Path,
-} from 'styled-chart'
-
-const ConversionPath = styled(Path)`
-  stroke: DarkKhaki;
-`
-
-const ProPath = styled(Path)`
-  stroke: Khaki;
-  fill: Khaki;
-`
-
-const BasicPath = styled(Path)`
-  stroke: LemonChiffon;
-  fill: LemonChiffon;
-`
-
-const StyledLineChart = () => {
-  return (
-    <LineChart
-      tooltip={{
-        isVisible: true,
-      }}
-      yAxis={{
-        ticksNum: 5,
-      }}
-      xAxis={{
-        key: 'date',
-      }}
-      config={{
-        conversion: {
-          label: 'Conversion',
-          component: <ConversionPath />,
-        },
-        basicPlan: {
-          label: 'Basic plan',
-          isFilled: true,
-          component: <BasicPath />,
-        },
-        proPlan: {
-          label: 'Pro plan',
-          isFilled: true,
-          component: <ProPath />
-        },
-      }}
-      data={[
-        {
-          date: '19/08',
-          conversion: 5,
-          basicPlan: 3,
-          proPlan: 1,
-        },
-        {
-          date: '20/08',
-          conversion: 7,
-          basicPlan: 2,
-          proPlan: 3,
-        },
-        {
-          date: '20/08',
-          conversion: 11,
-          basicPlan: 3,
-          proPlan: 1,
-        },
-      ]}
-    />
-  )
-}
-
-export default StyledLineChart
-```
-</p>
-</details>  
-
-
 
 
 ## Configuration
@@ -717,7 +462,254 @@ resizeDependency={[drawerIsOpen]}
 
 
 
-## More examples
+
+## Examples
+
+### BarChart basic example
+
+
+<img src="https://i.ibb.co/ykPStTb/2021-03-27-0-32-30.png" width="380" title="Basic BarChart">
+
+
+```javascript
+import * as React from 'react'
+import styled from 'styled-components'
+import {
+  BarChart,
+  BarGroup,
+} from 'styled-chart'
+
+const ProPlanBar = styled(BarGroup)`
+  background: DarkKhaki;
+`
+
+const BasicPlanBar = styled(BarGroup)`
+  background: Khaki;
+`
+
+const StyledBarChart = () => {
+  return (
+    <BarChart
+      tooltip={{
+        isVisible: true,
+      }}
+      yAxis={{
+        ticksNum: 5,
+      }}
+      xAxis={{
+        key: 'date',
+      }}
+      config={{
+        basicPlan: {
+          label: 'Basic plan',
+          component: <BasicPlanBar />,
+        },
+        proPlan: {
+          label: 'Pro plan',
+          component: <ProPlanBar />
+        },
+      }}
+      data={[
+        {
+          date: '19/08',
+          basicPlan: 1,
+          proPlan:   4,
+        },
+        {
+          date: '20/08',
+          basicPlan: 1,
+          proPlan: 4,
+        },
+      ]}
+    />
+  )
+}
+
+export default StyledBarChart
+```
+
+
+
+
+
+
+### Stacked BarChart basic example
+
+<img src="https://i.ibb.co/Kxt7TjF/2021-03-26-23-57-01.png" width="380" title="Basic BarChart">
+
+
+
+<details>
+<summary><span style="color:DodgerBlue;">Show Stacked BarChart example code</span></summary>
+<p>
+
+```javascript
+import * as React from 'react'
+import styled from 'styled-components'
+import {
+  BarChart,
+  Bar,
+  BarGroup,
+} from 'styled-chart'
+
+const MyBarGroup = styled(BarGroup)`
+  margin: 0 2px;
+`
+
+const ProPlanBar = styled(Bar)`
+  background: DarkKhaki;
+`
+
+const BasicPlanBar = styled(Bar)`
+  background: Khaki;
+`
+
+const StyledStackedBarChart = () => {
+
+  return (
+    <BarChart
+      tooltip={{
+        isVisible: true,
+      }}
+      yAxis={{
+        ticksNum: 5,
+      }}
+      xAxis={{
+        key: 'date',
+      }}
+      config={{
+        conversion: {
+          label: 'Conversion',
+          isParent: true,
+          component: <MyBarGroup />,
+        },
+        basicPlan: {
+          label: 'Basic plan',
+          component: <BasicPlanBar />,
+        },
+        proPlan: {
+          label: 'Pro plan',
+          component: <ProPlanBar />
+        },
+      }}
+      data={[
+        {
+          date: '19/08',
+          conversion: 22,
+          basicPlan: 1,
+          proPlan:   4,
+        },
+        {
+          date: '20/08',
+          conversion: 11,
+          basicPlan: 1,
+          proPlan: 4,
+        },
+      ]}
+    />
+  )
+}
+
+export default StyledStackedBarChart
+```
+
+</p>
+</details>  
+
+
+
+
+
+
+### LineChart basic example 
+
+<img src="https://i.ibb.co/YtLwV7w/2021-03-27-0-00-40.png" width="380" title="Basic LineChart">
+
+
+<details>
+<summary><span style="color:DodgerBlue;">Show LineChart example code</span></summary>
+<p>
+
+```javascript
+import * as React from 'react'
+import styled from 'styled-components'
+import {
+  LineChart,
+  Path,
+} from 'styled-chart'
+
+const ConversionPath = styled(Path)`
+  stroke: DarkKhaki;
+`
+
+const ProPath = styled(Path)`
+  stroke: Khaki;
+  fill: Khaki;
+`
+
+const BasicPath = styled(Path)`
+  stroke: LemonChiffon;
+  fill: LemonChiffon;
+`
+
+const StyledLineChart = () => {
+  return (
+    <LineChart
+      tooltip={{
+        isVisible: true,
+      }}
+      yAxis={{
+        ticksNum: 5,
+      }}
+      xAxis={{
+        key: 'date',
+      }}
+      config={{
+        conversion: {
+          label: 'Conversion',
+          component: <ConversionPath />,
+        },
+        basicPlan: {
+          label: 'Basic plan',
+          isFilled: true,
+          component: <BasicPath />,
+        },
+        proPlan: {
+          label: 'Pro plan',
+          isFilled: true,
+          component: <ProPath />
+        },
+      }}
+      data={[
+        {
+          date: '19/08',
+          conversion: 5,
+          basicPlan: 3,
+          proPlan: 1,
+        },
+        {
+          date: '20/08',
+          conversion: 7,
+          basicPlan: 2,
+          proPlan: 3,
+        },
+        {
+          date: '20/08',
+          conversion: 11,
+          basicPlan: 3,
+          proPlan: 1,
+        },
+      ]}
+    />
+  )
+}
+
+export default StyledLineChart
+```
+</p>
+</details>  
+
+
 
 ### Adjusted BarChart example
 

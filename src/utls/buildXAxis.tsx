@@ -52,6 +52,7 @@ export const buildXAxisItem = (
           children,
           style: {
             left: `${index * singleItemWidth }%`,
+            width: isLineChart ? 'auto' : `${singleItemWidth}%`,
           }
         })}
     </React.Fragment>

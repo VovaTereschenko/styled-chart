@@ -31,8 +31,7 @@ const buildDataSlices = (uiniqueKeysData: IDataItem[], config: IConfig) => {
     uniqueKeys.forEach((key) => {
       if (!acum[key]) acum[key] = []
       const dataItemProperty = dataItem[key]
-
-      if (typeof dataItemProperty !== undefined) {
+      if (typeof dataItemProperty !== 'undefined') {
         const value = isRichDataObject(dataItemProperty)
           ? Number(dataItemProperty.value)
           : Number(dataItemProperty)

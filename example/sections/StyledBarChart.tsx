@@ -1,235 +1,259 @@
-import * as React  from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 import {
   BarChart,
-  Bar,
   BarGroup,
+  Bar,
+  HintPoint,
   TooltipWrapper,
-  EmptyBar,
-  ChartWrapper,
+  TooltipLabel,
+  TooltipValue,
+  TooltipXAxisValue,
 } from '../../src/index'
 
 import {
-  MyXAxisItem,
-  MyXAxisBarWrapper,
-  StarredItem,
-  StarredItemEmoji,
-  MyYAxisWrapper,
-  MyYAxisItem,
-} from './sharedStyledComponents'
+  getRandomInt,
+  getXAxisValue,
+  createXAxisSnippet,
+  createYAxisSnippet,
+  createDataSnippet,
+  createTooltipSnippet,
+  createBarConfigSnippet,
+} from '../utils'
+
+import {
+  IChartCreatorConfig,
+} from '../types'
 
 
-const MyWrapper = styled.section`
-  display: block;
-  width: 100%;
-  justify-content: center;
-  ${TooltipWrapper} {
-    background: #cfcfcf;
-    color: #333; 
+import CodeSnippet from '../features/CodeSnippet'
+
+const StyledBarGroup = styled(BarGroup)`
+  && {
+    box-sizing: border-box;
+    margin: 0 4px;
   }
 `
 
-const StarredItemText = styled.span`
-  font-size: 14px;
-  font-weight: 700;
+const StyledBar = styled(Bar)<{backgroundColor: string}>`
+  && {
+    ${({ backgroundColor }) => `
+      background-color: ${backgroundColor};
+    `}
+  }
 `
 
-const MyBarGroup = styled(BarGroup)`
-  position: relative;
-  transition: 0.2s all linear;
-  margin: 0 2px;
-  border-radius: 8px 8px 0 0;
-  overflow: hidden;
+const StyledHint = styled(HintPoint)<{backgroundColor: string}>`
+  && {
+    ${({ backgroundColor }) => `
+      background-color: ${backgroundColor};
+    `}
+  }
 `
 
-const ProPlanBar = styled(Bar)`
-  border-top: 2px solid #fff;
-  background: #ecddb4;
+const StyledTooltip = styled(TooltipWrapper)<{backgroundColor?: string, textColor?: string}>`
+  && {
+    ${({ backgroundColor, textColor }) => `
+      ${backgroundColor ? `background: ${backgroundColor} !important` : ``};
+      ${textColor ? `color: ${textColor} !important` : ``};
+    `}
+    ${TooltipLabel} {
+      font-style: italic;
+    }
+    ${TooltipValue} {
+      font-style: italic;
+    }
+    ${TooltipXAxisValue} {
+      opacity: 0.8;
+    }
+    ${StyledHint} {
+      border-radius: 0;
+    }
+  }
 `
 
-const MyEmptyBar = styled(EmptyBar)`
-  margin: 0 2px;
-  background: #f7f7f7;
+
+const CustomChartWrapper = styled.section`
+  display: flex;
+  flex-shrink: 0;
+  width: 100%;
 `
 
-const BasicPlanBar = styled(Bar)`
-background:#FBEECA;
+const LineChartWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 `
 
-const SpecialPlanBar = styled(BasicPlanBar)`
-  align-items: center;
-  justify-content: center;
-  color: #000;
-  font-size:24px;
-`
+const createConfig = (entities: IChartCreatorConfig['entities']) => {
+  const config = entities.reduce((acum, entity) => {
+    const obj = {
+      [entity.id]: {
+        label: entity.label,
+        isParent: Boolean(entity.isParent),
+        component:  Boolean(entity.isParent)
+                      ? <StyledBarGroup />
+                      : <StyledBar 
+                          backgroundColor={entity.mainColor}
+                        />
+      }
+    }
+    return Object.assign({}, acum, obj)
+  }, {})
+  return config
+}
 
-const getSpecialBasicPlan = (number: number) => 
-  <SpecialPlanBar>
-    <StarredItemText>{number}</StarredItemText>
-  </SpecialPlanBar>
+const createTooltip = (entities: IChartCreatorConfig['entities'], tooltip: IChartCreatorConfig['tooltip']) => {
+  const tooltipConfig = {
+    isVisible: tooltip.isVisible,
+    component: <StyledTooltip backgroundColor={tooltip.mainColor} textColor={tooltip.secondaryColor}/>,
+    hints: createTooltipHints(entities)
+  }
 
-const StyledBarChart = () => {
+  return tooltipConfig
+}
 
-  const getConversionList = (number: number, children?: any) => {
+const createTooltipHints = (entities: IChartCreatorConfig['entities']) => {
+  const config = entities.reduce((acum, entity) => {
+    const obj = {
+      [entity.id]: (
+          <StyledHint 
+            backgroundColor={entity.mainColor}
+          />
+        ),
+      }
+    return Object.assign({}, acum, obj)
+  }, {})
+  return config
+}
+
+
+const createData = (entities: IChartCreatorConfig['entities']) => {
+  const keys = entities.map(entity => entity.id)
+
+  const getKeyValueItem = (increment: number) =>
+    keys.reduce((acum, key, index) => {
+      const num = 
+        index % 2
+          ?  getRandomInt((increment + 50),  increment + 3 - index)
+          :  getRandomInt((increment + 30), increment % 2 ? increment * 6 - index * 3 : increment * 4 - index * increment)
+      const obj = {
+        [key]: num > 0 ? num : 1,
+      }
+      return Object.assign({}, acum, obj)
+    },{})
+
+  const data = getXAxisValue().map((weekday, index) => {
+    const dataItem = {
+      weekday,
+      ...getKeyValueItem(index),
+    }
+    return dataItem
+  })
+
+  return data
+}
+
+const StyledLineChart = (props: IChartCreatorConfig) => {
+  const { entities, yAxis, xAxis, height, tooltip } = props
+  const [isTypescript, setTypescript] = React.useState(false)
+
+  const handleLang = (val: boolean) => {
+    if (val) setTypescript(true)
+    else setTypescript(false)
+  }
+
+
+  const code = `
+  import * as React from 'react'
+  import styled from 'styled-components'
+  import {
+    BarChart,
+    BarGroup,
+    Bar,
+    HintPoint,
+    TooltipWrapper,
+    TooltipLabel,
+    TooltipValue,
+    TooltipXAxisValue,
+  } from 'styled-chart'
+  
+  // That's how you style the bars e.g. ${entities.map(entity => !entity.isParent && entity.label).filter(item => item).join(', ')}
+  const StyledBar = styled(Bar)${isTypescript ? `<{backgroundColor: string}>` : ''}\`
+    && {
+      \${({ backgroundColor }) => \`
+        background-color: \${backgroundColor};
+      \`}
+    }
+  \`
+  // That's how you style the "parent" bar ${entities.map(entity => entity.isParent && entity.label).filter(item => item).join(', ')}
+  const StyledBarGroup = styled(BarGroup)\`
+    && {
+      margin: 0 4px;
+    }
+  \`
+  // That's how you can style the Tooltip
+  const StyledTooltip = styled(TooltipWrapper)${isTypescript ? `<{backgroundColor?: string, textColor?: string}>` : ''}\`
+    && {
+      \${({ backgroundColor, textColor }) => \`
+        \${backgroundColor ? \`background: \${backgroundColor}\` : \`\`};
+        \${textColor ? \`color: \${textColor}\` : \`\`};
+      \`}
+      \${TooltipLabel} {
+        font-style: italic;
+      }
+      \${TooltipValue} {
+        font-style: italic;
+      }
+      \${TooltipXAxisValue} {
+        opacity: 0.8;
+      }
+    }
+  \`
+  // That's how you style the 'colored hint dots' in the tooltip
+  const StyledHint = styled(HintPoint)${isTypescript ? `<{backgroundColor: string}>` : ''}\`
+    && {
+      \${({ backgroundColor }) => \`
+        background-color: \${backgroundColor};
+      \`}
+    }
+  \`
+  const CHART_HEIGHT = ${height}
+  ${createXAxisSnippet(xAxis)}${createYAxisSnippet(yAxis)}${createBarConfigSnippet(entities)}${createTooltipSnippet(entities, tooltip)}
+  
+  const StyledBarChart = () => {${createDataSnippet(entities)}
     return (
-      <MyBarGroup>
-        <StarredItem>
-          <StarredItemEmoji>🌟</StarredItemEmoji>
-          <StarredItemText>{number}</StarredItemText>
-        </StarredItem>
-        {children}
-      </MyBarGroup>
+      <BarChart
+        height={CHART_HEIGHT}
+        tooltip={TOOLTIP}
+        yAxis={Y_AXIS}
+        xAxis={X_AXIS}
+        config={CONFIG}
+        data={data}
+      />
     )
   }
+    
+  export default StyledBarChart
+`
+
 
   return (
-    <MyWrapper>
-      <BarChart
-        height="300px"
-        tooltip={{
-          isVisible: true,
-        }}
-        yAxis={{
-          maxValue: 100,
-          grid: true,
-          denoteAs: '%',
-          ticksNum: 5,
-          sectionComponent: <MyYAxisWrapper />,
-          component: <MyYAxisItem />
-        }}
-        xAxis={{
-          key: 'date',
-          grid: true,
-          ticksNum: 4,
-          step: 5,
-          sectionComponent: <MyXAxisBarWrapper />,
-          component: <MyXAxisItem />,
-        }}
-        config={{
-          conversion: {
-            label: 'Conversion',
-            isParent: true,
-            denoteAs: '%',
-            component: <MyBarGroup />,
-          },
-          basicPlan: {
-            label: 'Basic plan',
-            component: <BasicPlanBar />,
-          },
-          proPlan: {
-            label: 'Pro plan',
-            component: <ProPlanBar />
-          },
-          empty: {
-            label: 'Empty',
-            component: <MyEmptyBar />
-          },
-        }}
-        data={[
-          {
-            date: '19/08',
-            conversion: 22,
-            basicPlan: 1,
-            proPlan:   4,
-          },
-          {
-            date: '20/08',
-            conversion: 0,
-            basicPlan: 1,
-            proPlan: 4,
-          },
-          {
-            date: '21/08',
-            conversion: 0,
-            basicPlan: 24,
-            proPlan: 14,
-          },
-          {
-            date: '22/08',
-            // conversion: 12,
-            basicPlan: 27,
-            proPlan: 11,
-          },
-          {
-            date: '23/08',
-            // conversion: 24,
-            basicPlan: 29,
-            proPlan: 8,
-          },
-          {
-            date: '24/08',
-            conversion: 64,
-            basicPlan: {
-              value: 90,
-              component: () => getSpecialBasicPlan(90),
-            },
-            proPlan: 4,
-          },
-          {
-            date: '25/08',
-            conversion: 45,
-            basicPlan: 3,
-            proPlan: 1,
-          },
-          {
-            date: '26/08',
-            conversion: {
-              value: 22,
-              component: (children) => getConversionList(95, children),
-            },
-            basicPlan: 23,
-            proPlan: 13,
-          },
-          {
-            date: '27/08',
-            conversion: 83,
-            basicPlan: 23,
-            proPlan: 13,
-          },
-          {
-            date: '28/08',
-            conversion: 83,
-            basicPlan: 23,
-            proPlan: 13,
-          },
-          {
-            date: '29/08',
-            conversion: 83,
-            basicPlan: 23,
-            proPlan: 13,
-          },
-          {
-            date: '30/08',
-            conversion: 83,
-            basicPlan: 23,
-            proPlan: 13,
-          },
-          {
-            date: '01/09',
-            conversion: 83,
-            basicPlan: 23,
-            proPlan: 13,
-          },
-          {
-            date: '01/09',
-            basicPlan: 23,
-            proPlan: 13,
-          },
-          {
-            date: '02/09',
-            conversion: 83,
-            basicPlan: 23,
-          },
-          {
-            date: '27/08',
-            conversion: 83,
-            basicPlan: 23,
-            proPlan: 13,
-          },
-        ]}
-      />
-    </MyWrapper>
+    <LineChartWrapper>
+      <CustomChartWrapper>
+        <BarChart
+          height={height}
+          tooltip={createTooltip(entities, tooltip)}
+          yAxis={yAxis}
+          xAxis={Object.assign({}, {key: 'weekday'}, xAxis)}
+          config={createConfig(entities)}
+          data={React.useMemo(() => createData(entities), [entities.length])}
+        />
+      </CustomChartWrapper>
+      <CodeSnippet toggleLang={handleLang} currentLang={isTypescript ? 'Typescript' : 'Javascript'}  code={code} />
+    </LineChartWrapper>
   )
 }
 
-export default StyledBarChart
+export default StyledLineChart
