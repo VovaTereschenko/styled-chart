@@ -6,7 +6,8 @@
 
 Create beautiful charts with 💅 [Styled-components](https://styled-components.com/) (or your own react components). Chart lib for React.js built with Typescript and almost no dependencies.
 
-Start creating your chart with live editor https://styled-chart.com/editor.
+
+Start creating your chart with live editor 👉👉👉 https://styled-chart.com/editor
 
 Questions, suggestions? Contact developer: [vovatdev@gmail.com](mailto:vovatdev@gmail.com)
 
@@ -16,7 +17,8 @@ Questions, suggestions? Contact developer: [vovatdev@gmail.com](mailto:vovatdev@
 npm install styled-chart --save
 ```
 
-There are two basic charts which you can customize: BarChart and LineChart
+## Get started
+The easiest way to start is to grab the code here https://styled-chart.com/editor
 
 
 ## Configuration
@@ -409,12 +411,16 @@ resizeDependency={[drawerIsOpen]}
 // list of the ticks
 <TooltipList/> 
 <TooltipListItem/>
-// to separate and style the value
+// to style the value
 <TooltipValue/>
-// to separate and style the label
+// to style the label
 <TooltipLabel/>
+// includes label and value
+<TooltipListItemTextContent />
 // to style the related TooltipXAxisValue
 <TooltipXAxisValue/> 
+// includes the parent bar label and value
+<TooltipParentItem />
 // HintPoint is also included here
 // so you can style the label's colored 'hint dots' 
 // it appears here only if you specify it explicitly
@@ -470,6 +476,9 @@ resizeDependency={[drawerIsOpen]}
 
 <img src="https://i.ibb.co/ykPStTb/2021-03-27-0-32-30.png" width="380" title="Basic BarChart">
 
+<details>
+<summary><span style="color:DodgerBlue;">Show BarChart example code</span></summary>
+<p>
 
 ```javascript
 import * as React from 'react'
@@ -528,8 +537,8 @@ const StyledBarChart = () => {
 export default StyledBarChart
 ```
 
-
-
+</p>
+</details>  
 
 
 
