@@ -97,7 +97,7 @@ const LineChartBarsOverlay = ({
             >
               {children}
             </ParentInvisibleBar>)
-        }), [uiniqueKeysData])}
+        }), [uiniqueKeysData, minValue, maxValue])}
       </InvisibleBarsSection>
       {tooltip && tooltip.isVisible && tooltipData
         && buildTooltip(

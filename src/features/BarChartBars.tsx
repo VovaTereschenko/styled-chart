@@ -213,7 +213,7 @@ const BarChartBars = ({
           ))
 
         return parent
-      }), [uiniqueKeysData])}
+      }), [uiniqueKeysData, minValue, maxValue])}
       {tooltip && tooltip.isVisible && tooltipData
         && buildTooltip(
           tooltipData,
