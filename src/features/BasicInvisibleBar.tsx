@@ -20,6 +20,7 @@ interface IBasicBar {
   dataItemProp: IDataItemProperty,
   config: IConfig,
   innerSum: number,
+  minYValue?: number
   tooltip?: ITooltip,
 }
 
@@ -28,6 +29,7 @@ const BasicInvisibleBar = ({
   dataItemProp,
   config,
   innerSum,
+  minYValue,
   tooltip,
 }: IBasicBar) =>  {
   if (config[dataConfigKey]) {
@@ -49,7 +51,7 @@ const BasicInvisibleBar = ({
 
     const componentProps = {
       style: {
-        height: getInnerBarHeight(Number(value), innerSum),
+        height: getInnerBarHeight(Number(value), innerSum, minYValue),
       },
     }
     

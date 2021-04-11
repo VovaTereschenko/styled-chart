@@ -101,6 +101,7 @@ const buildBasicBar = (
   dataItemProp: IDataItemProperty,
   config: IConfig,
   innerSum: number,
+  minYValue: number,
 ) => {
   if (config[dataConfigKey] && !config[dataConfigKey].isParent) {
     const component = isRichDataObject(dataItemProp)
@@ -114,7 +115,7 @@ const buildBasicBar = (
 
     const componentProps = {
       style: {
-        height: getInnerBarHeight(Number(value), innerSum),
+        height: getInnerBarHeight(Number(value), innerSum, minYValue),
       },
     }
 
@@ -134,25 +135,23 @@ const getDataItemValue = (dataItem: IDataItemProperty) =>
     ? dataItem.value
     : dataItem
 
+interface IBarChartBars {
+  uiniqueKeysData: IDataItem[]
+  config: IConfig
+  xAxisValues: IDataItemProperty[]
+  maxValue: number
+  minValue: number
+  tooltip?: ITooltip
+}
 
-  interface IBarChartBars {
-    uiniqueKeysData: IDataItem[]
-    config: IConfig
-    xAxisValues: IDataItemProperty[]
-    maxValue: number
-    minValue: number
-    tooltip?: ITooltip
-  }
-
-    
 const BarChartBars = ({
-    uiniqueKeysData,
-    config,
-    xAxisValues,
-    minValue,
-    maxValue,
-    tooltip,
-  }: IBarChartBars) => {
+  uiniqueKeysData,
+  config,
+  xAxisValues,
+  minValue,
+  maxValue,
+  tooltip,
+}: IBarChartBars) => {
   const [tooltipData, setTooltipData] = React.useState<ITooltipData | null>(null)
   const [tooltipIsOpen, toggleTooltip] =  React.useState(false)
   const isStackedBarChart = Object.entries(config).map(item => item[1]).some(item => item.isParent)
@@ -188,6 +187,7 @@ const BarChartBars = ({
             dataItem[dataConfigKey],
             config,
             innerBarsSum,
+            minValue,
           ))
 
         const parent = Object.keys(dataItem).map((dataConfigKey) => 

@@ -5,6 +5,7 @@ const XAxisItem = styled.div`
   justify-content: center;
   padding: 8px 0;
   position: absolute;
+  white-space: nowrap;
 `
 
 export default XAxisItem

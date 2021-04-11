@@ -14,7 +14,10 @@ export const buildYAxisItems = (
   index: number,
   val?: number,
 ) => {
-  const resultingValue = `${val}${yAxis.denoteAs ? yAxis.denoteAs : ''}`
+
+  const value = yAxis.formatFn ?  yAxis.formatFn(val) : val
+  const resultingValue = `${value}${yAxis.denoteAs ? yAxis.denoteAs : ''}`
+  
   return (
     yAxis.component
       ? <React.Fragment key={index}>

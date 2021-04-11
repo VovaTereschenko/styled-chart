@@ -57,6 +57,7 @@ export type IYAxis = {
   minValue?: number
   ticksNum?: number
   denoteAs?: string
+  formatFn?(val: any): any 
   grid?: boolean | IReactComponent
   sectionComponent?: IReactComponent
   component?: IReactComponent

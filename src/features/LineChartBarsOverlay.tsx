@@ -6,7 +6,7 @@ import {
 import BasicInvisibleBar from './BasicInvisibleBar'
 import ParentInvisibleBar from './ParentInvisibleBar'
 
-import { 
+import {
   IDataItem,
   IConfig,
   ITooltip,
@@ -37,12 +37,12 @@ const LineChartBarsOverlay = ({
   xAxisValues,
   maxValue,
   minValue,
-}:ILineChartBarsOverlay) => {
+}: ILineChartBarsOverlay) => {
   const [tooltipData, setTooltipData] = React.useState<ITooltipData | null>(null)
-  const [tooltipIsOpen, toggleTooltip] =  React.useState(false)
+  const [tooltipIsOpen, toggleTooltip] = React.useState(false)
   return (
     <>
-      <InvisibleBarsSection dataLength={uiniqueKeysData.length} onMouseLeave={() => {toggleTooltip(false)}}>
+      <InvisibleBarsSection dataLength={uiniqueKeysData.length} onMouseLeave={() => { toggleTooltip(false) }}>
         {React.useMemo(() => uiniqueKeysData.map((dataItem: IDataItem, index) => {
           const tooltipKeys = findTooltipKeys(dataItem, config)
           const tooltipValues = tooltipKeys.reduce((acum, key) => {
@@ -63,18 +63,20 @@ const LineChartBarsOverlay = ({
               .filter(val => val && val)
 
           const maxPathValue = valuesEachArray.length ? Math.max(...valuesEachArray) : 0
+          console.log("minValue", minValue)
 
           const children = Object.keys(dataItem).map((dataConfigKey) =>
-              <BasicInvisibleBar
-                key={`inner_${dataItem.dataItemUID}_${dataConfigKey}`}
-                dataConfigKey={dataConfigKey}
-                dataItemProp={dataItem[dataConfigKey]}
-                config={config}
-                innerSum={maxPathValue}
-                tooltip={tooltip}
-              />
-            )
-              
+            <BasicInvisibleBar
+              key={`inner_${dataItem.dataItemUID}_${dataConfigKey}`}
+              dataConfigKey={dataConfigKey}
+              dataItemProp={dataItem[dataConfigKey]}
+              config={config}
+              innerSum={maxPathValue}
+              tooltip={tooltip}
+              minYValue={minValue}
+            />
+          )
+
           const tooltipData = {
             xAxisValue: xAxisValues[index],
             dataConfigKey: '',
@@ -93,8 +95,9 @@ const LineChartBarsOverlay = ({
               setTooltipData={setTooltipData}
               toggleTooltip={toggleTooltip}
               tooltipData={tooltipData}
-              children={children}
-            />)
+            >
+              {children}
+            </ParentInvisibleBar>)
         }), [uiniqueKeysData])}
       </InvisibleBarsSection>
       {tooltip && tooltip.isVisible && tooltipData
