@@ -116,16 +116,17 @@ const buildTooltip = (
       Boolean(isBarChart),
       isSmartTooltipPositioning
     )
-  
-  const transform = `
-    translateX(calc(${translateX}% + ${xOffset}px)) translateY(calc(${translateY}% + ${yOffset}px))
-  `
 
+  const floatingBottom = bottom < 0 ? 0 : bottom > 100 ? 100 : bottom
+  const floatingTranslateY = floatingBottom === 100 ? 100 : translateY
+  const transform = `
+    translateX(calc(${translateX}% + ${xOffset}px)) translateY(calc(${floatingTranslateY}% + ${yOffset}px))
+  `
   const componentProps = {
     style: {
       left: `${left}%`,
       transform,
-      bottom: `${bottom}%`,
+      bottom: `${floatingBottom}%`,
     } as {[key: string]: string | number},
     children,
   }
