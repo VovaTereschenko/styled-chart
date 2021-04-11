@@ -280,6 +280,9 @@ yAxis={{
   // number, optional
   // default is 0
   minValue: 0,
+  // function
+  // formats the values of yAxis
+  formatFn: (yAxisValue) => yourFormatFunction(yAxisValue),
   // string, optional
   // denotation of values
   denoteAs: '%',
