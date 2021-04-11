@@ -63,7 +63,6 @@ const LineChartBarsOverlay = ({
               .filter(val => val && val)
 
           const maxPathValue = valuesEachArray.length ? Math.max(...valuesEachArray) : 0
-          console.log("minValue", minValue)
 
           const children = Object.keys(dataItem).map((dataConfigKey) =>
             <BasicInvisibleBar
