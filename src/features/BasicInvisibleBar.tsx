@@ -67,4 +67,4 @@ const BasicInvisibleBar = ({
   return <></>
 }
 
-export default React.memo(BasicInvisibleBar)
+export default BasicInvisibleBar
