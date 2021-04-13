@@ -4,8 +4,8 @@ const TooltipListItem = styled.li`
   display: flex;
   align-items: center;
   list-style: none;
-  padding: none;
-  margin: none;
+  padding: 0;
+  margin: 0;
 `
 
 export default TooltipListItem

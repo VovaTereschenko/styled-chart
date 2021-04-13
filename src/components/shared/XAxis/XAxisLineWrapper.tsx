@@ -7,12 +7,6 @@ const XAxisLineWrapper = styled.aside`
   position: relative;
   ${XAxisItem} {
     transform: translateX(-50%);
-    &:first-child {
-      transform: translateX(-20%);
-    }
-    &:last-child {
-      transform: translateX(-80%);
-    }
   }
 `
 
