@@ -44,7 +44,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
   const isStackedBarChart = Object.entries(config).map(item => item[1]).some(item => item.isParent)
 
   const {
-    step: xAxisStep = 1,
+    step: xAxisStep = Math.round(data.length > 10 ? data.length / 2 : data.length),
     ticksNum: xAxisTicksNum = data.length,
     key: xAxisKey,
     grid: xAxisGrid,

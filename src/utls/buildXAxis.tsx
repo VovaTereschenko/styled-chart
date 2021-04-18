@@ -42,11 +42,13 @@ export const buildXAxisItem = (
   isLineChart?: boolean,
   children?: any,
 ) => {
+  const stepCoef = Math.floor(itemsNum / step) - 1
+  const removeAllAfter = Math.floor(stepCoef * step)
   const singleItemWidth = isLineChart ?  100 / (itemsNum - 1) : 100 / itemsNum
 
   return (
     <React.Fragment key={dataItem.dataItemUID}>
-      {(index) % step ? undefined : React.cloneElement(
+      {((index) % step || index > removeAllAfter) && index !== itemsNum - 1  ? undefined : React.cloneElement(
         xAxis.component || <XAxisItem key={index} />,
         {
           children,

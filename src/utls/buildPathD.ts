@@ -1,7 +1,6 @@
 import {
   IConfig,
   IConfigItem,
-  ILegend,
 } from '../types'
 
 const buildPathD = (

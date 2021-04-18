@@ -57,7 +57,7 @@ const LineChart = ({
   const wrapperRef = React.useRef<HTMLElement>(null)
 
   const {
-    step = 1,
+    step = Math.round(data.length > 10 ? data.length / 2 : data.length),
     ticksNum: xAxisTicksNum = data.length,
     key: xAxisKey,
     grid: xAxisGrid,

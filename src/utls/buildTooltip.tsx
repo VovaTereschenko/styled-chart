@@ -38,7 +38,6 @@ const buildTooltip = (
     hints,
   } = tooltip
 
-
   let tooltipValues = tooltipData.tooltipValues
   const parentKey = findParentBar(config)
   if (parentKey && isBarChart) {
