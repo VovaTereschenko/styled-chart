@@ -42,7 +42,7 @@ const LineChartBarsOverlay = ({
   const [tooltipIsOpen, toggleTooltip] = React.useState(false)
   return (
     <>
-      <InvisibleBarsSection dataLength={uiniqueKeysData.length} onMouseLeave={() => { toggleTooltip(false) }}>
+      <InvisibleBarsSection dataLength={uiniqueKeysData.length} onMouseLeave={() => { toggleTooltip(false); setTooltipData(null) }}>
         {React.useMemo(() => uiniqueKeysData.map((dataItem: IDataItem, index) => {
           const tooltipKeys = findTooltipKeys(dataItem, config)
           const tooltipValues = tooltipKeys.reduce((acum, key) => {

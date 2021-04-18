@@ -50,6 +50,7 @@ export type IXAxis = {
   grid?: boolean | IReactComponent
   sectionComponent?: IReactComponent
   component?: IReactComponent
+  emptyArea?: IReactComponent
 }
 
 export type IYAxis = {

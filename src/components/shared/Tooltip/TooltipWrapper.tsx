@@ -14,6 +14,7 @@ const TooltipWrapper = styled.div`
   transition: 0.08s all linear;
   min-width: 120px;
   max-width: 220px;
+  pointer-events: none;
   ${HintPoint} {
     margin-right: 4px;
   }

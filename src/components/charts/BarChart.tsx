@@ -19,7 +19,7 @@ import {
   findBarsYAxisMax,
   buildXAxis,
   buildYAxis,
-  getXAxisValues,
+  getYAxisValues,
   fillDataRelativeToXAxis,
   findParentBar,
   checkIfAllBarsHaveKeyOrEmpty,
@@ -65,7 +65,7 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
   } = yAxis
       
   const xAxisValues = data.map(dataItem => dataItem[xAxisKey])
-  const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
+  const yAxisValues = getYAxisValues(yAxisTicksNum, maxValue, minValue)
 
   return (
     <ChartWrapper height={height && getDenotedHeight(height)}>

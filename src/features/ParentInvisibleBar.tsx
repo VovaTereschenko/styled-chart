@@ -34,6 +34,7 @@ const ParentInvisibleBar = ({
   tooltipData,
   children,
 }: IParentBar) => {
+
   const component = <InvisibleBarGroup>{children}</InvisibleBarGroup>
   const height = getBarHeight(max, maxYAxis, minYAxis)
   const componentProps = {
@@ -50,7 +51,7 @@ const ParentInvisibleBar = ({
   return (
     <InvisibleBarGroupWrapper
       width={`${100/barsNum}%`}
-      onMouseEnter={() =>  { tooltipData && setTooltipData(tooltipData); toggleTooltip(true) }}>
+      onMouseEnter={() =>  { tooltipData && tooltipData.xAxisValue && setTooltipData(tooltipData); toggleTooltip(true) }}>
       {React.cloneElement(
         component,
         componentProps

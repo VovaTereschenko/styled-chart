@@ -15,6 +15,7 @@ export { default as InvisibleBar } from '../components/shared/Invisibles/Invisib
 export { default as InvisibleBarGroupWrapper } from '../components/shared/Invisibles/InvisibleBarGroupWrapper'
 
 export { default as EmptyBar } from '../components/shared/Empty/EmptyBar'
+export { default as EmptyAreaWrapper} from '../components/shared/Empty/EmptyAreaWrapper'
 
 export { default as SVG } from '../components/shared/SVGRelated/SVG'
 export { default as Path } from '../components/shared/SVGRelated/Path'

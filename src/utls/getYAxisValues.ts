@@ -1,4 +1,4 @@
-const getXAxisValues = (yAxisTicksNum: number, maxValue: number, minValue:number) =>
+const getYAxisValues = (yAxisTicksNum: number, maxValue: number, minValue:number) =>
   Array.from({length: yAxisTicksNum}, (_, i) => {
     const yAxisStep = (maxValue - minValue) / (yAxisTicksNum - 1)
     if (!i) return minValue
@@ -6,4 +6,4 @@ const getXAxisValues = (yAxisTicksNum: number, maxValue: number, minValue:number
     return Math.round(yAxisStep * i + minValue)
   }).reverse()
 
-export default getXAxisValues
+export default getYAxisValues

@@ -5,13 +5,13 @@ import {
   ChartWrapper,
   ChartWithXAxisWrapper,
   ChartVisualsWrapper,
+  EmptyAreaWrapper,
 } from '../'
 
 import { 
   IXAxis,
   IYAxis,
   IConfig,
-  ILegend,
   ITooltip,
   INotUniqueDataItem,
 } from '../../types'
@@ -21,8 +21,9 @@ import {
   buildYAxis,
   buildXAxis,
   buildPath,
+  buildPathD,
   buildGrid,
-  getXAxisValues,
+  getYAxisValues,
   fillDataRelativeToXAxis,
   buildDataSlices,
   getDenotedHeight,
@@ -49,17 +50,18 @@ const LineChart = ({
   tooltip,
   height,
   resizeDependency,
-  flexure = 20,
+  flexure = 0,
 }: ILineChart) => {
   const [SVGWidth, setSVGWidth] = React.useState<number>(0)
   const [SVGHeight, setSVGHeight] = React.useState<number>(0)
-  const wrapperRef = React.useRef<SVGSVGElement>(null)
+  const wrapperRef = React.useRef<HTMLElement>(null)
 
   const {
     step = 1,
     ticksNum: xAxisTicksNum = data.length,
     key: xAxisKey,
     grid: xAxisGrid,
+    emptyArea,
   } = xAxis
 
   const uiniqueKeysData = fillDataRelativeToXAxis(data, xAxisTicksNum)
@@ -83,87 +85,41 @@ const LineChart = ({
     }
   })
 
-
   const dataSlices = buildDataSlices(uiniqueKeysData, config)
-
-  /**
-   * @example [
-   *    [1, 2, 3],
-   *    [2, 0, 1],
-   * ]
-   */
   const valuesArrays =  Object.entries(dataSlices).map(item => item[1])
-
-  /**
-   * @example [
-   *    1, 2, 3, 2, 0, 1,
-   * ]
-   */
   const arrayOfAllValues = valuesArrays.reduce((acum, item) =>
     [...acum, ...item]
   , [])
 
   const {
-    maxValue = Math.max(...arrayOfAllValues),
-    minValue = 0,
+    maxValue: yAxisMax = Math.max(...arrayOfAllValues),
+    minValue: yAxisMin = 0,
     ticksNum : yAxisTicksNum = 3,
     grid: yAxisGrid,
   } = yAxis
   
-  const yAxisValues = getXAxisValues(yAxisTicksNum, maxValue, minValue)
+  const yAxisValues = getYAxisValues(yAxisTicksNum, yAxisMax, yAxisMin)
+  const width = SVGWidth * (data.length / cellsNumber) // SVG Should cut the extra paths
 
   return (
     <ChartWrapper height={height && getDenotedHeight(height)}>
       {buildYAxis(yAxis, yAxisValues)}
       <ChartWithXAxisWrapper>
-        <ChartVisualsWrapper>
+        <ChartVisualsWrapper ref={wrapperRef}>
           {buildGrid(xAxisValues, xAxisGrid, yAxisValues, yAxisGrid)}
-          <SVG ref={wrapperRef}>
+          <SVG style={{width:`${width}px`}} >
             {Object.entries(dataSlices).map(dataSlice => {
-              const d = dataSlice[1].reduce((acum, item, i) => {              
-                const calcY = (val: number) => 
-                  SVGHeight - SVGHeight/(maxValue - minValue) * (val - minValue)
-          
-                const
-                  prevItem = dataSlice[1][i - 1] || 0,
-                  prevIndex = i > 1 ? i - 1 : 0,
-                  prevY = calcY(prevItem),
-                  prevX = SVGWidth/(cellsNumber - 1) * prevIndex
-
-                const
-                  x = SVGWidth/(cellsNumber - 1) * i,
-                  y = calcY(item)
-
-                flexure = config[dataSlice[0]] && config[dataSlice[0]].flexure || flexure
-                if (Number(flexure) >= 0 || Number(flexure) <= 100) {
-                  flexure = Number(flexure)
-                } else {
-                  throw new Error('Flexure must be between 0 and 100')
-                }
-
-                const reservedStrokeWidth = 100
-
-                const
-                  deltaPull = 100,
-                  deltaSmall = flexure,
-                  deltaLarge = 100 - flexure
-
-                const delta = (x - prevX) / deltaPull
-
-                const ponintsSlice = i === 0
-                  ? `m ${x} ${y} `
-                  : `c ${delta * deltaSmall} 0 ${delta * deltaLarge} ${y - prevY} ${x - prevX} ${y - prevY} ` 
-                
-                const lastSlice =
-                  i === dataSlice[1].length - 1
-                  && config[dataSlice[0]][ILegend.isFilled]
-                    // We build the full chart is isFilled flag is provided
-                    ? `c ${delta * deltaSmall} 0 ${delta * deltaLarge} ${y - prevY} ${x - prevX} ${y - prevY} V ${SVGHeight + reservedStrokeWidth} H 0`
-                    : undefined
-
-                return acum += lastSlice || ponintsSlice
-              }, '')
-
+              const d = buildPathD(
+                dataSlice[0],
+                dataSlice[1],
+                config,
+                SVGHeight,
+                SVGWidth,
+                cellsNumber,
+                yAxisMax,
+                yAxisMin,
+                flexure,
+              )
               return buildPath(
                 dataSlice[0],
                 config,
@@ -171,17 +127,18 @@ const LineChart = ({
               )
             })}
           </SVG>
-
+          {emptyArea && data.length / cellsNumber < 1 && <EmptyAreaWrapper>
+            {emptyArea}
+          </EmptyAreaWrapper>}
           <LineChartBarsOverlay 
             uiniqueKeysData={uiniqueKeysData}
             config={config}
             valuesArrays={valuesArrays}
             xAxisValues={xAxisValues}
-            maxValue={maxValue}
-            minValue={minValue}
+            maxValue={yAxisMax}
+            minValue={yAxisMin}
             tooltip={tooltip}
           />
-          
         </ChartVisualsWrapper>
         {buildXAxis(xAxis, uiniqueKeysData, step, true)}
       </ChartWithXAxisWrapper>

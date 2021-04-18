@@ -45,17 +45,10 @@ const buildTooltipTransform = (
       translateY = bottom
     }
   } else {
-    if (bottom < 50) {
-      translateY = 0
-      yOffset = -smOffset
-      xOffset = 0
-      if (isRightSide) xOffset = 0
-    } else {
-      isRightSide ? left -= singleBarPersentage : left += singleBarPersentage
-      translateY = 100
-      yOffset = 0
-      xOffset = isRightSide ? -smOffset : smOffset
-    }
+    isRightSide ? left -= singleBarPersentage : left += singleBarPersentage
+    translateY = bottom
+    yOffset = 0
+    xOffset = isRightSide ? -smOffset : smOffset
   }
 
   return ({
