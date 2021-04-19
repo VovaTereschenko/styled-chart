@@ -92,8 +92,6 @@ const BarChartBars = ({
           }
         })
 
-        console.log("children", children)
-
         return Object.keys(dataItem).map((dataConfigKey) => {
           if (isParentBar(dataConfigKey, config)
             || (!isStackedBarChart
