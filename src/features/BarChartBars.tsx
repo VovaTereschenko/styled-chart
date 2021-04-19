@@ -78,17 +78,21 @@ const BarChartBars = ({
 
         const children = Object.keys(dataItem).map((dataConfigKey) => {
           if (config[dataConfigKey] && !config[dataConfigKey].isParent) {
-            <BasicBar
-              key={`inner_${dataItem.dataItemUID}_${dataConfigKey}`}
-              dataConfigKey={dataConfigKey}
-              dataItem={dataItem}
-              dataItemProp={dataItem[dataConfigKey]}
-              config={config}
-              innerSum={innerBarsSum}
-              minYValue={minValue}
-            />
+            return (
+              <BasicBar
+                key={`inner_${dataItem.dataItemUID}_${dataConfigKey}`}
+                dataConfigKey={dataConfigKey}
+                dataItem={dataItem}
+                dataItemProp={dataItem[dataConfigKey]}
+                config={config}
+                innerSum={innerBarsSum}
+                minYValue={minValue}
+              />
+            )
           }
         })
+
+        console.log("children", children)
 
         return Object.keys(dataItem).map((dataConfigKey) => {
           if (isParentBar(dataConfigKey, config)
