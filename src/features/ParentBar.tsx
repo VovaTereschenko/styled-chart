@@ -8,7 +8,6 @@ import {
 
 import {
   IConfig,
-  IDataItem,
   IDataItemProperty,
   ILegend,
   ITooltipData,
@@ -21,7 +20,6 @@ import {
 
 interface IParentBar {
   dataConfigKey: string,
-  dataItem: IDataItem,
   dataItemProp: IDataItemProperty,
   config: IConfig,
   barsNum: number,
@@ -35,7 +33,6 @@ interface IParentBar {
 
 const ParentBar = ({
   dataConfigKey,
-  dataItem,
   dataItemProp,
   config,
   barsNum,
