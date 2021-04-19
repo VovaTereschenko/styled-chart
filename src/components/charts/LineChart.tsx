@@ -57,7 +57,7 @@ const LineChart = ({
   const wrapperRef = React.useRef<HTMLElement>(null)
 
   const {
-    step = Math.round(data.length > 10 ? data.length / 2 : data.length),
+    step: xAxisStep = Math.round(data.length > 10 ? data.length / 4 : 1),
     ticksNum: xAxisTicksNum = data.length,
     key: xAxisKey,
     grid: xAxisGrid,
@@ -140,7 +140,7 @@ const LineChart = ({
             tooltip={tooltip}
           />
         </ChartVisualsWrapper>
-        {buildXAxis(xAxis, uiniqueKeysData, step, true)}
+        {buildXAxis(xAxis, uiniqueKeysData, xAxisStep, true)}
       </ChartWithXAxisWrapper>
     </ChartWrapper>
   )
