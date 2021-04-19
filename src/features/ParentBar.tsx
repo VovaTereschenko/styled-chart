@@ -74,7 +74,6 @@ const ParentBar = ({
 
   return (
     <InvisibleBarGroupWrapper
-      key={`invisible_${dataItem.dataItemUID}_${dataConfigKey}`}
       width={`${100 / barsNum}%`}
       onMouseEnter={() => {
         tooltipData && dataConfigKey !== ILegend.empty && setTooltipData(tooltipData)

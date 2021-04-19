@@ -100,8 +100,8 @@ const BarChartBars = ({
           ) {
             return (
               <ParentBar
+                key={`invisible_${dataItem.dataItemUID}_${dataConfigKey}`}
                 dataConfigKey={dataConfigKey}
-                dataItem={dataItem}
                 dataItemProp={dataItem[dataConfigKey]}
                 config={config}
                 barsNum={uiniqueKeysData.length}
