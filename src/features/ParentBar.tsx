@@ -73,9 +73,12 @@ const ParentBar = (props: IParentBar) => {
 
   const barHeight = getBarHeight(Number(value), maxYAxis, minYAxis)
 
-
   const selectedByInterval = Boolean(selectionInterval?.length && (
     selectionInterval[0] <= index && selectionInterval[1] >= index
+  ))
+
+  const selectedNow = Boolean(selectionArray?.length && (
+    selectionArray[0] <= index && selectionArray[1] >= index
   ))
 
   const componentProps = {
@@ -96,7 +99,6 @@ const ParentBar = (props: IParentBar) => {
     if (!selectionArray.length) setSelectionArray([id])
   }
 
-
   const handlePointerUp = () => {
     const [min, max] = getSelectionMinMax()
     if (selectionArray.length) {
@@ -105,29 +107,31 @@ const ParentBar = (props: IParentBar) => {
     clearLocalSelection()
   }
 
-
   const handlePointerOver = (id: number) => {
-    if (
-      selectionArray.length &&
-        (id > Math.max(...selectionArray) ||
-            id < Math.min(...selectionArray))
-    ) {
-      const selectedIds = [...selectionArray, ...[id]]
+    let selectedIds = [...selectionArray]
+    const min = Math.min(...selectionArray)
+    const max =  Math.max(...selectionArray)
+
+    if (selectionArray.length) {
+      if (id > max) {
+        selectedIds = [min, id]
+      } else if (id < min) {
+        selectedIds = [id, max]
+      }
       setSelectionArray(selectedIds)
     }
   }
-
 
   return (
     <InvisibleBarGroupWrapper
       onClick={applyBarSelection ? () => applyBarSelection(index) : undefined}
       isSelecting={Boolean(selectionArray.length)}
-      withSelection={ withSelection}
+      withSelection={withSelection}
       selectionHighlighter={selectionHighlighter}
       onPointerUp={withSelection ? () => handlePointerUp() : undefined}
-      onPointerDown={withSelection ? () => handlePointerDown(index)  : undefined}
-      onPointerOver={withSelection ? () => handlePointerOver(index)  : undefined}
-      selected={selectionArray.includes(index)}
+      onPointerDown={withSelection ? () => handlePointerDown(index) : undefined}
+      onPointerOver={withSelection ? () => handlePointerOver(index) : undefined}
+      selected={selectedNow}
       selectedByInterval={selectedByInterval}
       width={`${100 / barsNum}%`}
       onMouseEnter={() => {
