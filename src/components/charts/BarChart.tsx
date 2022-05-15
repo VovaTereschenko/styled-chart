@@ -1,10 +1,6 @@
 import * as React from 'react'
 
-import {
-  ChartWrapper,
-  ChartVisualsWrapper,
-  ChartWithXAxisWrapper,
-} from '..'
+import { ChartWrapper, ChartVisualsWrapper, ChartWithXAxisWrapper } from '..'
 
 import {
   IYAxis,
@@ -12,6 +8,7 @@ import {
   IConfig,
   ITooltip,
   INotUniqueDataItem,
+  ISelection
 } from '../../types'
 
 import {
@@ -31,17 +28,27 @@ import {
 import BarChartBars from '../../features/BarChartBars'
 
 interface IStackedBarChart {
-  config: IConfig
-  data: INotUniqueDataItem[]
-  yAxis: IYAxis
-  xAxis: IXAxis
-  tooltip?: ITooltip
-  height?: string | number
+  config: IConfig;
+  data: INotUniqueDataItem[];
+  yAxis: IYAxis;
+  xAxis: IXAxis;
+  selection?: ISelection;
+  tooltip?: ITooltip;
+  height?: string | number;
 }
 
-
-const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarChart) => {
-  const isStackedBarChart = Object.entries(config).map(item => item[1]).some(item => item.isParent)
+const BarChart = ({
+  height,
+  data,
+  config,
+  yAxis,
+  xAxis,
+  tooltip,
+  selection
+}: IStackedBarChart) => {
+  const isStackedBarChart = Object.entries(config)
+    .map((item) => item[1])
+    .some((item) => item.isParent)
 
   const {
     step: xAxisStep = Math.round(data.length > 10 ? data.length / 4 : 1),
@@ -54,17 +61,22 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
 
   const parentBar = findParentBar(config)
   if (parentBar && !checkIfAllBarsHaveKeyOrEmpty(uiniqueKeysData, parentBar)) {
-    uiniqueKeysData = fillStackedBarChartWithParents(uiniqueKeysData, parentBar)
+    uiniqueKeysData = fillStackedBarChartWithParents(
+      uiniqueKeysData,
+      parentBar
+    )
   }
 
   const {
-    maxValue = isStackedBarChart ? findStackedYAxisMax(config, uiniqueKeysData) : findBarsYAxisMax(config, uiniqueKeysData),
+    maxValue = isStackedBarChart
+      ? findStackedYAxisMax(config, uiniqueKeysData)
+      : findBarsYAxisMax(config, uiniqueKeysData),
     minValue = 0,
     ticksNum: yAxisTicksNum = 3,
     grid: yAxisGrid,
   } = yAxis
-      
-  const xAxisValues = data.map(dataItem => dataItem[xAxisKey])
+
+  const xAxisValues = data.map((dataItem) => dataItem[xAxisKey])
   const yAxisValues = getYAxisValues(yAxisTicksNum, maxValue, minValue)
 
   return (
@@ -72,10 +84,17 @@ const BarChart = ({ height, data, config, yAxis, xAxis, tooltip }: IStackedBarCh
       {buildYAxis(yAxis, yAxisValues)}
       <ChartWithXAxisWrapper>
         <ChartVisualsWrapper>
-          {buildGrid(xAxisValues, xAxisGrid, yAxisValues, yAxisGrid, 'isBarChart')}
-          <BarChartBars 
+          {buildGrid(
+            xAxisValues,
+            xAxisGrid,
+            yAxisValues,
+            yAxisGrid,
+            'isBarChart'
+          )}
+          <BarChartBars
             uiniqueKeysData={uiniqueKeysData}
             config={config}
+            selection={selection}
             xAxisValues={xAxisValues}
             minValue={minValue}
             maxValue={maxValue}

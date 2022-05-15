@@ -1,6 +1,9 @@
-import { IDataItemProperty, IRichDataObject } from '../types'
+import { IDataItemProperty, IRichDataObject } from '../types';
 
-const isRichDataObject = (dataItem: IDataItemProperty): dataItem is IRichDataObject =>
-  (dataItem as IRichDataObject).component !== undefined || (dataItem as IRichDataObject).value !== undefined 
+const isRichDataObject = (
+  dataItem: IDataItemProperty
+): dataItem is IRichDataObject =>
+  (dataItem as IRichDataObject).component !== undefined ||
+  (dataItem as IRichDataObject).value !== undefined;
 
-export default isRichDataObject
+export default isRichDataObject;

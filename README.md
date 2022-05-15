@@ -1,71 +1,71 @@
 # Styled-chart
 
-
  <img src="https://i.ibb.co/4JLjXHF/2021-03-26-23-46-52.png" width="150" title="Logo">
 
-
 Create beautiful charts with 💅 [Styled-components](https://styled-components.com/) (or your own react components). Chart lib for React.js built with Typescript and almost no dependencies.
-
 
 Start creating your chart with live editor 👉👉👉 https://styled-chart.com/editor
 
 Questions, suggestions? Contact developer: [vovatdev@gmail.com](mailto:vovatdev@gmail.com)
 
-
 ## Installation
+
 ```bash
 npm install styled-chart --save
 ```
 
 ## Get started
-The easiest way to start is to grab the code here https://styled-chart.com/editor
 
+The easiest way to start is to grab the code here https://styled-chart.com/editor
 
 ## Configuration
 
 There are five entities you can configue any LineChart or BarChart with:
+
 ```javascript
 // {[key: string]: number | object}[]
 // required
 // your chart data
-data 
+data;
 // object
 // required
 // data keys visual config
-config
+config;
 // object
 // required
 // horizontal line visual config
-xAxis
+xAxis;
 // object
 // required
 // vertical line visual config
-yAxis 
+yAxis;
 // object
 // optional
 // config for the tooltip 🤷
-tooltip
+tooltip;
 // number | string
 // optional
 // height of the chart
-height
+height;
 ```
 
 LineChart only
+
 ```javascript
 // number from 0 to 100
 // optional
 // sets the flexure of the lines
 // (can be adjusted pointwise in the config)
-flexure
+flexure;
 // any[]
 // optional
-// if this changes, chart will resize 
+// if this changes, chart will resize
 // (in case other DOM element pushes it)
-resizeDependency 
+resizeDependency;
 ```
 
 ### data
+
 ```javascript
 {
   [key: string]: number | React.ReactComponent
@@ -73,6 +73,7 @@ resizeDependency
 ```
 
 Example
+
 ```javascript
 data={[
   {
@@ -91,11 +92,13 @@ data={[
 ```
 
 #### Notes:
+
 - The order of the values effects on the relationship between paths/bars
 
 LineChart: proPlan is in front of the basicPlan
 
 BarChart: proPlan is before or below (in the stacked version of BarChart) proPlan
+
 ```javascript
 {
   basicPlan: 15,
@@ -109,11 +112,11 @@ BarChart: proPlan is before or below (in the stacked version of BarChart) proPla
 {
   basicPlan: {
     // is equivalent of basicPlan: 90
-    value: 90, 
+    value: 90,
     // provide the function to get the layout
-    // so you can explicitly return anything instead of 
+    // so you can explicitly return anything instead of
     // the default bar/path or the one which is specified by you in the config
-    component: () => getSpecialBasicPlan(90), 
+    component: () => getSpecialBasicPlan(90),
   },
 }
 ```
@@ -123,9 +126,9 @@ BarChart: proPlan is before or below (in the stacked version of BarChart) proPla
 ```javascript
 {
   conversion: {
-    value: 90, 
+    value: 90,
     // provide the function to get the inner layout
-    // so you can explicitly return anything instead of 
+    // so you can explicitly return anything instead of
     // the default component or the one specified by you in the config
     component: (children) => getConversionLineList(90 children),
   },
@@ -145,6 +148,7 @@ const getConversionLineList = (number: number, children: any) => {
 ### config
 
 BarChart
+
 ```javascript
 config={{
   conversion: {
@@ -169,7 +173,7 @@ config={{
     // so you'll get stacked bar chart
     // only a single isParent can be recognized (all the others will be ignored)
     // hint: you can style <BarGroup/> from the lib
-    isParent: true, 
+    isParent: true,
   },
   basicPlan: {
     label: 'Basic plan',
@@ -184,6 +188,7 @@ config={{
 ```
 
 LineChart
+
 ```javascript
 config={{
   conversion: {
@@ -239,7 +244,7 @@ xAxis={{
   // string
   // required
   // a key from the data items you want to use for the xAxis values, e.g. 'date'
-  key: 'date', 
+  key: 'date',
   // number, optional
   // default is 1
   // 1 means you show every xTick
@@ -269,13 +274,12 @@ xAxis={{
 }}
 ```
 
-
 ### yAxis
 
 ```javascript
 yAxis={{
   // number, optional
-  // default is a max of all data values 
+  // default is a max of all data values
   maxValue: 100,
   // number, optional
   // default is 0
@@ -308,6 +312,7 @@ yAxis={{
 ```
 
 ### tooltip
+
 ```javascript
 tooltip={{
   // boolean, optional
@@ -335,7 +340,7 @@ tooltip={{
     // ReactChild | JSX.Element, optional
     // a component for the hint circle (used in the tooltip and in the LineChart paths)
     // default for the path values highlighters <HintPoint />
-    // hint: you can style <HintPoint/> from the lib 
+    // hint: you can style <HintPoint/> from the lib
     basicPlan: <MyBasicHint/>,
     proPlan: <MyProHint/>,
     conversion: <MyConversionHint/>,
@@ -343,44 +348,44 @@ tooltip={{
 }}
 ```
 
-
 ### height
+
 ```javascript
 // string | number
 // if number, will count in px
 // default is 300px
-height="400px"
+height = '400px';
 ```
 
-
 ### resizeDependency
+
 ```javascript
 // any array
 // optional
 // example:
-// if user opens a drawer UI element on your site, the chart has to resize 
+// if user opens a drawer UI element on your site, the chart has to resize
 resizeDependency={[drawerIsOpen]}
 ```
 
-
 ## Components you can import and style
+
 ```javascript
 
 // ----------
 // charts:
 // ----------
 // chart built with bars
-<BarChart/> 
+<BarChart/>
 // chart built with 'lines' (paths)
-<LineChart/> 
+<LineChart/>
 
 // ----------
 // bars:
 // ----------
 // default for the bar
-<Bar/> 
+<Bar/>
 // default for the Bar with isParent flag
-<BarGroup/> 
+<BarGroup/>
  // default for empty values
  // (in case you provided ticksNum in the xAxis > data.length)
  // you can style one if provide 'empty' key in config
@@ -391,9 +396,9 @@ resizeDependency={[drawerIsOpen]}
 // xAxis:
 // ----------
 // default for the xAxis component
-<XAxisItem /> 
+<XAxisItem />
 // default for the xAxis sectionComponent of the BarChart
-<XAxisBarWrapper/> 
+<XAxisBarWrapper/>
 // default grid borders for xAxis
 <XGrid/>
 // ----------
@@ -402,17 +407,17 @@ resizeDependency={[drawerIsOpen]}
 // default for the yAxis component
 <YAxisItem/>
 // default for the yAxis sectionComponent of the LineChart
-<XAxisLineWrapper/> 
+<XAxisLineWrapper/>
 // default grid borders for yAxis
 <YGrid/>
 // ----------
 // tooltip:
 // ----------
 // dafault for the tooltip component
-<TooltipWrapper/> 
+<TooltipWrapper/>
 // inside TooltipWrapper:
 // list of the ticks
-<TooltipList/> 
+<TooltipList/>
 <TooltipListItem/>
 // to style the value
 <TooltipValue/>
@@ -421,11 +426,11 @@ resizeDependency={[drawerIsOpen]}
 // includes label and value
 <TooltipListItemTextContent />
 // to style the related TooltipXAxisValue
-<TooltipXAxisValue/> 
+<TooltipXAxisValue/>
 // includes the parent bar label and value
 <TooltipParentItem />
 // HintPoint is also included here
-// so you can style the label's colored 'hint dots' 
+// so you can style the label's colored 'hint dots'
 // it appears here only if you specify it explicitly
 // see tooltip config
 <HintPoint/>
@@ -436,18 +441,18 @@ resizeDependency={[drawerIsOpen]}
 // Wrapper for the LineChart's 'lines' (paths)
 <SVG/>
 // default for the paths in LineChart
-<Path/> 
+<Path/>
 
 // ----------
 // invisible elements:
 // ----------
 // overlay of the LineChart
-// is used for better interactions with tooltip 
+// is used for better interactions with tooltip
 // or to explicitly wrapper children and not mess with
 // SVG's foreignItem
-<InvisibleBarSection/> 
+<InvisibleBarSection/>
 // inside InvisibleBarSection:
-<InvisibleBar/> 
+<InvisibleBar/>
 <InvisibleBarGroup/>
 <InvisibleBarGroupWrapper/>
 
@@ -457,7 +462,7 @@ resizeDependency={[drawerIsOpen]}
 // a wrapper for any chart
 <ChartWrapper/>
 // a wrapper for the 'visual' content (bar groups / svg)
-<ChartVisualsWrapper/> 
+<ChartVisualsWrapper/>
  // a wrapper for any chart visual content and xAxis
 <ChartWithXAxisWrapper/>
 
@@ -466,16 +471,12 @@ resizeDependency={[drawerIsOpen]}
 // ----------
 // default for the 'colored circle hints'
 // in tooltip and LineChart's 'path highlighters'
-<HintPoint/> 
+<HintPoint/>
 ```
-
-
-
 
 ## Examples
 
 ### BarChart basic example
-
 
 <img src="https://i.ibb.co/ykPStTb/2021-03-27-0-32-30.png" width="380" title="Basic BarChart">
 
@@ -484,20 +485,17 @@ resizeDependency={[drawerIsOpen]}
 <p>
 
 ```javascript
-import * as React from 'react'
-import styled from 'styled-components'
-import {
-  BarChart,
-  BarGroup,
-} from 'styled-chart'
+import * as React from 'react';
+import styled from 'styled-components';
+import { BarChart, BarGroup } from 'styled-chart';
 
 const ProPlanBar = styled(BarGroup)`
   background: DarkKhaki;
-`
+`;
 
 const BasicPlanBar = styled(BarGroup)`
   background: Khaki;
-`
+`;
 
 const StyledBarChart = () => {
   return (
@@ -518,14 +516,14 @@ const StyledBarChart = () => {
         },
         proPlan: {
           label: 'Pro plan',
-          component: <ProPlanBar />
+          component: <ProPlanBar />,
         },
       }}
       data={[
         {
           date: '19/08',
           basicPlan: 1,
-          proPlan:   4,
+          proPlan: 4,
         },
         {
           date: '20/08',
@@ -534,50 +532,41 @@ const StyledBarChart = () => {
         },
       ]}
     />
-  )
-}
+  );
+};
 
-export default StyledBarChart
+export default StyledBarChart;
 ```
 
 </p>
-</details>  
-
-
+</details>
 
 ### Stacked BarChart basic example
 
 <img src="https://i.ibb.co/Kxt7TjF/2021-03-26-23-57-01.png" width="380" title="Basic BarChart">
-
-
 
 <details>
 <summary><span style="color:DodgerBlue;">Show Stacked BarChart example code</span></summary>
 <p>
 
 ```javascript
-import * as React from 'react'
-import styled from 'styled-components'
-import {
-  BarChart,
-  Bar,
-  BarGroup,
-} from 'styled-chart'
+import * as React from 'react';
+import styled from 'styled-components';
+import { BarChart, Bar, BarGroup } from 'styled-chart';
 
 const MyBarGroup = styled(BarGroup)`
   margin: 0 2px;
-`
+`;
 
 const ProPlanBar = styled(Bar)`
   background: DarkKhaki;
-`
+`;
 
 const BasicPlanBar = styled(Bar)`
   background: Khaki;
-`
+`;
 
 const StyledStackedBarChart = () => {
-
   return (
     <BarChart
       tooltip={{
@@ -601,7 +590,7 @@ const StyledStackedBarChart = () => {
         },
         proPlan: {
           label: 'Pro plan',
-          component: <ProPlanBar />
+          component: <ProPlanBar />,
         },
       }}
       data={[
@@ -609,7 +598,7 @@ const StyledStackedBarChart = () => {
           date: '19/08',
           conversion: 22,
           basicPlan: 1,
-          proPlan:   4,
+          proPlan: 4,
         },
         {
           date: '20/08',
@@ -619,50 +608,41 @@ const StyledStackedBarChart = () => {
         },
       ]}
     />
-  )
-}
+  );
+};
 
-export default StyledStackedBarChart
+export default StyledStackedBarChart;
 ```
 
 </p>
-</details>  
+</details>
 
-
-
-
-
-
-### LineChart basic example 
+### LineChart basic example
 
 <img src="https://i.ibb.co/YtLwV7w/2021-03-27-0-00-40.png" width="380" title="Basic LineChart">
-
 
 <details>
 <summary><span style="color:DodgerBlue;">Show LineChart example code</span></summary>
 <p>
 
 ```javascript
-import * as React from 'react'
-import styled from 'styled-components'
-import {
-  LineChart,
-  Path,
-} from 'styled-chart'
+import * as React from 'react';
+import styled from 'styled-components';
+import { LineChart, Path } from 'styled-chart';
 
 const ConversionPath = styled(Path)`
   stroke: DarkKhaki;
-`
+`;
 
 const ProPath = styled(Path)`
   stroke: Khaki;
   fill: Khaki;
-`
+`;
 
 const BasicPath = styled(Path)`
   stroke: LemonChiffon;
   fill: LemonChiffon;
-`
+`;
 
 const StyledLineChart = () => {
   return (
@@ -689,7 +669,7 @@ const StyledLineChart = () => {
         proPlan: {
           label: 'Pro plan',
           isFilled: true,
-          component: <ProPath />
+          component: <ProPath />,
         },
       }}
       data={[
@@ -713,15 +693,14 @@ const StyledLineChart = () => {
         },
       ]}
     />
-  )
-}
+  );
+};
 
-export default StyledLineChart
+export default StyledLineChart;
 ```
+
 </p>
-</details>  
-
-
+</details>
 
 ### Adjusted BarChart example
 
@@ -732,8 +711,8 @@ export default StyledLineChart
 <p>
 
 ```javascript
-import * as React  from 'react'
-import styled from 'styled-components'
+import * as React from 'react';
+import styled from 'styled-components';
 import {
   BarChart,
   Bar,
@@ -745,14 +724,14 @@ import {
   XAxisBarWrapper,
   YAxisWrapper,
   YAxisItem,
-} from 'styled-chart'
+} from 'styled-chart';
 
 const MyWrapper = styled.section`
   // That's how use can "force" rules (in cascade)
   ${ChartWrapper} {
     height: 270px;
   }
-`
+`;
 
 const MyXAxisItem = styled(XAxisItem)`
   text-align: center;
@@ -760,20 +739,20 @@ const MyXAxisItem = styled(XAxisItem)`
   font-size: 14px;
   color: black;
   font-weight: bold;
-`
+`;
 
 const MyXAxisBarWrapper = styled(XAxisBarWrapper)`
   border-top: 2px solid gray;
-`
+`;
 
 const StarredItemText = styled.span`
   font-size: 14px;
   font-weight: 700;
-`
+`;
 
 const StarredItemEmoji = styled.span`
   font-size: 24px;
-`
+`;
 
 const StarredItem = styled.div`
   display: flex;
@@ -784,27 +763,31 @@ const StarredItem = styled.div`
   position: absolute;
   box-sizing: border-box;
   padding: 16px 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgb(248, 182, 195) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(248, 182, 195) 100%
+  );
   text-align: center;
   font-size: 12px;
   border-radius: 5px;
-`
+`;
 
 const MyYAxisWrapper = styled(YAxisWrapper)`
   width: 40px;
   padding: 0 8px;
   text-align: right;
   border-right: 2px solid gray;
-`
+`;
 
 const MyYAxisItem = styled(YAxisItem)`
   font-weight: bold;
-`
+`;
 
 const MyTooltipWrapper = styled(TooltipWrapper)`
   background: OldLace;
-  color: black; 
-`
+  color: black;
+`;
 
 const MyBarGroup = styled(BarGroup)`
   position: relative;
@@ -812,33 +795,34 @@ const MyBarGroup = styled(BarGroup)`
   margin: 0 2px;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
-`
+`;
 
 const ProPlanBar = styled(Bar)`
   border-top: 2px solid white;
   background: Plum;
-`
+`;
 
 const MyEmptyBar = styled(EmptyBar)`
   margin: 0 2px;
   background: WhiteSmoke;
-`
+`;
 
 const BasicPlanBar = styled(Bar)`
   background: Pink;
-`
+`;
 
 const SpecialPlanBar = styled(BasicPlanBar)`
   align-items: center;
   justify-content: center;
   color: black;
-  font-size:24px;
-`
+  font-size: 24px;
+`;
 
-const getSpecialBasicPlan = (number: number) => 
+const getSpecialBasicPlan = (number: number) => (
   <SpecialPlanBar>
     <StarredItemText>{number}</StarredItemText>
   </SpecialPlanBar>
+);
 
 const getConversionList = (number: number, children?: any) => {
   return (
@@ -849,8 +833,8 @@ const getConversionList = (number: number, children?: any) => {
       </StarredItem>
       {children}
     </MyBarGroup>
-  )
-}
+  );
+};
 
 const StyledBarChart = () => {
   return (
@@ -864,7 +848,7 @@ const StyledBarChart = () => {
           maxValue: 100,
           ticksNum: 5,
           sectionComponent: <MyYAxisWrapper />,
-          component: <MyYAxisItem />
+          component: <MyYAxisItem />,
         }}
         xAxis={{
           key: 'date',
@@ -885,11 +869,11 @@ const StyledBarChart = () => {
           },
           proPlan: {
             label: 'Pro plan',
-            component: <ProPlanBar />
+            component: <ProPlanBar />,
           },
           empty: {
             label: 'Empty',
-            component: <MyEmptyBar />
+            component: <MyEmptyBar />,
           },
         }}
         data={[
@@ -897,7 +881,7 @@ const StyledBarChart = () => {
             date: '19/08',
             conversion: 22,
             basicPlan: 1,
-            proPlan:   4,
+            proPlan: 4,
           },
           {
             date: '20/08',
@@ -926,23 +910,18 @@ const StyledBarChart = () => {
         ]}
       />
     </MyWrapper>
-  )
-}
+  );
+};
 
-export default StyledBarChart
+export default StyledBarChart;
 ```
 
 </p>
-</details>  
-
-
-
-
+</details>
 
 ### Adjusted LineChart example
 
 <img src="https://i.ibb.co/LC1tv93/2021-03-27-0-24-22.png" width="380" title="Adjusted BarChart">
-
 
 <details>
 <summary><span style="color:DodgerBlue;">Show Adjusted LineChart example code</span></summary>
@@ -1100,7 +1079,7 @@ const StyledLineChart = () => {
           basicPlan: 1,
           proPlan: 4,
           conversion: 22,
-        
+
         },
         {
           date: '20/08',
@@ -1170,24 +1149,21 @@ export default StyledLineChart
 ```
 
 </p>
-</details>  
+</details>
 
 ### Styling in cascade
+
 To access all the elements of the Chart, use the cascade styling. This is handy if something goes wrong with direct styling.
 
 ```javascript
-import {
-  LineChart,
-  BarChart,
-  TooltipWrapper,
-} from 'styled-chart'
+import { LineChart, BarChart, TooltipWrapper } from 'styled-chart';
 
 const MyWrapper = styled.section`
   ${TooltipWrapper} {
     background: #cfcfcf;
-    color: #333; 
+    color: #333;
   }
-`
+`;
 // ... Inside your react component ->
 // Wrap the chart into your styled wrapper
 return (
@@ -1195,7 +1171,8 @@ return (
     <LineChart />
     <BarChart />
   </MyWrapper>
-)
+);
 ```
+
 </p>
-</details>  
+</details>

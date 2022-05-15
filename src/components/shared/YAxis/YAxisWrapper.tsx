@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const YAxisWrapper = styled.ul`
   display: flex;
@@ -8,6 +8,6 @@ const YAxisWrapper = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;
-`
+`;
 
-export default YAxisWrapper
+export default YAxisWrapper;

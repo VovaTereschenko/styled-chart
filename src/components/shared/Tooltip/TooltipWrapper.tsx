@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import HintPoint from '../HandyStuff/HintPoint'
+import styled from 'styled-components';
+import HintPoint from '../HandyStuff/HintPoint';
 
 const TooltipWrapper = styled.div`
   display: flex;
@@ -18,6 +18,6 @@ const TooltipWrapper = styled.div`
   ${HintPoint} {
     margin-right: 4px;
   }
-`
+`;
 
-export default TooltipWrapper
+export default TooltipWrapper;

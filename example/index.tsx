@@ -1,18 +1,17 @@
-
 import 'react-app-polyfill/ie11';
 import * as ReactDOM from 'react-dom';
 import './index.css';
-import logo from './assets/logo.svg'
-import * as React from 'react'
-import styled from 'styled-components'
-import BasicCharts from './sections/BasicCharts'
+import logo from './assets/logo.svg';
+import * as React from 'react';
+import styled from 'styled-components';
+import BasicCharts from './sections/BasicCharts';
 
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
   margin: 16px auto;
   width: 100%;
-`
+`;
 
 const Logo = styled.div`
   display: flex;
@@ -20,13 +19,13 @@ const Logo = styled.div`
   align-items: center;
   justify-content: center;
   height: auto;
-`
+`;
 
 const LogoImage = styled.img`
   display: flex;
   width: 42px;
   height: 42px;
-`
+`;
 
 const LgooText = styled.p`
   display: flex;
@@ -34,7 +33,7 @@ const LgooText = styled.p`
   font-weight: 700;
   letter-spacing: -1.2px;
   margin: 0;
-`
+`;
 
 const H1 = styled.h1`
   margin: 32px auto 16px;
@@ -48,14 +47,14 @@ const H1 = styled.h1`
     display: block;
     &:before {
       font-weight: 400;
-      content: '<💅>'
+      content: '<💅>';
     }
   }
 
   @media (max-width: 767px) {
     font-size: 32px;
   }
-`
+`;
 
 const H2 = styled.h2`
   margin: 0 auto 32px;
@@ -64,12 +63,12 @@ const H2 = styled.h2`
   font-weight: 500;
   color: #303030;
   text-align: center;
-`
+`;
 
 const Wrapper = styled.section`
   margin: 16px auto 0;
   max-width: 1200px;
-`
+`;
 
 const Feedback = styled.section`
   text-align: center;
@@ -86,13 +85,13 @@ const Feedback = styled.section`
   a {
     color: #2f7cc3;
   }
-`
+`;
 
 const Buttongroup = styled.section`
   display: flex;
-  margin:  16px;
+  margin: 16px;
   justify-content: flex-end;
-`
+`;
 
 const ButtonPrimary = styled.button`
   display: flex;
@@ -109,12 +108,12 @@ const ButtonPrimary = styled.button`
   --webkit-appearance: none;
   border: none;
   cursor: pointer;
-  transition: .2s all linear;
+  transition: 0.2s all linear;
   box-shadow: 0px 2px #86c4ff96;
   &:hover {
     background: #6fb2f0;
   }
-`
+`;
 
 const ButtonSecondary = styled(ButtonPrimary)`
   text-decoration: none;
@@ -124,9 +123,9 @@ const ButtonSecondary = styled(ButtonPrimary)`
     background: linear-gradient(#6eafec, #e7a5ad);
     box-shadow: 0px 4px #6fb2f0;
   }
-`
+`;
 
-const App = () =>
+const App = () => (
   <Wrapper>
     <Header>
       <Logo>
@@ -134,20 +133,40 @@ const App = () =>
         <LgooText>Styled chart</LgooText>
       </Logo>
       <Buttongroup>
-        <ButtonSecondary as="a" href="https://github.com/VovaTereschenko/styled-chart">Docs with samples</ButtonSecondary>
+        <ButtonSecondary
+          as="a"
+          href="https://github.com/VovaTereschenko/styled-chart"
+        >
+          Docs with samples
+        </ButtonSecondary>
       </Buttongroup>
     </Header>
-    
-    <H1>Create beautiful charts with <span>styled components</span></H1>
+
+    <H1>
+      Create beautiful charts with <span>styled components</span>
+    </H1>
     <H2>Chart lib for React.js built with TS and almost no dependencies</H2>
     <BasicCharts />
 
     <Feedback>
-      <p>Like it? <a target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/vova">Buy me a coffee ☕</a></p>
-      <p>Contact developer <a href="mailto:vovatdev@gmail.com">vovatdev@gmail.com</a></p>
+      <p>
+        Like it?{' '}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.buymeacoffee.com/vova"
+        >
+          Buy me a coffee ☕
+        </a>
+      </p>
+      <p>
+        Contact developer{' '}
+        <a href="mailto:vovatdev@gmail.com">vovatdev@gmail.com</a>
+      </p>
     </Feedback>
-  </Wrapper> 
+  </Wrapper>
+);
 
-export default App
+export default App;
 
 ReactDOM.render(<App />, document.getElementById('root'));

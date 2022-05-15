@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import HintPoint from '../HandyStuff/HintPoint'
+import styled from 'styled-components';
+import HintPoint from '../HandyStuff/HintPoint';
 
 const InvisibleBar = styled.div`
   display: flex;
@@ -14,7 +14,6 @@ const InvisibleBar = styled.div`
     transform: translateX(-50%) translateY(-50%);
     transition: 0.1s all linear;
   }
-  
-`
+`;
 
-export default InvisibleBar
+export default InvisibleBar;

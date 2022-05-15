@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const XGrid = styled.div`
   width: 100%;
@@ -6,6 +6,6 @@ const XGrid = styled.div`
   background: #e0e0e0;
   pointer-events: none;
   position: absolute;
-`
+`;
 
-export default XGrid
+export default XGrid;

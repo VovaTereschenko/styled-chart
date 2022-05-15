@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const YGrid = styled.div`
   height: 100%;
@@ -6,6 +6,6 @@ const YGrid = styled.div`
   background: #e0e0e0;
   pointer-events: none;
   position: absolute;
-`
+`;
 
-export default YGrid
+export default YGrid;

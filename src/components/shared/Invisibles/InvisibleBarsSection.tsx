@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-const InvisibleBarsSection = styled.div<{dataLength: number}>`
+const InvisibleBarsSection = styled.div<{ dataLength: number }>`
   height: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -8,9 +8,9 @@ const InvisibleBarsSection = styled.div<{dataLength: number}>`
   position: absolute;
   z-index: 1;
   ${({ dataLength }) => `
-    width: calc(100% + ${100/(dataLength - 1)}%);
-    margin-left: calc(${-(100 + 100/(dataLength - 1))/dataLength/2}%);
+    width: calc(100% + ${100 / (dataLength - 1)}%);
+    margin-left: calc(${-(100 + 100 / (dataLength - 1)) / dataLength / 2}%);
   `}
-`
+`;
 
-export default InvisibleBarsSection
+export default InvisibleBarsSection;

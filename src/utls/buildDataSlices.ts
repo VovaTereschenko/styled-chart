@@ -1,5 +1,5 @@
-import { IConfig, IDataItem, IDataSlice } from '../types'
-import { isRichDataObject, findInnerComponentsKeys } from './'
+import { IConfig, IDataItem, IDataSlice } from '../types';
+import { isRichDataObject, findInnerComponentsKeys } from './';
 
 /**
  * @example {
@@ -8,7 +8,9 @@ import { isRichDataObject, findInnerComponentsKeys } from './'
  * }
  */
 const buildDataSlices = (uiniqueKeysData: IDataItem[], config: IConfig) => {
-  const keys = uiniqueKeysData.map((item) => findInnerComponentsKeys(item, config))
+  const keys = uiniqueKeysData.map((item) =>
+    findInnerComponentsKeys(item, config)
+  );
 
   /**
    * @example {
@@ -16,10 +18,9 @@ const buildDataSlices = (uiniqueKeysData: IDataItem[], config: IConfig) => {
    * }
    */
   const uniqueKeys = keys.reduce((acum, item) => {
-    const uniqueIterationKeys = item.filter(key => acum.indexOf(key) === -1)
-    return [...acum, ...uniqueIterationKeys]
-  }, [])
-
+    const uniqueIterationKeys = item.filter((key) => acum.indexOf(key) === -1);
+    return [...acum, ...uniqueIterationKeys];
+  }, []);
 
   /**
    * @example {
@@ -29,20 +30,19 @@ const buildDataSlices = (uiniqueKeysData: IDataItem[], config: IConfig) => {
    */
   const dataSlices = uiniqueKeysData.reduce((acum, dataItem) => {
     uniqueKeys.forEach((key) => {
-      if (!acum[key]) acum[key] = []
-      const dataItemProperty = dataItem[key]
+      if (!acum[key]) acum[key] = [];
+      const dataItemProperty = dataItem[key];
       if (typeof dataItemProperty !== 'undefined') {
         const value = isRichDataObject(dataItemProperty)
           ? Number(dataItemProperty.value)
-          : Number(dataItemProperty)
-        acum[key].push(value)
+          : Number(dataItemProperty);
+        acum[key].push(value);
       }
-    
-    })
-    return acum
-  }, {} as IDataSlice)
+    });
+    return acum;
+  }, {} as IDataSlice);
 
-  return dataSlices
-}
+  return dataSlices;
+};
 
-export default buildDataSlices
+export default buildDataSlices;

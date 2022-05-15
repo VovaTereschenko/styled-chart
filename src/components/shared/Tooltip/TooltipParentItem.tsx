@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import TooltipLabel from './TooltipLabel'
-import TooltipValue from './TooltipValue'
+import styled from 'styled-components';
+import TooltipLabel from './TooltipLabel';
+import TooltipValue from './TooltipValue';
 
 const TooltipParentItem = styled.div`
   display: flex;
@@ -11,6 +11,6 @@ const TooltipParentItem = styled.div`
   ${TooltipValue}, ${TooltipLabel} {
     font-size: 18px;
   }
-`
+`;
 
-export default TooltipParentItem
+export default TooltipParentItem;

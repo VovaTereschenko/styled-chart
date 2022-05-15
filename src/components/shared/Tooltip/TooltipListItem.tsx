@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const TooltipListItem = styled.li`
   display: flex;
@@ -6,6 +6,6 @@ const TooltipListItem = styled.li`
   list-style: none;
   padding: 0;
   margin: 0;
-`
+`;
 
-export default TooltipListItem
+export default TooltipListItem;

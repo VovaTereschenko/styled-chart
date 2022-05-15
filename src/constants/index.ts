@@ -3,6 +3,6 @@ const constants = {
   defaultColor: '#757575',
   emptyBarColor: '#f0f0f0',
   defaultBargroupColor: '#757575',
-}
+};
 
-export default constants
+export default constants;

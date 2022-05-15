@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import XAxisItem from './XAxisItem'
+import styled from 'styled-components';
+import XAxisItem from './XAxisItem';
 
 const XAxisLineWrapper = styled.aside`
   width: 100%;
@@ -8,6 +8,6 @@ const XAxisLineWrapper = styled.aside`
   ${XAxisItem} {
     transform: translateX(-50%);
   }
-`
+`;
 
-export default XAxisLineWrapper
+export default XAxisLineWrapper;

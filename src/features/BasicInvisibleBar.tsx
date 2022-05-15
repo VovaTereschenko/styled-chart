@@ -1,27 +1,17 @@
-import * as React from 'react'
-import { 
-  InvisibleBar,
-  HintPoint,
-} from '../components'
+import * as React from 'react';
+import { InvisibleBar, HintPoint } from '../components';
 
-import {
-  IConfig,
-  ITooltip,
-  IDataItemProperty,
-} from '../types'
+import { IConfig, ITooltip, IDataItemProperty } from '../types';
 
-import {
-  isRichDataObject,
-  getInnerBarHeight,
-} from '../utls'
+import { isRichDataObject, getInnerBarHeight } from '../utls';
 
 interface IBasicBar {
-  dataConfigKey: string,
-  dataItemProp: IDataItemProperty,
-  config: IConfig,
-  innerSum: number,
-  minYValue?: number
-  tooltip?: ITooltip,
+  dataConfigKey: string;
+  dataItemProp: IDataItemProperty;
+  config: IConfig;
+  innerSum: number;
+  minYValue?: number;
+  tooltip?: ITooltip;
 }
 
 const BasicInvisibleBar = ({
@@ -31,40 +21,39 @@ const BasicInvisibleBar = ({
   innerSum,
   minYValue,
   tooltip,
-}: IBasicBar) =>  {
+}: IBasicBar) => {
   if (config[dataConfigKey]) {
-    const point = tooltip && tooltip.hints && tooltip.hints[dataConfigKey] || <HintPoint />
+    const point = (tooltip &&
+      tooltip.hints &&
+      tooltip.hints[dataConfigKey]) || <HintPoint />;
 
-    if (!dataItemProp) return <></>
+    if (!dataItemProp) return <></>;
 
-    const component = isRichDataObject(dataItemProp)
-      ? <InvisibleBar>
+    const component = isRichDataObject(dataItemProp) ? (
+      <InvisibleBar>
         {point}
         {dataItemProp.component()}
       </InvisibleBar>
-      : <InvisibleBar>
-        {point}
-      </InvisibleBar>
+    ) : (
+      <InvisibleBar>{point}</InvisibleBar>
+    );
     const value = isRichDataObject(dataItemProp)
       ? dataItemProp.value
-      : dataItemProp
+      : dataItemProp;
 
     const componentProps = {
       style: {
         height: getInnerBarHeight(Number(value), innerSum, minYValue),
       },
-    }
-    
+    };
+
     return (
       <React.Fragment>
-        {React.cloneElement(
-          component,
-          componentProps,
-        )}
+        {React.cloneElement(component, componentProps)}
       </React.Fragment>
-    )
+    );
   }
-  return <></>
-}
+  return <></>;
+};
 
-export default BasicInvisibleBar
+export default BasicInvisibleBar;

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const InvisibleBarGroup = styled.div`
   display: flex;
@@ -6,6 +6,6 @@ const InvisibleBarGroup = styled.div`
   flex-shrink: 0;
   position: relative;
   width: 100%;
-`
+`;
 
-export default InvisibleBarGroup
+export default InvisibleBarGroup;

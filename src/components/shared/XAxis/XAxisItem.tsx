@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const XAxisItem = styled.div`
   display: flex;
@@ -6,6 +6,6 @@ const XAxisItem = styled.div`
   padding: 8px 0;
   position: absolute;
   white-space: nowrap;
-`
+`;
 
-export default XAxisItem
+export default XAxisItem;

@@ -1,14 +1,14 @@
-import styled from 'styled-components'
-import constants from '../../../constants'
+import styled from 'styled-components';
+import constants from '../../../constants';
 
-const getHeight = (height?: number | string) => 
-  height ?
-    typeof height === 'number'
+const getHeight = (height?: number | string) =>
+  height
+    ? typeof height === 'number'
       ? `${height}px`
       : height
-    : constants.chartHeight
+    : constants.chartHeight;
 
-const ChartWrapper = styled.section<{height?: string | number}>`
+const ChartWrapper = styled.section<{ height?: string | number }>`
   display: flex;
   ${({ height }) => `
     height: ${getHeight(height)};
@@ -17,6 +17,6 @@ const ChartWrapper = styled.section<{height?: string | number}>`
   box-sizing: border-box;
   padding: 8px 8px 48px 8px;
   position: relative;
-`
+`;
 
-export default ChartWrapper
+export default ChartWrapper;

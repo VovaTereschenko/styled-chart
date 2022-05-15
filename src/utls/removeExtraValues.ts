@@ -1,6 +1,8 @@
-import { INotUniqueDataItem } from '../types'
+import { INotUniqueDataItem } from '../types';
 
-const removeExtraValues = (data: INotUniqueDataItem[], cellsNum: number): INotUniqueDataItem[] =>
-  data.slice(data.length - cellsNum, data.length )
+const removeExtraValues = (
+  data: INotUniqueDataItem[],
+  cellsNum: number
+): INotUniqueDataItem[] => data.slice(data.length - cellsNum, data.length);
 
-export default removeExtraValues
+export default removeExtraValues;
