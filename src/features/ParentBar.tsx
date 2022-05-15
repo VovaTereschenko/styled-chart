@@ -73,13 +73,20 @@ const ParentBar = (props: IParentBar) => {
 
   const barHeight = getBarHeight(Number(value), maxYAxis, minYAxis)
 
+
+  const selectedByInterval = Boolean(selectionInterval?.length && (
+    selectionInterval[0] <= index && selectionInterval[1] >= index
+  ))
+
   const componentProps = {
     style: {
       height: `${barHeight > 100 ? 100 : barHeight}%`,
       width: `${100}%`,
     },
+    selected: selectedByInterval,
   } as {
     style: object;
+    selected: boolean;
     children: typeof children;
   }
 
@@ -110,9 +117,6 @@ const ParentBar = (props: IParentBar) => {
     }
   }
 
-  const selectedByInterval = Boolean(selectionInterval?.length && (
-    selectionInterval[0] <= index && selectionInterval[1] >= index
-  ))
 
   return (
     <InvisibleBarGroupWrapper
